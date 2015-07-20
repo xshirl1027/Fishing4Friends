@@ -5,95 +5,94 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Thread = mongoose.model('Thread'),
+	Post = mongoose.model('Post'),
 	_ = require('lodash');
 
 /**
- * Create a Thread
+ * Create a Post
  */
 exports.create = function(req, res) {
-	var thread = new Thread(req.body);
-	thread.user = req.user;
+	var post = new Post(req.body);
+	post.user = req.user;
 
-	thread.save(function(err) {
+	post.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(thread);
+			res.jsonp(post);
 		}
 	});
 };
 
 /**
- * Show the current Thread
+ * Show the current Post
  */
 exports.read = function(req, res) {
-	res.jsonp(req.thread);
+	res.jsonp(req.post);
 };
 
 /**
- * Update a Thread
+ * Update a Post
  */
 exports.update = function(req, res) {
-	var thread = req.thread ;
+	var post = req.post ;
 
-	thread = _.extend(thread , req.body);
+	post = _.extend(post , req.body);
 
-	thread.save(function(err) {
+	post.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(thread);
+			res.jsonp(post);
 		}
 	});
 };
 
 /**
- * Delete an Thread
+ * Delete an Post
  */
 exports.delete = function(req, res) {
-	var thread = req.thread ;
+	var post = req.post ;
 
-	thread.remove(function(err) {
+	post.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(thread);
+			res.jsonp(post);
 		}
 	});
 };
 
 /**
- * List of Threads
+ * List of Posts
  */
 exports.list = function(req, res) { 
-	console.log(req.query);
-	var keyNames= Object.keys(req.query);
+var keyNames= Object.keys(req.query);
 	if (keyNames.length===0){
-		Thread.find().sort('-created').populate('user', 'displayName').exec(function(err, threads) {
+		Post.find().sort('-created').populate('user', 'displayName').exec(function(err, posts) {
 			if (err) {
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.jsonp(threads);
+				res.jsonp(posts);
 			}
 		
 		});
 	}else{
-		Thread.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('-created').populate('user', 'displayName').exec(function(err, threads){
+		Post.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('-created').populate('user', 'displayName').exec(function(err, posts){
 			if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 			} else {
-				res.jsonp(threads);
+				res.jsonp(posts);
 			}
 		});
 		
@@ -101,26 +100,23 @@ exports.list = function(req, res) {
 	
 };
 
-
-
 /**
- * Thread middleware
+ * Post middleware
  */
-exports.threadByID = function(req, res, next, id) { 
-	Thread.findById(id).populate('user', 'displayName').exec(function(err, thread) {
+exports.postByID = function(req, res, next, id) { 
+	Post.findById(id).populate('user', 'displayName').exec(function(err, post) {
 		if (err) return next(err);
-		if (! thread) return next(new Error('Failed to load Thread ' + id));
-		req.thread = thread ;
+		if (! post) return next(new Error('Failed to load Post ' + id));
+		req.post = post ;
 		next();
 	});
 };
 
-
 /**
- * Thread authorization middleware
+ * Post authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.thread.user.id !== req.user.id) {
+	if (req.post.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();

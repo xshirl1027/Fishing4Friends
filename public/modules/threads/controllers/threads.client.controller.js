@@ -7,13 +7,10 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
 		// Create new Thread
 		$scope.create = function() {
-/* 			$scope.messageboard = Messageboards.get({ 
-				MessageboardId: $stateParams.messageboardId
-			}); */
-			// Create new Thread object
+			
 			var thread = new Threads ({
 				name: this.name,
-				topic: $stateParams.name
+				messageboardId: $stateParams.messageboardId
 			});
 
 			// Redirect after save
@@ -22,6 +19,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
 				// Clear form fields
 				$scope.name = '';
+				//$scope.messageboardId='';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -60,11 +58,9 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 			$scope.threads = Threads.query();
 		};
 		// Find existing Thread
-		$scope.findOne2 = function(topicname) {
-
-			//topicname=$scope.$$prevSibling.messageboard.name;
-			console.log(topicname);
-			$scope.threads = Threads.query({'topic': topicname});
+		$scope.findOne2 = function() {
+			console.log($stateParams.messageboardId);
+			$scope.threads = Threads.query({'messageboardId': $stateParams.messageboardId});
 		};
 		// Find existing Thread
 		$scope.findOne = function() {

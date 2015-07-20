@@ -9,6 +9,9 @@
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
+		<a class="btn btn-primary" href="/#!/threads/{{thread._id}}/add">
+			<i class="glyphicon glyphicon-pencil"></i>
+		</a>
 	</div>
 	<small>
 		<em class="text-muted">
@@ -18,4 +21,20 @@
 			<span data-ng-bind="thread.user.displayName"></span>
 		</em>
 	</small>
+</section>
+<section data-ng-controller="PostsController" data-ng-init="findOne2()">
+    <div class="page-header">
+        <h1>Posts</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="post in posts | orderBy:created" data-ng-href="#!/posts/{{post._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="post.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="post.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="post.name"></h4>
+        </a>
+    </div>
 </section>

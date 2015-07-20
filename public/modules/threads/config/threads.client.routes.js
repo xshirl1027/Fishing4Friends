@@ -20,6 +20,10 @@ angular.module('threads').config(['$stateProvider',
 		state('editThread', {
 			url: '/threads/:threadId/edit',
 			templateUrl: 'modules/threads/views/edit-thread.client.view.html'
+		}).
+		state('addThread', {
+			url: '/threads/:threadId/add',
+			templateUrl: 'modules/posts/views/create-post.client.view.html'
 		});
 	}
 ]);

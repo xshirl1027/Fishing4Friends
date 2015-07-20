@@ -60,10 +60,11 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 		
 		// Find existing Messageboard
 		$scope.findOne = function() {
+			console.log($stateParams.messageboardId);
 			$scope.messageboard = Messageboards.get({ 
 				messageboardId: $stateParams.messageboardId
 			});
-			if ($scope.messageboard.name) console.log($scope.messageboard.name);
+			//console.log($stateParams.messageboardId);
 		};
 
 	}

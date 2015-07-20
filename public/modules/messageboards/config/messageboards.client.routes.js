@@ -18,7 +18,7 @@ angular.module('messageboards').config(['$stateProvider',
 			templateUrl: 'modules/messageboards/views/view-messageboard.client.view.html'
 		}).
 		state('addviewMessageboard', {
-			url: '/messageboards/:name/add',
+			url: '/messageboards/:messageboardId/add',
 			templateUrl: 'modules/threads/views/create-thread.client.view.html'
 		}).
 		state('editMessageboard', {

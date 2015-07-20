@@ -7,10 +7,10 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 /**
- * Thread Schema
+ * Post Schema
  */
-var ThreadSchema = new Schema({
-	messageboardId:{
+var PostSchema = new Schema({
+	threadid:{
 		type: String,
 		default: '',
 		trim: true
@@ -18,7 +18,7 @@ var ThreadSchema = new Schema({
 	name: {
 		type: String,
 		default: '',
-		required: 'Please fill Thread name',
+		required: 'Please fill Post name',
 		trim: true
 	},
 	created: {
@@ -31,4 +31,4 @@ var ThreadSchema = new Schema({
 	}
 });
 
-mongoose.model('Thread', ThreadSchema);
+mongoose.model('Post', PostSchema);
