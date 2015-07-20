@@ -3,7 +3,7 @@
         <h1>Messageboards</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="messageboard in messageboards" data-ng-href="#!/messageboards/{{messageboard._id}}" class="list-group-item">
+        <a data-ng-repeat="messageboard in messageboards | orderBy:created:reverse" data-ng-href="#!/messageboards/{{messageboard._id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="messageboard.created | date:'medium'"></span>
@@ -11,6 +11,7 @@
 				<span data-ng-bind="messageboard.user.displayName"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="messageboard.name"></h4>
+			<p class="list-group-item-heading" data-ng-bind="messageboard.message"></p>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!messageboards.$resolved || messageboards.length">
