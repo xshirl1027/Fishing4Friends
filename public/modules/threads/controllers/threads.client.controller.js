@@ -37,7 +37,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 				}
 			} else {
 				$scope.thread.$remove(function() {
-					$location.path('threads');
+					window.history.back();
 				});
 			}
 		};

@@ -86,7 +86,7 @@ var keyNames= Object.keys(req.query);
 		
 		});
 	}else{
-		Post.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('-created').populate('user', 'displayName').exec(function(err, posts){
+		Post.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('created').populate('user', 'displayName').exec(function(err, posts){
 			if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

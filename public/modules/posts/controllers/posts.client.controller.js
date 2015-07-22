@@ -36,7 +36,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 				}
 			} else {
 				$scope.post.$remove(function() {
-					$location.path('posts');
+					window.history.back();
 				});
 			}
 		};
@@ -60,6 +60,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 			$scope.posts = Posts.query({'threadid':$stateParams.threadId});
 		};
 		// Find existing Post
+		
 		$scope.findOne = function() {
 			$scope.post = Posts.get({ 
 				postId: $stateParams.postId
