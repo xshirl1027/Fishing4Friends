@@ -88,6 +88,9 @@ var UserSchema = new Schema({
 	},
 	resetPasswordExpires: {
 		type: Date
+	},
+	profile_pic: {
+		type: Schema.ObjectId
 	}
 });
 

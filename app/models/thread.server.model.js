@@ -21,6 +21,12 @@ var ThreadSchema = new Schema({
 		required: 'Please fill Thread name',
 		trim: true
 	},
+	message: {
+		type: String,
+		default: '',
+		required: 'Please enter a message',
+		trim: true
+	},
 	created: {
 		type: Date,
 		default: Date.now
