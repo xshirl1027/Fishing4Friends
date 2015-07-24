@@ -1,6 +1,6 @@
-<section data-ng-controller="ThreadsController" data-ng-init="findOne()">
+<section data-ng-controller="OfferingsController" data-ng-init="findOne()">
     <div class="page-header">
-        <h1>Edit Thread</h1>
+        <h1>Edit Offering</h1>
     </div>
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="update()" novalidate>
@@ -8,10 +8,17 @@
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="thread.name" id="name" class="form-control" placeholder="Title" required>
-						<input type="text" data-ng-model="thread.message" id="message" class="form-control" placeholder="text" required>
+                        <input type="text" data-ng-model="offering.name" id="name" class="form-control" placeholder="Name" required>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="offering.description" id="description" class="form-control" placeholder="Description" required>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-default">
                 </div>

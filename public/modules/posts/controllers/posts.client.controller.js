@@ -15,7 +15,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 			// Redirect after save
 			post.$save(function(response) {
-				$location.path('posts/' + response._id);
+				window.history.back();
 
 				// Clear form fields
 				$scope.name = '';

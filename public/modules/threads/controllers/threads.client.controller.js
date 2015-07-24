@@ -10,12 +10,13 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 			
 			var thread = new Threads ({
 				name: this.name,
-				messageboardId: $stateParams.messageboardId
+				messageboardId: $stateParams.messageboardId,
+				message:this.message
 			});
 
 			// Redirect after save
 			thread.$save(function(response) {
-				$location.path('threads/' + response._id);
+				window.history.back();
 
 				// Clear form fields
 				$scope.name = '';

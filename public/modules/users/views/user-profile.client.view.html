@@ -1,0 +1,49 @@
+<section data-ng-controller="SettingsController">
+	<div class="page-header">
+		<h1 data-ng-bind="user.username"></h1>
+		<div>Welcome <span data-ng-bind="user.displayName"></span><br>
+			<span data-ng-bind="user.email"></span>
+		</div>
+
+
+				<section data-ng-controller="PhotosController" data-ng-init="findUserProfilePic()">
+					
+      		        <img ng-show="photo.src" ng-src="{{photo.src}}" />
+      		        <!-- If the user has not uploaded a profile pic, display the alternate: -->
+					<span class="empty" ng-show="!photo.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
+				
+ 				</section>
+				
+
+
+		<!-- This includes the HTML for the modal view for profile photo upload. -->
+		<div ng-include="'/modules/core/views/modal-upload.client.view.html'"></div>
+
+
+
+		</div>
+	</div>
+</section>
+
+
+
+<section data-ng-controller="OfferingsController" data-ng-init="findByUser()">
+    <div class="page-header">
+        <h1>Offerings</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="offering in offerings" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="offering.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="offering.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+            <p data-ng-bind="offering.description"></p>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!offerings.$resolved || offerings.length">
+    	No Offerings yet, why don't you <a href="/#!/offerings/create">create one</a>?
+    </div>
+</section>

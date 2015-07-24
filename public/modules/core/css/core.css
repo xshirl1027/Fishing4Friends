@@ -13,11 +13,3 @@
 .ng-valid.ng-dirty {
 	border-color: #78FA89;
 }
-img{
-border:solid;
-border-color:blue;
-}
-
-.body{
-background-image:url("modules/core/img/brand/fish.png");
-}
