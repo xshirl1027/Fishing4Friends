@@ -1,14 +1,16 @@
-.table{
-	border:solid;
-	border-color:#084B8A;
-	border-width:1px;
-	margin-bottom:1px;
-	background-color:#F5ECCE;
-	padding:10px;
-}
-.panel-heading{
+.panel{
  background-color:#F5ECCE;
+}
+.panel-head{
+	font-weight:bold;
+	border-color:#084B8A;
 }
 .panel-body{
- background-color:#F5ECCE;
+	border:solid;
+	border-width:1px;
+	border-color:#084B8A;
+}
+.small{
+	font-weight:light;
+	font-color:grey;
 }
