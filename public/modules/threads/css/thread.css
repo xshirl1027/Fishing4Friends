@@ -1,0 +1,14 @@
+.table{
+	border:solid;
+	border-color:#084B8A;
+	border-width:1px;
+	margin-bottom:1px;
+	background-color:#F5ECCE;
+	padding:10px;
+}
+.panel-heading{
+ background-color:#F5ECCE;
+}
+.panel-body{
+ background-color:#F5ECCE;
+}
