@@ -13,6 +13,13 @@ angular.module('offerings').factory('Offerings', ['$resource',
 				// note how to extend the query parameters
 				// params: {offeringId: '', user: '@userId', price: '0', keywords:['blue','green']},
 				isArray: true
+			}, addInterested: {
+				method: 'PUT',
+				url: 'offerings/:offeringId/interested/'
+			}, addRating: {
+				method: 'PUT',
+				params: { offeringId: '@_id'},
+				url: 'offerings/:offeringId/rating'
 			}
 		});
 	}

@@ -32,8 +32,12 @@ module.exports = function(app) {
 	app.route('/auth/facebook/callback').get(users.oauthCallback('facebook'));
 
 	// Setting the twitter oauth routes
-	app.route('/auth/twitter').get(passport.authenticate('twitter'));
-	app.route('/auth/twitter/callback').get(users.oauthCallback('twitter'));
+	app.route('/auth/twitter').get(passport.authenticate('twitter', {
+									failureRedirect: '/signin'}));
+	app.route('/auth/twitter/callback').get(users.oauthCallback('twitter',{
+		failureRedirect: '/signin',
+		successRedirect: '/'
+	}));
 
 	// Setting the google oauth routes
 	app.route('/auth/google').get(passport.authenticate('google', {
