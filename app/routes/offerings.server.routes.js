@@ -14,9 +14,17 @@ module.exports = function(app) {
 		.put(users.requiresLogin, offerings.hasAuthorization, offerings.update)
 		.delete(users.requiresLogin, offerings.hasAuthorization, offerings.delete);
 
+	// While this route requires no authorization check to modify the offering document, the document is
+	// modified by the server controller and not the client.
+	app.route('/offerings/:offeringId/interested')
+		.put(users.requiresLogin, offerings.addInterested);
+
+	// Do we add an authorization middle ?
+	app.route('/offerings/:offeringId/rating')
+		.put(users.requiresLogin, offerings.addRating);
+
+
 	// Finish by binding the Offering middleware
 	app.param('offeringId', offerings.offeringByID);
 
-	// added by Marc... questionable functionality
-	app.param('userId', users.userByID);
 };

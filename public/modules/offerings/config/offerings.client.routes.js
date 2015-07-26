@@ -5,7 +5,15 @@ angular.module('offerings').config(['$stateProvider',
 	function($stateProvider) {
 		// Offerings state routing
 		$stateProvider.
+		state('rateOffering', {
+			url: '/offerings/:offeringId/rate',
+			templateUrl: 'modules/offerings/views/rate.client.view.html'
+		}).
 		state('listOfferings', {
+			url: '/offerings',
+			templateUrl: 'modules/offerings/views/list-offerings.client.view.html'
+		}).
+		state('searchOfferings', {
 			url: '/offerings',
 			templateUrl: 'modules/offerings/views/list-offerings.client.view.html'
 		}).

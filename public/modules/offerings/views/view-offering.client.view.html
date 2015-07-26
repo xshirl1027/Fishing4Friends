@@ -2,6 +2,9 @@
 	<div class="page-header">
 		<h1 data-ng-bind="offering.name"></h1>
 	</div>
+
+
+	<!-- This produces the buttons for editing the offering, given correct authentication status. -->
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == offering.user._id))">
 		<a class="btn btn-primary" href="/#!/offerings/{{offering._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
@@ -11,7 +14,30 @@
 		</a>
 	</div>
 
+	<!-- This produces the button for a user to indicate interest in the offer. -->
+	<div class="pull-right" data-ng-show="((authentication.user) && !(authentication.user._id == offering.user._id) && !foundInterested && !foundRater)">
+		<a class="btn btn-primary" ng-click="addInterested()">I'm interested! &nbsp
+			<i class="glyphicon glyphicon-plus"></i>
+		</a>
+	</div>
+
+	<!-- This produces the icon to confirm registration of the user's interest in the offer. -->
+	<div class="pull-right" data-ng-show="((authentication.user) && !(authentication.user._id == offering.user._id) && foundInterested)">
+		<a class="btn btn-primary" onClick="javascript:history.go(-1);">Your interest is registered &nbsp
+			<i class="glyphicon glyphicon-ok"></i>
+		</a>
+	</div>
+
+	<!-- This produces the icon to prompt the user to rate the offering. -->
+	<div class="pull-right" data-ng-show="((authentication.user) && !(authentication.user._id == offering.user._id) && foundRater)">
+		<a class="btn btn-primary" href="/#!/offerings/{{offering._id}}/rate">Rate it! &nbsp
+			<i class="glyphicon glyphicon-star-empty"></i>
+		</a>
+	</div>
+
 	<p data-ng-bind="offering.description"></p>
+
+
 
 	<small>
 		<em class="text-muted">
@@ -21,4 +47,15 @@
 			<span data-ng-bind="offering.user.displayName"></span>
 		</em>
 	</small>
+
+
+	<!-- This produces the list of users who have indicated interest in the offer. -->
+	<br>
+	<div class="btn-group-vertical pull-right" data-ng-show="((authentication.user) && (authentication.user._id == offering.user._id))" >
+        <a class="btn btn-primary" data-ng-repeat="user in offering.interested" ng-click="acceptOffer({{$index}})">Accept offer from: &nbsp<span data-ng-bind="user.displayName"></span> &nbsp
+			<i class="glyphicon glyphicon-saved"></i>
+		</a>
+	</div>
+
+
 </section>

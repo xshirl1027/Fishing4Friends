@@ -54,7 +54,20 @@ var OfferingSchema = new Schema({
 	transaction: {
 		type: String,
 		default: ''
-	}
+	},
+	rating: {
+		score: { type: Number,
+				 default: 0
+				},
+		times_purchased:  { type: Number,
+				 default: 0
+				},
+		comments: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'} ]
+	},
+	interested: [ {type: mongoose.Schema.Types.ObjectId, ref: 'User'} ],
+	rater: [ {type: mongoose.Schema.Types.ObjectId, ref: 'User'} ]
 });
 
+OfferingSchema.index({ '$**': 'text' });
 mongoose.model('Offering', OfferingSchema);
+
