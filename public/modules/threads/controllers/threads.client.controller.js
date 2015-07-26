@@ -16,7 +16,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
 			// Redirect after save
 			thread.$save(function(response) {
-				window.history.back();
+				$location.path('threads/' + thread._id);
 
 				// Clear form fields
 				$scope.name = '';

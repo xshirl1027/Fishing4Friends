@@ -46,7 +46,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 			var post = $scope.post;
 
 			post.$update(function() {
-				$location.path('posts/' + post._id);
+				window.history.back();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
