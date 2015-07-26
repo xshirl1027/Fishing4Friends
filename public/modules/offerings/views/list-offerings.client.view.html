@@ -1,0 +1,52 @@
+<section data-ng-controller="OfferingsController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Offerings</h1>	
+		
+			<p>Search By
+			<select ng-model="searchCriteria" ng-options="option for option in searchOptions"></select>:</p>
+			
+			<form class="form-horizontal" data-ng-submit="Search()">
+				<div ng-switch on="searchCriteria">
+					<div ng-switch-when="Keyword">
+						<input type="text" data-ng-model="searchInfo.entry" placeholder="Enter Keywords...">
+					</div>
+					<div ng-switch-when="Price">
+						<input type="number" data-ng-model="searchInfo.entry" placeholder="Enter Max Price...">
+					</div>
+				</div>
+				</br>
+				<input type="submit" value="Search">
+			</form>
+			
+			</br>
+			<form class="form-group" data-ng-submit="find()">
+                <button class="btn btn-default">Clear</button>
+            </form>
+
+    </div>
+	<div class="row">
+		<p>Sort By
+		<select ng-model="sortCriteria" ng-change="changeSort()" ng-options="field for field in sortOptions"></select>
+		<select ng-model="order" ng-change="changeOrder()">
+			<option value="Ascending">Ascending</option>
+			<option value="Descending">Descending</option>
+		</select>:</p>
+	</div>
+    <div class="list-group">
+        <!--a data-ng-repeat="offering in offerings | filter: {price : exactPrice}" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item"-->
+		<a data-ng-repeat="offering in offerings | orderBy: sorting : descend" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="offering.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="offering.user.displayName"></span>
+			</small>
+			<h3 class="list-group-item-heading" data-ng-bind="offering.name"></h3>
+			<h4 class="list-group-item-heading">Price: {{offering.price}}</h4>
+            <p data-ng-bind="offering.description"></p>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!offerings.$resolved || offerings.length">
+    	No Offerings yet, why don't you <a href="/#!/offerings/create">create one</a>?
+    </div>
+</section>
