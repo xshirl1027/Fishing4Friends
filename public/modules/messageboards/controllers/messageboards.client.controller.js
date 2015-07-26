@@ -67,5 +67,6 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			//console.log($stateParams.messageboardId);
 		};
 
+
 	}
 ]);
