@@ -13,3 +13,11 @@
 .ng-valid.ng-dirty {
 	border-color: #78FA89;
 }
+
+/* addin for carousel controls */
+
+.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+  }
