@@ -1,20 +1,20 @@
 <section data-ng-controller="MessageboardsController" data-ng-init="findOne()">
+	<link rel="stylesheet" href="messageboardview.css">
 	<div class="page-header">
-		<h1 data-ng-bind="messageboard.name"></h1>
+		<h3 class=heading data-ng-bind="messageboard.name"></h3>
 		<p data-ng-bind="messageboard.message"></p>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == messageboard.user._id))">
-		<a class="btn btn-primary" href="/#!/messageboards/{{messageboard._id}}/edit">
+	<div class="pull-right" >
+		<a class="btn btn-primary" data-ng-show="((authentication.user) && (authentication.user._id == messageboard.user._id))" href="/#!/messageboards/{{messageboard._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
+		<a class="btn btn-primary" data-ng-show="((authentication.user) && (authentication.user._id == messageboard.user._id))"data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 		<a class="btn btn-primary" href="/#!/messageboards/{{messageboard._id}}/add">
 			<i class="glyphicon glyphicon-pencil"></i>
 		</a>
 	</div>
-
 	<small>
 		<em class="text-muted">
 			Posted on
@@ -23,9 +23,10 @@
 			<span data-ng-bind="messageboard.user.displayName"></span>
 		</em>
 	</small>
+</section>
 <section data-ng-controller="ThreadsController" data-ng-init="findOne2()">
+	
     <div class="page-header">
-        <h1>Threads</h1>
     </div>
     <div class="list-group">
         <a data-ng-repeat="thread in threads" data-ng-href="#!/threads/{{thread._id}}" class="list-group-item">
@@ -37,6 +38,6 @@
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="thread.name"></h4>
         </a>
-    </div>
+   
 </section>
 </section>

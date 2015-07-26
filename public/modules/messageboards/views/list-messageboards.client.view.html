@@ -1,20 +1,25 @@
 <section data-ng-controller="MessageboardsController" data-ng-init="find()">
+	<link rel="stylesheet" href="messageboard.css">
     <div class="page-header">
-        <h1>Messageboards</h1>
+        <div class='heading'><center>Messageboards</center></div>
+		<center>Forge friendships. Organize fishing Trips. Find great deals on gears and equipments. BNBR rule applies.</center>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="messageboard in messageboards | orderBy:created:reverse" data-ng-href="#!/messageboards/{{messageboard._id}}" class="list-group-item">
-			<small class="list-group-item-text">
+        <a class="list-group-item" data-ng-repeat="messageboard in messageboards | orderBy:created:reverse" data-ng-href="#!/messageboards/{{messageboard._id}}" >
+			
+			<div class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="messageboard.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="messageboard.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="messageboard.name"></h4>
-			<p class="list-group-item-heading" data-ng-bind="messageboard.message"></p>
+			</div>
+			<div class='topic-box'>
+				<h4 class="list-group-item-heading" data-ng-bind="messageboard.name"></h4>
+				<p class="list-group-item-heading" data-ng-bind="messageboard.message"></p>
+			</div>
         </a>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!messageboards.$resolved || messageboards.length">
-    	No Messageboards yet, why don't you <a href="/#!/messageboards/create">create one</a>?
+    <div class="alert alert-warning text-center">
+		<a href="/#!/messageboards/create">create new</a>?
     </div>
 </section>
