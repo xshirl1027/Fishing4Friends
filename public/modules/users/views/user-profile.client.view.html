@@ -40,7 +40,9 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
+			<a href='/#!/offerings/{{offering._id}}'>
 			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+			</a>
             <p data-ng-bind="offering.description"></p>
 
 

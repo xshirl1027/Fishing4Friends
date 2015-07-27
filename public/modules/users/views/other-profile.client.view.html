@@ -30,14 +30,14 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+			<a href='/#!/offerings/{{offering._id}}'>
+			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4></a>
             <p data-ng-bind="offering.description"></p>
-
-
 			<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == offering.user))">
 				<a class="btn btn-primary" data-ng-href="/#!/offerings/{{offering._id}}/edit">
 					<i class="glyphicon glyphicon-edit"></i>
 				</a>
+				
 				<a class="btn btn-primary" data-ng-repeat="user in offering.interested" ng-click="acceptOffer({{$index}},offering)">
 		            Accept offer from: &nbsp<span data-ng-bind="user.displayName"></span> &nbsp
 					<i class="glyphicon glyphicon-saved"></i>
@@ -45,8 +45,5 @@
 			</div>
             <p>&nbsp</p>
         </div>
-    </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!offerings.$resolved || offerings.length">
-    	No Offerings yet, why don't you <a href="/#!/offerings/create">create one</a>?
     </div>
 </section>
