@@ -54,3 +54,10 @@ exports.update = function(req, res) {
 exports.me = function(req, res) {
 	res.json(req.user || null);
 };
+
+/**
+ * Show the requested User
+ */
+exports.read = function(req, res) {
+	res.jsonp(req.other);
+};

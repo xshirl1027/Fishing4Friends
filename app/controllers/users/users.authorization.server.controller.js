@@ -22,6 +22,20 @@ exports.userByID = function(req, res, next, id) {
 };
 
 /**
+ * User middleware
+ */
+exports.otherByID = function(req, res, next, id) {
+	User.findOne({
+		_id: id
+	}).populate('_creator','displayName').exec(function(err, user) {
+		if (err) return next(err);
+		if (!user) return next(new Error('Failed to load User ' + id));
+		req.other = user;
+		next();
+	});
+};
+
+/**
  * Require login routing middleware
  */
 exports.requiresLogin = function(req, res, next) {
