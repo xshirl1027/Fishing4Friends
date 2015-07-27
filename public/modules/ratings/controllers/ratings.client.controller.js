@@ -60,7 +60,7 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 				rating.$remove();
 
 				for (var i in $scope.ratings) {
-					if ($scope.ratings [i] === rating) {
+					if ($scope.ratings[i] === rating) {
 						$scope.ratings.splice(i, 1);
 					}
 				}

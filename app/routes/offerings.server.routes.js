@@ -23,8 +23,6 @@ module.exports = function(app) {
 	app.route('/offerings/:offeringId/rating')
 		.put(users.requiresLogin, offerings.addRating);
 
-
 	// Finish by binding the Offering middleware
 	app.param('offeringId', offerings.offeringByID);
-
 };

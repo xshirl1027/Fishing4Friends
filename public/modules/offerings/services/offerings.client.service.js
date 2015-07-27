@@ -9,7 +9,8 @@ angular.module('offerings').factory('Offerings', ['$resource',
 				method: 'PUT'
 			}, search: {
 				method: 'GET',
-				params: {offeringId: '', user: '@userId'},
+				params: {offeringId: '', user: '@stuff'},
+				//@reading input
 				// note how to extend the query parameters
 				// params: {offeringId: '', user: '@userId', price: '0', keywords:['blue','green']},
 				isArray: true

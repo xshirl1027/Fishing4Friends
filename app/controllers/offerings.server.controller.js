@@ -81,6 +81,7 @@ exports.delete = function(req, res) {
  */
 exports.list = function(req, res) { 
 	var keyNames = Object.keys(req.query);
+	var val = req.query[keyNames[0]];
 	
 	//error handling function
 	var offeringsErr = function (err, offerings) {
@@ -91,6 +92,7 @@ exports.list = function(req, res) {
 		}
 		else {
 			res.jsonp(offerings);
+			//console.log(offerings)
 		}
 	};
 	
@@ -98,22 +100,16 @@ exports.list = function(req, res) {
 	if (keyNames.length === 0) {
 		Offering.find().sort('-created').populate('user', 'displayName').sort('-created').exec(offeringsErr);
 	}
-	 	// if first key is price, get all offerings with price <= the value in the pair
+	// if first key is price, get all offerings with price <= the value in the pair
  	else if (keyNames[0] === 'price'){
- 		Offering.where('price').lte(req.query[keyNames[0]]).sort('-created').exec(offeringsErr);
+ 		Offering.where('price').lte(val).sort('-created').exec(offeringsErr);
  	}
 	// search the list of offerings with the first key:value pair in the query
 	else if (keyNames[0] === 'user') {
-		Offering.find().where(keyNames[0]).equals(req.query[keyNames[0]]).populate('interested', 'displayName').sort('-created').exec(function(err, offerings) {
-		// Offering.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('-created').populate('interested').exec(function(err, offerings) {
-			if (err) {
-				return res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			} else {
-				res.jsonp(offerings);
-			}
-		});
+		Offering.find().where('user').equals(val).populate('interested', 'displayName').sort('-created').exec(offeringsErr);
+	}
+	else if (keyNames[0] === 'rater'){
+		Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
 	}
 	// otherwise search index 
 	else {
@@ -162,7 +158,7 @@ exports.addInterested = function(req, res) {
 exports.addRating = function(req, res) {
 	var offering = req.offering ;
 	// The req.body contains the updated offering.
-	offering = _.extend(offering , req.body);
+	offering = _.extend(offering, req.body);
 
 	offering.save(function(err) {
 		if (err) {
