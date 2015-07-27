@@ -6,7 +6,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		$scope.authentication = Authentication;
 
 		$scope.searchOptions = ['Keyword','Price'];
- 		$scope.sortOptions = ['Price','Ratings','Date'];
+ 		$scope.sortOptions = ['Price','Rating','Date'];
  		$scope.searchInfo = {entry: ''};
 
 		// Create new Offering
@@ -74,19 +74,31 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 				console.log('user and profile match');
 			}
 		};
-
+		
+		// Find a list of Offerings, where user is an authorized rater; added by Bill
+		$scope.findByRater = function(){
+			var userId = $scope.authentication.user._id;
+			$scope.offerings = Offerings.query({ rater: userId });
+		};
+		
+		// Find a list of Offerings, where user is interested; added by Bill
+		$scope.findByInterest = function(){
+			var userId = $scope.authentication.user._id;
+			$scope.offerings = Offerings.query({ interested: userId });
+		};
+		
 		// Find existing Offering, called to load .../view
 		$scope.findOne = function() {
 			$scope.foundInterested = false;
 			$scope.foundRater = false;
 			// var keyNames = Object.keys($stateParams);
 			// console.log($stateParams);
-			console.log('compare with', {_id:$scope.authentication.user._id});
+			console.log('compare with', {_id: $scope.authentication.user._id});
 			// var callback = function(juice) {
 			// 	console.log('here is the scoop, uh', {_id:$scope.authentication.user._id}._id);
 			// 	console.log('here is the scoop, uh', $scope.offering.interested[0]._id);
 			// 	// console.log('here is the scoop, uh', $scope.offering.interested.indexOf({_id:$scope.authentication.user._id}));
-			// };
+			//};
 
 			$scope.offering = Offerings.get({ 
 				offeringId: $stateParams.offeringId
@@ -189,6 +201,9 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		$scope.changeSort = function() {
 			switch($scope.sortCriteria){
 				case 'Price': $scope.sorting = 'price';
+				break;
+				
+				case 'Rating': $scope.sorting = 'rating.score';
 				break;
 				
 				default: $scope.sorting = 'created';
