@@ -87,7 +87,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			$scope.foundRater = false;
 			// var keyNames = Object.keys($stateParams);
 			// console.log($stateParams);
-			console.log('compare with', {_id:$scope.authentication.user._id});
+			console.log('compare with', {_id: $scope.authentication.user._id});
 			// var callback = function(juice) {
 			// 	console.log('here is the scoop, uh', {_id:$scope.authentication.user._id}._id);
 			// 	console.log('here is the scoop, uh', $scope.offering.interested[0]._id);

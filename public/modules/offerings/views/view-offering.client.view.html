@@ -61,13 +61,13 @@
 	<h1>Comments:</h1>
 
 		<div class="list-group">
-			<div  class="list-group-item" ng-repeat="Com in offering.rating.comments" data-ng-href="#!/ratings/{{Com._id}}">
+			<div class="list-group-item" ng-repeat="Com in offering.rating.comments" data-ng-href="#!/ratings/{{Com._id}}">
 				
-				<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == Com.user._id))">
+				<!--div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == Com.user._id))">
 					<a class="btn btn-primary" href="/#!/ratings/{{Com._id}}/edit">
 						<i class="glyphicon glyphicon-edit"></i>
 					</a>
-				</div>
+				</div-->
 				
 				<h5>Rating:{{Com.rating}}</h5>
 				<p>{{Com.comment}}</p>
@@ -80,10 +80,8 @@
 					<span data-ng-bind="Com.user.displayName"></span>
 				</em>
 				</small>
-				
-
+			
 			</div>
 		</div>
-			
-
+		
 </section>

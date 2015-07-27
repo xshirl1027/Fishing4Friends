@@ -58,17 +58,25 @@
 
 <section data-ng-controller="OfferingsController" data-ng-init="findByRater()">
     <div class="page-header">
-        <h1>Unrated Transactions</h1>
+        <h1>Unrated Offerings</h1>
     </div>
 	<div class="list-group">
-		<a class="list-group-item" data-ng-repeat="offering in offerings" data-ng-href="#!/offerings/{{offering._id}}">
+		<div class="list-group-item" data-ng-repeat="offering in offerings">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
             <p data-ng-bind="offering.description"></p>
-		</a>
+			
+					<!-- This produces the icon to prompt the user to rate the offering. -->
+			<div class="pull-right" data-ng-show="(authentication.user)">
+				<a class="btn btn-primary" href="/#!/offerings/{{offering._id}}/rate">Rate it! &nbsp
+					<i class="glyphicon glyphicon-star-empty"></i>
+				</a>
+			</div>
+			<p>&nbsp</p>
+		</div>
 	</div>
 </section>
 
