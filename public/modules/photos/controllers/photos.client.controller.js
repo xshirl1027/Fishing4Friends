@@ -4,7 +4,6 @@
 angular.module('photos').controller('PhotosController', ['$scope', '$stateParams', '$state', '$location', 'Authentication', 'Photos', 'Users',
 	function($scope, $stateParams, $state, $location, Authentication, Photos, Users) {
 		$scope.authentication = Authentication;
-
 		// Create new Photo
 		$scope.create = function(image) {
 			// Create new Photo object

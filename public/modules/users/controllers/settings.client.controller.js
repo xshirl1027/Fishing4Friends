@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication',
-	function($scope, $http, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$stateParams','$http', '$location', 'Users', 'Authentication',
+	function($scope, $stateParams,$http, $location, Users, Authentication) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -53,6 +53,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			} else {
 				$scope.submitted = true;
 			}
+		};
+		
+		$scope.findOne= function(){
+			console.log($stateParams.otherId);
+			$scope.other= Users.search({
+				otherId:$stateParams.otherId
+			},console.log($scope.other));
+			
 		};
 
 		// Change user password

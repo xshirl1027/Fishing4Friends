@@ -25,7 +25,7 @@
 						Posted on
 						<span data-ng-bind="thread.created | date:'medium'"></span>
 						by
-						<span><a class='userprofilelink' href='/#!/user-profile'>{{thread.user.displayName}}</a></span>
+						<span><a class='userprofilelink' href='/#!/users/profile/{{thread.user._id}}'>{{thread.user.displayName}}</a></span>
 					</em>
 				</small>
 		</div>
@@ -44,7 +44,7 @@
 					Posted on
 					<span data-ng-bind="post.created | date:'medium'"></span>
 					by
-					<span data-ng-bind="post.user.displayName"></span>
+					<span><a class='userprofilelink' href='/#!/users/profile/{{post.user._id}}'>{{post.user.displayName}}</span>
 				</em<
 			</small>
 			

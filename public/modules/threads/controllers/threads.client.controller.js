@@ -46,7 +46,6 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 		// Update existing Thread
 		$scope.update = function() {
 			var thread = $scope.thread;
-
 			thread.$update(function() {
 				$location.path('threads/' + thread._id);
 			}, function(errorResponse) {

@@ -90,7 +90,8 @@ var UserSchema = new Schema({
 		type: Date
 	},
 	profile_pic: {
-		type: Schema.ObjectId
+		type: Schema.ObjectId,
+		ref: 'Photo'
 	}
 });
 

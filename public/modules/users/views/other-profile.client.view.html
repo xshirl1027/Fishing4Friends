@@ -1,0 +1,16 @@
+<section data-ng-controller="SettingsController" data-ng-init='findOne()'>
+	<div class="page-header">
+		<h1 data-ng-bind="other.username"></h1>
+		<div>Welcome <span data-ng-bind="other.displayName"></span><br>
+			<span data-ng-bind="other.email"></span>
+		
+		<div class='something'>
+					
+      		         <img ng-show="other.profile_pic.src" ng-src="{{other.profile_pic.src}}" />
+      		        <!-- If the user has not uploaded a profile pic, display the alternate: -->
+					<span class="empty" ng-show="!other.profile_pic.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
+ 				</div>
+		</div>
+		</div>
+	</div>
+</section>
