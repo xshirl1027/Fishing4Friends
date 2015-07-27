@@ -75,10 +75,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			}
 		};
 		
-		// Find a list of Offerings, where user of the loaded profile is an authorized rater; added by Bill
+		// Find a list of Offerings, where user is an authorized rater; added by Bill
 		$scope.findByRater = function(){
 			var userId = $scope.authentication.user._id;
 			$scope.offerings = Offerings.query({ rater: userId });
+		};
+		
+		// Find a list of Offerings, where user is interested; added by Bill
+		$scope.findByInterest = function(){
+			var userId = $scope.authentication.user._id;
+			$scope.offerings = Offerings.query({ interested: userId });
 		};
 		
 		// Find existing Offering, called to load .../view

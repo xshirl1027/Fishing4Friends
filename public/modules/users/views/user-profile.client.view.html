@@ -26,7 +26,7 @@
 
 <section data-ng-controller="OfferingsController" data-ng-init="findByUser()">
     <div class="page-header">
-        <h1>Offerings</h1>
+        <h1>My Offerings</h1>
     </div>
     <div class="list-group">
 
@@ -69,10 +69,33 @@
 			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
             <p data-ng-bind="offering.description"></p>
 			
-					<!-- This produces the icon to prompt the user to rate the offering. -->
-			<div class="pull-right" data-ng-show="(authentication.user)">
+			<!-- This produces the icon to prompt the user to rate the offering. -->
+			<div class="pull-right" data-ng-show="((authentication.user) && !(authentication.user._id == offering.user._id))">
 				<a class="btn btn-primary" href="/#!/offerings/{{offering._id}}/rate">Rate it! &nbsp
 					<i class="glyphicon glyphicon-star-empty"></i>
+				</a>
+			</div>
+			<p>&nbsp</p>
+		</div>
+	</div>
+</section>
+
+<section data-ng-controller="OfferingsController" data-ng-init="findByInterest()">
+    <div class="page-header">
+        <h1>Pending Offerings</h1>
+    </div>
+	<div class="list-group">
+		<div class="list-group-item" data-ng-repeat="offering in offerings">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="offering.created | date:'medium'"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+            <p data-ng-bind="offering.description"></p>
+			
+			<div class="pull-right" data-ng-show="((authentication.user) && !(authentication.user._id == offering.user._id))">
+				<a class="btn btn-primary">Your interest is registered &nbsp
+					<i class="glyphicon glyphicon-ok"></i>
 				</a>
 			</div>
 			<p>&nbsp</p>
