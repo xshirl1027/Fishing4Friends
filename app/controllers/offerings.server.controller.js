@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Offering = mongoose.model('Offering'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
 
 /**
@@ -178,13 +179,23 @@ exports.addRating = function(req, res) {
  * Offering middleware
  */
 exports.offeringByID = function(req, res, next, id) { 
-	Offering.findById(id).populate('user', 'displayName').populate('interested', 'displayName').populate('rater', 'displayName').populate('rating.comments').exec(function(err, offering) {
-		console.log('offeringByID status is ',req.params);
-		if (err) return next(err);
-		if (! offering) return next(new Error('Failed to load Offering ' + id));
-		req.offering = offering ;
-		next();
-	});
+	Offering.findById(id).populate({
+			path: 'user interested rater',
+			select: 'displayName'
+		}).populate('rating.comments').exec(function(err, offering) {
+		   var options = {
+		        path: 'rating.comments.user',
+		        model: 'User',
+		        select: 'displayName'
+    		};
+		  		User.populate(offering, options, function(err, offering) {
+				console.log('offeringByID status is ',req.params);
+				if (err) return next(err);
+				if (! offering) return next(new Error('Failed to load Offering ' + id));
+				req.offering = offering ;
+				next();
+			});
+    });
 };
 
 /**
