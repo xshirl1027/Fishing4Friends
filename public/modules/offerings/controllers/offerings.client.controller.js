@@ -66,15 +66,18 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 
 		// Find a list of Offerings, searching by user of the loaded profile; added by Marc
 		$scope.findByUser = function() {
-			var userId = $scope.authentication.user._id;
 			var profileId = $scope.$$prevSibling.user._id;
 
 			$scope.offerings = Offerings.search({ user: profileId });
-			if (userId === profileId) {
-				console.log('user and profile match');
-			}
+
 		};
-		
+		$scope.findByOther = function() {
+			//var userId = $scope.authentication.user._id;
+			//var profileId = $scope.$$prevSibling.other._id;
+			//console.log($stateParams);
+			$scope.otherofferings = Offerings.search({ user: $stateParams.otherId });
+			
+		};
 		// Find a list of Offerings, where user is an authorized rater; added by Bill
 		$scope.findByRater = function(){
 			var userId = $scope.authentication.user._id;

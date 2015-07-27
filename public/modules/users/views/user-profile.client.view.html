@@ -6,13 +6,18 @@
 		</div>
 
 
-				<section data-ng-controller="PhotosController" data-ng-init="findUserProfilePic()">
-					
-      		        <img ng-show="photo.src" ng-src="{{photo.src}}" />
+				<div data-ng-controller="PhotosController" data-ng-init="findUserProfilePic()">
+					<div class="row">
+						<div class="col-xs-6 col-md-3">
+							<a href="#" class="thumbnail">
+								<img ng-show="photo.src" ng-src="{{photo.src}}" />
+							</a>
+						</div>
+					</div>
       		        <!-- If the user has not uploaded a profile pic, display the alternate: -->
 					<span class="empty" ng-show="!photo.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
 				
- 				</section>
+ 				</div>
 				
 
 		<!-- This includes the HTML for the modal view for profile photo upload. -->
