@@ -5,6 +5,33 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 	function($scope, $stateParams, $location, Authentication, Ratings, Offerings) {
 		$scope.authentication = Authentication;
 
+		// Ideal behaviour would be to check whether the user has the priviledge to rate this offering.
+		// However, the RatingsController is instantiated before the offering data is available for checking.
+
+		$scope.found = false;
+
+
+		$scope.checkRaterPriviledge = function () {
+			var Id = $location.path().split('/')[2];
+			var offering = Offerings.get({
+				offeringId: Id
+			}, function(juice) {
+				console.log('returned offering._id is',juice._id);
+				var userId = $scope.authentication.user._id;
+				var inArray = false;
+				var i = 0;
+				while (inArray === false && i < offering.rater.length) {
+					if (offering.rater[i]._id === $scope.authentication.user._id) {
+						// something
+						$scope.found = true;
+					}
+					i++;
+				}
+			});
+		};
+
+		$scope.checkRaterPriviledge();
+
 		// Create new Rating
 		$scope.create = function() {
 			// Create new Rating object
