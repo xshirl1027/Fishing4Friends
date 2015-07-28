@@ -35,4 +35,14 @@
             </fieldset>
         </form>
     </div>
+
+    <div >
+        <img ng-show="offering.offering_pic.src" data-ng-src="{{offering.offering_pic.src}}" />
+        <img ng-hide="offering.offering_pic.src" src="/modules/users/img/stunned.jpg" >
+    </div><br>
+
 </section>
+
+
+
+<div class="form-group" ng-include="'/modules/core/views/modal-upload.client.view.html'"></div>

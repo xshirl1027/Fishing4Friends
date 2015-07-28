@@ -203,7 +203,7 @@ exports.offeringByID = function(req, res, next, id) {
 	Offering.findById(id).populate({
 			path: 'user interested rater',
 			select: 'displayName'
-		}).populate('rating.comments').exec(function(err, offering) {
+		}).populate('rating.comments').populate('offering_pic','src').exec(function(err, offering) {
 		   var options = {
 		        path: 'rating.comments.user',
 		        model: 'User',

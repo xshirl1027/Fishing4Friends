@@ -1,8 +1,8 @@
 'use strict';
 
 // Photos controller
-angular.module('photos').controller('PhotosController', ['$scope', '$stateParams', '$state', '$location', 'Authentication', 'Photos', 'Users',
-	function($scope, $stateParams, $state, $location, Authentication, Photos, Users) {
+angular.module('photos').controller('PhotosController', ['$scope', '$stateParams', '$state', '$location', 'Authentication', 'Photos', 'Users', 'Offerings',
+	function($scope, $stateParams, $state, $location, Authentication, Photos, Users, Offerings) {
 		$scope.authentication = Authentication;
 		// Create new Photo
 		$scope.create = function(image) {
@@ -14,13 +14,22 @@ angular.module('photos').controller('PhotosController', ['$scope', '$stateParams
 
 			// Redirect after save
 			photo.$save(function(response) {
-				Users.update({ 'profile_pic' : response._id });
-				// Generator default line:
-				// $location.path('photos/' + response._id);
+				// Two paths lead to this point: from an offering, or from a user
+				if ($stateParams.offeringId) {
+					// Since the only link to the offering is the $stateParams, we make a new query to the database
+					// for a valid offering object.
+					var offering = Offerings.get({offeringId:$stateParams.offeringId}, function(){
+						offering.offering_pic = response._id;
+						offering.$update();
+					});
 
-				// While the modal window is open, it is the background window that gets redrawn,
-				// and still the old pic is shown.
-				$state.reload();
+					// !!! DO NOT REDIRECT the $location, as user might have unsaved edits in the form.
+				}
+				else {
+					Users.update({ 'profile_pic' : response._id });
+
+					// !! Perform any page redirects from here.
+				}
 
 				// Clear form fields
 				$scope.name = '';

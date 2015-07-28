@@ -65,7 +65,11 @@ var OfferingSchema = new Schema({
 		comments: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'} ]
 	},
 	interested: [ {type: mongoose.Schema.Types.ObjectId, ref: 'User'} ],
-	rater: [ {type: mongoose.Schema.Types.ObjectId, ref: 'User'} ]
+	rater: [ {type: mongoose.Schema.Types.ObjectId, ref: 'User'} ],
+	offering_pic: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Photo'
+	}
 });
 
 OfferingSchema.index({ '$**': 'text' });
