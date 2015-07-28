@@ -72,8 +72,11 @@ exports.delete = function(req, res) {
 /**
  * List of Messageboards
  */
-exports.list = function(req, res) { 
-	Messageboard.find().sort('-created').populate('user', 'displayName').exec(function(err, messageboards) {
+exports.list = function(req, res) {
+	var keyNames = Object.keys(req.query);
+	var val = req.query[keyNames[0]];
+	
+	var messageboardsErr = function(err, messageboards){
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -81,7 +84,14 @@ exports.list = function(req, res) {
 		} else {
 			res.jsonp(messageboards);
 		}
-	});
+	};
+	
+	if (keyNames.length === 0) {
+		Messageboard.find().sort('-created').populate('user', 'displayName').exec(messageboardsErr);
+	}
+	else{
+		Messageboard.find({ $text: { $search: val }}).sort('-created').exec(messageboardsErr);
+	}
 };
 
 /**

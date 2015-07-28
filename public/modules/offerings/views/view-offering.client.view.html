@@ -43,7 +43,7 @@
 		</div>
 	
 		<h4 class="list-group-item-heading">${{offering.price}}</h3>
-		<h5 class="list-group-item-heading">Rating: {{offering.rating.score}}</h4>
+		<div star-rating rating-value="offering.rating.score" data-max="5"></div>
 		<p data-ng-bind="offering.description"></p>
 
 		<small>
@@ -75,8 +75,7 @@
 						<i class="glyphicon glyphicon-edit"></i>
 					</a>
 				</div-->
-				
-				<h5>Rating:{{Com.rating}}</h5>
+				<div star-offering rating-value="Com.rating" data-max="5"></div>
 				<p>{{Com.comment}}</p>
 				
 				<small>

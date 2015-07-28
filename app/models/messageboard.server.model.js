@@ -33,6 +33,5 @@ var MessageboardSchema = new Schema({
 	}
 });
 
-
-
+MessageboardSchema.index({ '$**': 'text' });
 mongoose.model('Messageboard', MessageboardSchema);

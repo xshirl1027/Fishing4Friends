@@ -1,18 +1,24 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$stateParams','$http', '$location', 'Users', 'Authentication',
-	function($scope, $stateParams,$http, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$stateParams','$http', '$location', 'Users', 'Authentication', 'Offerings', 'Messageboards',
+	function($scope, $stateParams, $http, $location, Users, Authentication, Offerings, Messageboards) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
+		//Get recommended messageBoards and Offerings 
+		$scope.getRecommendations = function(){
+			var words = $scope.user.interests;
+			$scope.offerings = Offerings.query({ keywords : words });
+			$scope.posts = Messageboards.query({ keywords : words });
+		};
+		
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
 				return true;
 			}
-
 			return false;
 		};
 

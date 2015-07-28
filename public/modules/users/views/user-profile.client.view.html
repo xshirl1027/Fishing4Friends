@@ -4,7 +4,9 @@
 		<div>Welcome <span data-ng-bind="user.displayName"></span><br>
 			<span data-ng-bind="user.email"></span>
 		</div>
-
+		<br>		
+		<div>My Interests: <span data-ng-bind="user.interests"></span><br>
+		</div>
 
 				<div data-ng-controller="PhotosController" data-ng-init="findUserProfilePic()">
 					<div class="row">
@@ -41,7 +43,7 @@
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
 			<a href='/#!/offerings/{{offering._id}}'>
-			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+				<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
 			</a>
             <p data-ng-bind="offering.description"></p>
 
@@ -74,6 +76,7 @@
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+			<div class="star-rating" star-rating rating-value="offering.rating.score" data-max="5"></div>
             <p data-ng-bind="offering.description"></p>
 			
 			<!-- This produces the icon to prompt the user to rate the offering. -->

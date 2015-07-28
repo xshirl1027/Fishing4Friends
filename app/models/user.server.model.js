@@ -41,6 +41,10 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true
 	},
+	interests: {
+		type: String,
+		trim: true
+	},
 	email: {
 		type: String,
 		trim: true,

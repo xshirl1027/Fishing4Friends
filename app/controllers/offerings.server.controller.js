@@ -98,7 +98,7 @@ exports.list = function(req, res) {
 	
 	// if no search key is specified, get full list of offerings, since no query is specified
 	if (keyNames.length === 0) {
-		Offering.find().sort('-created').populate('user', 'displayName').sort('-created').exec(offeringsErr);
+		Offering.find().sort('-created').populate('user', 'displayName').exec(offeringsErr);
 	}
 	else{
 		switch(keyNames[0]){
@@ -119,9 +119,7 @@ exports.list = function(req, res) {
 			break;
 			
 			default:
-			Offering.find({ $text: { $search: req.query[keyNames[0]] }}).sort('-created').exec(offeringsErr);
-			
-			
+			Offering.find({ $text: { $search: val }}).sort('-created').exec(offeringsErr);
 		}
 	}
 	/*
