@@ -1,7 +1,8 @@
 'use strict';
 
-/** Messageboards controller
-Client side controller responsible for the creation, deletion and updating of message boards, which is the first layer of the message board interface.
+/** 
+Client side controller for Messageboards module
+responsible for user activities on the creation, deletion and updating of message boards.
 **/
 angular.module('messageboards').controller('MessageboardsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messageboards',
 	function($scope, $stateParams, $location, Authentication, Messageboards) {

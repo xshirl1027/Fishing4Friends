@@ -1,6 +1,6 @@
 'use strict';
 /**Client side controller for the post module:
-Responsible for creating, updating, deleting, finding posts
+Responsible for user activities on creating, updating, deleting, finding posts
 **/
 angular.module('posts').controller('PostsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts',
 	function($scope, $stateParams, $location, Authentication, Posts) {

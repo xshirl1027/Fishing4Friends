@@ -1,5 +1,7 @@
 'use strict';
-
+/**
+	client-side controller for the User Module
+**/
 angular.module('users').controller('SettingsController', ['$scope', '$stateParams','$http', '$location', 'Users', 'Authentication', 'Offerings', 'Messageboards',
 	function($scope, $stateParams, $http, $location, Users, Authentication, Offerings, Messageboards) {
 		$scope.user = Authentication.user;
@@ -60,7 +62,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 				$scope.submitted = true;
 			}
 		};
-		/** **/
+		/**findOne():
+			return a user object based on userId
+		**/
 		$scope.findOne= function(){
 			console.log($stateParams.otherId);
 			$scope.other= Users.search({

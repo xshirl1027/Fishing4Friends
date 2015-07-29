@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * Server-side Module dependencies.
+ * Server-side controller for messageboards module
+	Responsible for reading data from and propagating the user's changes to the database
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
@@ -9,7 +10,7 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 /**
- * create(req, res)
+ * create(req, res):
  * Saves the newly created messageboard, which also contains the user object, to the database
  **/
 exports.create = function(req, res) {

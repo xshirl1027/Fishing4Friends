@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Client-side controller for the Thread module responsible for saving changes and retrieving thread data from the database
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Thread = mongoose.model('Thread'),
 	_ = require('lodash');
 
-/**
- * Create a Thread
+/**create(req, res):
+ * Create a Thread and save to database
  */
 exports.create = function(req, res) {
 	var thread = new Thread(req.body);
@@ -26,15 +26,15 @@ exports.create = function(req, res) {
 	});
 };
 
-/**
- * Show the current Thread
+/**read(req, res):
+ * return the current thread
  */
 exports.read = function(req, res) {
 	res.jsonp(req.thread);
 };
 
-/**
- * Update a Thread
+/**Update(req, res)
+ * Update a Thread in the database
  */
 exports.update = function(req, res) {
 	var thread = req.thread ;
@@ -52,8 +52,8 @@ exports.update = function(req, res) {
 	});
 };
 
-/**
- * Delete an Thread
+/**Delete(req, res):
+ * Delete a Thread from the database
  */
 exports.delete = function(req, res) {
 	var thread = req.thread ;
@@ -69,8 +69,9 @@ exports.delete = function(req, res) {
 	});
 };
 
-/**
- * List of Threads
+/**list(req, res)
+ * return query result of of Threads from the database
+ return all threads if query is empty
  */
 exports.list = function(req, res) { 
 	console.log(req.query);
@@ -103,7 +104,7 @@ exports.list = function(req, res) {
 
 
 
-/**
+/**threadByID(req, res, next, id):
  * Thread middleware
  */
 exports.threadByID = function(req, res, next, id) { 
@@ -116,7 +117,7 @@ exports.threadByID = function(req, res, next, id) {
 };
 
 
-/**
+/**hasAuthorization(req, res, next):
  * Thread authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {

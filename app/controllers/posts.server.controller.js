@@ -1,15 +1,16 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Server-side Controller for Posts module
+	responsible for reading data from and propagating changes to the database
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Post = mongoose.model('Post'),
 	_ = require('lodash');
 
-/**
- * Create a Post
+/**create(req, res):
+ * Save post and creating user to database
  */
 exports.create = function(req, res) {
 	var post = new Post(req.body);
@@ -26,15 +27,15 @@ exports.create = function(req, res) {
 	});
 };
 
-/**
- * Show the current Post
+/**read(req,res):
+ * return an existing post from the database
  */
 exports.read = function(req, res) {
 	res.jsonp(req.post);
 };
 
-/**
- * Update a Post
+/**update(req, res):
+ * Update a Post and save to database
  */
 exports.update = function(req, res) {
 	var post = req.post ;
@@ -52,8 +53,8 @@ exports.update = function(req, res) {
 	});
 };
 
-/**
- * Delete an Post
+/**delete(req, res):
+ * Delete an Post from the database
  */
 exports.delete = function(req, res) {
 	var post = req.post ;
@@ -69,8 +70,8 @@ exports.delete = function(req, res) {
 	});
 };
 
-/**
- * List of Posts
+/**list(req, res):
+ * Queries the database and return a list of posts
  */
 exports.list = function(req, res) { 
 var keyNames= Object.keys(req.query);
@@ -100,7 +101,7 @@ var keyNames= Object.keys(req.query);
 	
 };
 
-/**
+/**postByID(req, res, next, id):
  * Post middleware
  */
 exports.postByID = function(req, res, next, id) { 
@@ -112,7 +113,7 @@ exports.postByID = function(req, res, next, id) {
 	});
 };
 
-/**
+/**hasAuthorization(req, res, next,):
  * Post authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
