@@ -1,0 +1,11 @@
+{
+    "name": "The Fishing 4 Friends web app",
+    "description": "A web app to facilitate resource sharing between anglers.",
+    "version": "1.0",
+    "url": "https://blooming-spire-7786.herokuapp.com/",
+    "options": {
+    	"paths": ["public/modules", "app"],
+    	"outdir": "YUIdocs",
+    	"exclude": "node_modules"
+    }
+}

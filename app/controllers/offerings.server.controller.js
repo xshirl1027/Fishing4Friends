@@ -1,3 +1,10 @@
+/**
+ * Provides the Offering Server module (Express).
+ *
+ * @module Offering
+ * @requires mongoose
+ */
+
 'use strict';
 
 /**

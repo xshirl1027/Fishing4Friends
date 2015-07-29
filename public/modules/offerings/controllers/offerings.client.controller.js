@@ -1,6 +1,17 @@
+/**
+ * Provides the Offering Client module (Angular).
+ *
+ * @module Offerings
+ */
+
 'use strict';
 
-// Offerings controller
+/**
+ * Controller driving the client views.
+ *
+ * @class OfferingsController
+ * @constructor
+ */
 angular.module('offerings').controller('OfferingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Offerings',
 	function($scope, $stateParams, $location, Authentication, Offerings) {
 		$scope.authentication = Authentication;
@@ -9,7 +20,15 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
  		$scope.sortOptions = ['Price','Rating','Date'];
  		$scope.searchInfo = {entry: ''};
 
-		// Create new Offering
+		/**
+		 * Creates a new offering, adding it to the database, and returning it to be displayed in the .../view page.
+		 * Parameters for the new offering are indirectly provided by $scope.
+		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param $scope 
+		 * @method create
+		 * @return nothing
+		 */
 		$scope.create = function() {
 			// Create new Offering object
 			var offering = new Offerings ({
@@ -30,7 +49,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			});
 		};
 
-		// Remove existing Offering, called from .../view
+
+		/**
+		 * Removes the specified offering from the database.
+		 * This is used in the .../view page.
+		 * On sucessful response from the database, the client is redirected to one page back in the browser's history.
+		 *
+		 * @param offering
+		 * @method remove
+		 * @return nothing
+		 */
 		$scope.remove = function(offering) {
 			if ( offering ) { 
 				offering.$remove();
@@ -48,7 +76,17 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			}
 		};
 
-		// Update existing Offering, called from .../edit
+
+		/**
+		 * Updates the specified offering, with new input from the user.
+		 * This is used in the .../edit page.
+		 * Parameters for the new offering are indirectly provided by $scope.
+		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param $scope
+		 * @method update
+		 * @return nothing
+		 */
 		$scope.update = function() {
 			var offering = $scope.offering;
 			
@@ -59,18 +97,47 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			});
 		};
 
-		// Find a list of Offerings
+
+		/**
+		 * Obtains a full list Offering documents from the database.
+		 * This is used with the 'ng-init' directive.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method find
+		 * @return nothing
+		 */
 		$scope.find = function() {
 			$scope.offerings = Offerings.query();
 		};
 
-		// Find a list of Offerings, searching by user of the loaded profile; added by Marc
+
+		/**
+		 * Makes a 'query' to the database, seeking a list of offerings by a specified user's ID.
+		 * This is used with the 'ng-init' directive, when loading a user's own profile page.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method findByUser
+		 * @return nothing
+		 */
 		$scope.findByUser = function() {
 			var profileId = $scope.$$prevSibling.user._id;
 
 			$scope.offerings = Offerings.search({ user: profileId });
 
 		};
+
+
+		/**
+		 * Makes a 'query' to the database, seeking a list of offerings by a specified user's ID.
+		 * This is used with the 'ng-init' directive, when loading another user's profile page.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method findByUser
+		 * @return nothing
+		 */		
 		$scope.findByOther = function() {
 			//var userId = $scope.authentication.user._id;
 			//var profileId = $scope.$$prevSibling.other._id;
