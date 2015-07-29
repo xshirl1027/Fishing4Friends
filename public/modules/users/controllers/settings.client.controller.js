@@ -60,7 +60,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 				$scope.submitted = true;
 			}
 		};
-		
+		/** **/
 		$scope.findOne= function(){
 			console.log($stateParams.otherId);
 			$scope.other= Users.search({

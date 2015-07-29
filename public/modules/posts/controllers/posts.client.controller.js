@@ -1,11 +1,13 @@
 'use strict';
-
-// Posts controller
+/**Client side controller for the post module:
+Responsible for creating, updating, deleting, finding posts
+**/
 angular.module('posts').controller('PostsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts',
 	function($scope, $stateParams, $location, Authentication, Posts) {
 		$scope.authentication = Authentication;
 
-		// Create new Post
+		/**create()
+		Create and save new Post**/
 		$scope.create = function() {
 			// Create new Post object
 			var post = new Posts ({
@@ -24,7 +26,10 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 			});
 		};
 
-		// Remove existing Post
+		/**
+		remove():
+		removes existing post
+		**/
 		$scope.remove = function(post) {
 			if ( post ) { 
 				post.$remove();
@@ -41,7 +46,8 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 			}
 		};
 
-		// Update existing Post
+		/**update()
+		Update existing Post**/
 		$scope.update = function() {
 			var post = $scope.post;
 
@@ -52,15 +58,21 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 			});
 		};
 
-		// Find a list of Posts
+		/**find(): 
+		Find a list of Posts**/
 		$scope.find = function() {
 			$scope.posts = Posts.query();
 		};
+		/**findOne2():
+		Find a list of posts under the same threadId
+		**/
 		$scope.findOne2= function(){
 			$scope.posts = Posts.query({'threadid':$stateParams.threadId});
 		};
-		// Find existing Post
 		
+		/**fineOne():
+		Find existing Post by postId
+		**/
 		$scope.findOne = function() {
 			$scope.post = Posts.get({ 
 				postId: $stateParams.postId

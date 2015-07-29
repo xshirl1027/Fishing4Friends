@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Server-side Module dependencies.
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
@@ -9,8 +9,9 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 /**
- * Create a Messageboard
- */
+ * create(req, res)
+ * Saves the newly created messageboard, which also contains the user object, to the database
+ **/
 exports.create = function(req, res) {
 	var messageboard = new Messageboard(req.body);
 	messageboard.user = req.user;
@@ -26,14 +27,14 @@ exports.create = function(req, res) {
 	});
 };
 
-/**
- * Show the current Messageboard
+/**read(req, res):
+ * Shows the current Messageboard
  */
 exports.read = function(req, res) {
 	res.jsonp(req.messageboard);
 };
 
-/**
+/**update(req, res):
  * Update a Messageboard
  */
 exports.update = function(req, res) {
@@ -52,7 +53,7 @@ exports.update = function(req, res) {
 	});
 };
 
-/**
+/**delete(req, res):
  * Delete an Messageboard
  */
 exports.delete = function(req, res) {
@@ -69,8 +70,8 @@ exports.delete = function(req, res) {
 	});
 };
 
-/**
- * List of Messageboards
+/**list(req, res)
+ *returns a list of Messageboards
  */
 exports.list = function(req, res) {
 	var keyNames = Object.keys(req.query);
@@ -94,7 +95,7 @@ exports.list = function(req, res) {
 	}
 };
 
-/**
+/**messageboardById(req,res,next,id):
  * Messageboard middleware
  */
 exports.messageboardByID = function(req, res, next, id) { 
@@ -107,7 +108,7 @@ exports.messageboardByID = function(req, res, next, id) {
 };
 
  
-/**
+/**hasAuthorization(req, res, next):
  * Messageboard authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {

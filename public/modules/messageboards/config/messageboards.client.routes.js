@@ -1,6 +1,7 @@
 'use strict';
 
-//Setting up route
+/**
+The messageboards.client.routes up routes that allow user to create, delete, edit, view and list messageboards**/
 angular.module('messageboards').config(['$stateProvider',
 	function($stateProvider) {
 		// Messageboards state routing

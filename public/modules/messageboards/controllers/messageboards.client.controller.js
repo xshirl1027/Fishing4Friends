@@ -1,18 +1,20 @@
 'use strict';
 
-// Messageboards controller
+/** Messageboards controller
+Client side controller responsible for the creation, deletion and updating of message boards, which is the first layer of the message board interface.
+**/
 angular.module('messageboards').controller('MessageboardsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messageboards',
 	function($scope, $stateParams, $location, Authentication, Messageboards) {
 		$scope.authentication = Authentication;
 
-		// Create new Messageboard
+		/** $scope.create():
+			stores user input for a new message board and saves to database**/
 		$scope.create = function() {
 			// Create new Messageboard object
 			var messageboard = new Messageboards ({
 				name: this.name,
 				message: this.message
 			});
-
 			// Redirect after save
 			messageboard.$save(function(response) {
 				$location.path('messageboards/' + response._id);
@@ -25,7 +27,8 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			});
 		};
 
-		// Remove existing Messageboard
+		/** $scope.remove():
+		iterates through a list of all message board and remove the one you want**/
 		$scope.remove = function(messageboard) {
 			if ( messageboard ) { 
 				messageboard.$remove();
@@ -42,7 +45,8 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			}
 		};
 
-		// Update existing Messageboard
+		/** $scope.update():
+		Update existing Messageboard**/
 		$scope.update = function() {
 			var messageboard = $scope.messageboard;
 
@@ -53,18 +57,19 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			});
 		};
 
-		// Find a list of Messageboards
+		/**$scope.find():
+		returns a list of all existing message boards
+		**/
 		$scope.find = function() {
 			$scope.messageboards = Messageboards.query();
 		};
 		
-		// Find existing Messageboard
+		/** $scope.findOne():
+		Return a Message board with the id in the current $stateParams **/
 		$scope.findOne = function() {
-			console.log($stateParams.messageboardId);
 			$scope.messageboard = Messageboards.get({ 
 				messageboardId: $stateParams.messageboardId
 			});
-			//console.log($stateParams.messageboardId);
 		};
 
 

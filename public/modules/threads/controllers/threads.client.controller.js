@@ -1,6 +1,6 @@
 'use strict';
-
-// Threads controller
+/**Client-side controller for the Thread module:
+Responsible for creating, deleting, updating, finding the thread object**/
 angular.module('threads').controller('ThreadsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Threads',
 	function($scope, $stateParams, $location, Authentication, Threads) {
 		$scope.authentication = Authentication;
