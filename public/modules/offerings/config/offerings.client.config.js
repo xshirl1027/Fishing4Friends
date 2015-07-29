@@ -1,6 +1,15 @@
 'use strict';
 
-// Configuring the Articles module
+/**
+ * Configures the Offerings module.
+ * Adds Offering menu items to the top menu bar.
+ * 
+ * @module Offerings
+ * @submodule Client
+ * @class run
+ * @param Menus {service}
+ * @return nothing
+ */
 angular.module('offerings').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items

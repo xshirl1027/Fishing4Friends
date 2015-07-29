@@ -1,6 +1,16 @@
 'use strict';
 
 //Setting up route
+/**
+ * Configures the Offerings module.
+ * Adds the client routes to the $stateProvider.
+ * 
+ * @module Offerings
+ * @submodule Client
+ * @class config
+ * @param $stateProvider {Object}
+ * @return nothing
+ */
 angular.module('offerings').config(['$stateProvider',
 	function($stateProvider) {
 		// Offerings state routing
@@ -23,11 +33,6 @@ angular.module('offerings').config(['$stateProvider',
 		}).
 		state('viewOffering', {
 			url: '/offerings/:offeringId',
-			templateUrl: 'modules/offerings/views/view-offering.client.view.html'
-		}).
-		// added by Marc, for the user profile page ... seems utterly useless
-		state('viewOfferingByUser', {
-			url: '/offerings/byUser/1',
 			templateUrl: 'modules/offerings/views/view-offering.client.view.html'
 		}).
 		state('editOffering', {

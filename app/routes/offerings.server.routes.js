@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * Defines the RESTful API endpoints related to offerings.
+ *
+ * @module Offerings
+ * @submodule Server
+ * @class Routes
+ * @static
+ */
+
 module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 	var offerings = require('../../app/controllers/offerings.server.controller');
