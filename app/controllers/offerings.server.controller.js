@@ -1,4 +1,19 @@
+/**
+ * Provides the Offerings module for the server (Express).
+ *
+ * @module Offerings
+ * @submodule Server
+ * @requires mongoose
+ */
+
 'use strict';
+
+/**
+ * Controller driving the server and database behaviour.
+ *
+ * @class ServerController
+ * @static
+ */
 
 /**
  * Module dependencies.
@@ -9,13 +24,18 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	_ = require('lodash');
 
+
 /**
- * Create a Offering
+ * Creates a new offering, adding it to the database, and writing it to the client.
+ *
+ * @method create
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.create = function(req, res) {
 	var offering = new Offering(req.body);
-	console.log('POST request body is ',req.body);
-	console.log('POST request body.id is ',req.body._id);
+	// console.log('POST request body is ',req.body);
 	offering.user = req.user;
 
 	offering.save(function(err) {
@@ -29,16 +49,28 @@ exports.create = function(req, res) {
 	});
 };
 
+
 /**
- * Show the current Offering
+ * Show the current Offering back to the client.
+ *
+ * @method read
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.read = function(req, res) {
 	console.log('read route',req.query);
 	res.jsonp(req.offering);
 };
 
+
 /**
- * Update a Offering
+ * Update an Offering and write the update back to the client.
+ *
+ * @method update
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.update = function(req, res) {
 	var offering = req.offering ;
@@ -60,7 +92,12 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an Offering
+ * Delete an Offering.
+ *
+ * @method delete
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.delete = function(req, res) {
 	var offering = req.offering ;
@@ -76,8 +113,14 @@ exports.delete = function(req, res) {
 	});
 };
 
+
 /**
- * List of Offerings and search based on user entered input
+ * List of Offerings, including qualified search queries; write an array of offerings back to the client.
+ *
+ * @method list
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.list = function(req, res) { 
 	var keyNames = Object.keys(req.query);
@@ -140,26 +183,15 @@ exports.list = function(req, res) {
 	}*/
 };
 
-/**
- * List of Offerings by this User
- * added by Marc
- */
-exports.listByUser = function(req, res) { 
-	Offering.find().where('user').equals(req.user).sort('-created').exec(function(err, offerings) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(offerings);
-		}
-	});
-};
 
 /**
  * Update an Offering to register the user's interest in purchasing it.
- * This function performs the document modification, then saves it to the database and returns
- * the result to the user/client.
+ * This function performs the document modification, then saves it to the database and writes the result back to the user/client.
+ *
+ * @method addInterested
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.addInterested = function(req, res) {
 	var offering = req.offering ;
@@ -178,6 +210,15 @@ exports.addInterested = function(req, res) {
 	});
 };
 
+
+/**
+ * Update an Offering to add a user's rating, and writes the result back to the user/client. 
+ *
+ * @method addRating
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
+ */
 exports.addRating = function(req, res) {
 	var offering = req.offering ;
 	// The req.body contains the updated offering.
@@ -195,7 +236,15 @@ exports.addRating = function(req, res) {
 };
 
 /**
- * Offering middleware
+ * Offering middleware; obtains the offering with specified ID from the database.
+ * Writes an error back to the user if the offering is not found.
+ *
+ * @method offeringByID
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @param id {Number} 
+ * @return nothing
  */
 exports.offeringByID = function(req, res, next, id) { 
 	Offering.findById(id).populate({
@@ -217,10 +266,18 @@ exports.offeringByID = function(req, res, next, id) {
     });
 };
 
+
 /**
- * Offering authorization middleware
+ * Offering authorization middleware; checks that the logged in user is also the offering's creator.
+ * Writes an error back to the user if they lack authorization.
+ *
+ * @method addInterested
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @return nothing
  */
-exports.hasAuthorization = function(req, res, next) {
+ exports.hasAuthorization = function(req, res, next) {
 	if (req.offering.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}

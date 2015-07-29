@@ -1,6 +1,24 @@
+/**
+ * Provides the Offerings module for the client (Angular).
+ *
+ * @module Offerings
+ * @submodule Client
+ * @main
+ */
+
 'use strict';
 
-// Offerings controller
+/**
+ * Controller driving the client views.
+ *
+ * @class OfferingsController
+ * @constructor
+ * @param $scope {Object} 
+ * @param $stateParams {Object}
+ * @param $location {Service}
+ * @param Authentication {Service} 
+ * @param Offerings {Resource}
+ */
 angular.module('offerings').controller('OfferingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Offerings',
 	function($scope, $stateParams, $location, Authentication, Offerings) {
 		$scope.authentication = Authentication;
@@ -9,7 +27,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
  		$scope.sortOptions = ['Price','Rating','Date'];
  		$scope.searchInfo = {entry: ''};
 
-		// Create new Offering
+
+		/**
+		 * Creates a new offering, adding it to the database, and returning it to be displayed in the .../view page.
+		 * Parameters for the new offering are indirectly provided by $scope.
+		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none 
+		 * @method create
+		 * @return nothing
+		 */
 		$scope.create = function() {
 			// Create new Offering object
 			var offering = new Offerings ({
@@ -30,7 +57,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			});
 		};
 
-		// Remove existing Offering, called from .../view
+
+		/**
+		 * Removes the specified offering from the database.
+		 * This is used in the .../view page.
+		 * On sucessful response from the database, the client is redirected to one page back in the browser's history.
+		 *
+		 * @param offering
+		 * @method remove
+		 * @return nothing
+		 */
 		$scope.remove = function(offering) {
 			if ( offering ) { 
 				offering.$remove();
@@ -48,7 +84,17 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			}
 		};
 
-		// Update existing Offering, called from .../edit
+
+		/**
+		 * Updates the specified offering, with new input from the user.
+		 * This is used in the .../edit page.
+		 * Parameters for the new offering are indirectly provided by $scope.
+		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none
+		 * @method update
+		 * @return nothing
+		 */
 		$scope.update = function() {
 			var offering = $scope.offering;
 			
@@ -59,18 +105,47 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			});
 		};
 
-		// Find a list of Offerings
+
+		/**
+		 * Obtains a full list Offering documents from the database.
+		 * This is used with the 'ng-init' directive.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method find
+		 * @return nothing
+		 */
 		$scope.find = function() {
 			$scope.offerings = Offerings.query();
 		};
 
-		// Find a list of Offerings, searching by user of the loaded profile; added by Marc
+
+		/**
+		 * Makes a 'search' to the database, seeking a list of offerings by a specified user's ID.
+		 * This is used with the 'ng-init' directive, when loading a user's own profile page.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method findByUser
+		 * @return nothing
+		 */
 		$scope.findByUser = function() {
 			var profileId = $scope.$$prevSibling.user._id;
 
 			$scope.offerings = Offerings.search({ user: profileId });
 
 		};
+
+
+		/**
+		 * Makes a 'search' to the database, seeking a list of offerings by a specified user's ID.
+		 * This is used with the 'ng-init' directive, when loading another user's profile page.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method findByUser
+		 * @return nothing
+		 */		
 		$scope.findByOther = function() {
 			//var userId = $scope.authentication.user._id;
 			//var profileId = $scope.$$prevSibling.other._id;
@@ -78,38 +153,65 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			$scope.otherofferings = Offerings.search({ user: $stateParams.otherId });
 			
 		};
-		// Find a list of Offerings, where user is an authorized rater; added by Bill
+
+
+		/**
+		 * Makes a 'query' to the database, seeking a list of offerings for which a specified user has rater priviledges.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method findByRater
+		 * @return nothing
+		 */	
 		$scope.findByRater = function(){
 			var userId = $scope.authentication.user._id;
 			$scope.offerings = Offerings.query({ rater: userId });
 		};
 		
-		// Find a list of Offerings, where user is interested; added by Bill
+
+		/**
+		 * Makes a 'query' to the database, seeking a list of offerings for which a specified user has shown interest.
+		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method findByInterest
+		 * @return nothing
+		 */	
 		$scope.findByInterest = function(){
 			var userId = $scope.authentication.user._id;
 			$scope.offerings = Offerings.query({ interested: userId });
 		};
+
 		
-		// Find existing Offering, called to load .../view
+		/**
+		 * Makes a 'get' to the database, seeking a single offering by specified ID.
+		 * On sucessful response from the database, the offering objects is assigned to $scope.offering.
+		 * The offering ID is obtained from $stateParams.
+		 *
+		 * @param none
+		 * @method findOne
+		 * @return nothing
+		 */	
 		$scope.findOne = function() {
 			$scope.foundInterested = false;
 			$scope.foundRater = false;
-			// var keyNames = Object.keys($stateParams);
-			// console.log($stateParams);
-			console.log('compare with', {_id: $scope.authentication.user._id});
-			// var callback = function(juice) {
-			// 	console.log('here is the scoop, uh', {_id:$scope.authentication.user._id}._id);
-			// 	console.log('here is the scoop, uh', $scope.offering.interested[0]._id);
-			// 	// console.log('here is the scoop, uh', $scope.offering.interested.indexOf({_id:$scope.authentication.user._id}));
-			//};
 
 			$scope.offering = Offerings.get({ 
 				offeringId: $stateParams.offeringId
 			}, $scope.compareId);
 		};
 
+
 		// While essentially identical code to the update() function, calling the addInterest()
 		// function from the Offerings $resource uses a different RESTful API call.
+		/**
+		 * Adds the user to the offering's 'interested' array. This uses a custom route to trigger the server to modify the document.
+		 * On sucessful response from the database, the client is directed to the .../view page.
+		 *
+		 * @param none
+		 * @method addInterested
+		 * @return nothing
+		 */	
 		$scope.addInterested = function() {
 			var offering = $scope.offering;
 			$scope.foundInterested = true;
@@ -121,9 +223,15 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			});
 		};
 
-		// Run as a callback function, it operates on data returned by the server to load the .../view page.
-		// It assigns 'true' values to $scope.foundInterested and $scope.foundRater to help determine which
-		// action buttons are displayed to the user.
+
+		/**
+		 * Run as a callback function, it operates on data returned by the server to load the .../view page.
+		 * It assigns 'true' to either $scope.foundInterested or $scope.foundRater (or neither) to help determine which action buttons are displayed to the user.
+		 *
+		 * @param offering
+		 * @method compareId
+		 * @return nothing
+		 */			
 		$scope.compareId = function(offering) {
 			var i = 0;
 			while ($scope.foundInterested === false && i < offering.interested.length) {
@@ -138,11 +246,17 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 				}
 				i++;
 			}
-
-			console.log('scope at end of findOne()', $scope);
 		};
 
-		// Called in .../view or /user-profile.
+
+		/**
+		 * Runs when an offering owner accepts the interest shown by another user, signifying the closure of a transaction.
+		 * The function removes the accepted user from the offering's 'interested' array, and adds them to the offering's 'rater' array.
+		 *
+		 * @param index, offeringId
+		 * @method acceptOffer
+		 * @return nothing
+		 */
 		$scope.acceptOffer = function(index, offeringId) {
 			var offering;
 			if (!offeringId) {
@@ -154,10 +268,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 
 			// Accept the user: remove their Id from the offering.interested, and add their Id to the offering.rater
 			var acceptedBuyer = offering.interested.splice(index, 1);
-			// console.log('acceptedBuyer', acceptedBuyer,' the _id', acceptedBuyer[0]._id);
 			offering.rater.push(acceptedBuyer[0]._id);
-
-			// console.log('modified offering', offering);
 
 			offering.$update(function() {
 				// $location.path('offerings/' + offering._id);
@@ -166,16 +277,18 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			});
 		};
 
-		$scope.addRating = function() {
-			// DO NOT calculate updated rating for the offering; save it for 'submit'
-			// input particular rating from this user
 
-			// need a route to '/offerings/:offeringId/rating'
+		/**
+		 * Performs an 'update' of the offering document, which has been modified with the addition of the reference to anew rating document.
+		 * On sucessful response from the database, the client is directed to the .../view page.
+		 *
+		 * @param none
+		 * @method addRating
+		 * @return nothing
+		 */
+		$scope.addRating = function() {
+
 			var offering = $scope.offering;
-			// offering.rating.
-			console.log('scope in addRating is ', $scope);
-			console.log('placeholder ', $scope.placeholder);
-			console.log('rating score ', $scope.ratingValue);
 
 			offering.$addRating(function() {
 				$location.path('offerings/' + offering._id);
@@ -185,7 +298,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			
 		};
 		
-		// Perform search according to user input
+
+		/**
+		 * Makes a 'query' to the database, having two options: keyword search or price search.
+		 * On sucessful response from the database, the client is directed to the .../view page.
+		 * The query terms are indirectly provided through $scope.searchCriteria and $scope.searchInfo.entry.
+		 *
+		 * @param none
+		 * @method Search
+		 * @return nothing
+		 */
 		$scope.Search = function(){
 			var Info = $scope.searchInfo.entry;
 			
@@ -200,6 +322,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			}
 		};
 		
+
+		/**
+		 * Operates with user selection of ordering function for the offerings listing.
+		 * It will sort according to attribute: price; rating score; or date created.
+		 * It will cause the page to reorder the list of offerings.
+		 *
+		 * @param none
+		 * @method changeSort
+		 * @return nothing
+		 */
 		//determine field to sort offerings by
 		$scope.changeSort = function() {
 			switch($scope.sortCriteria){
@@ -213,7 +345,16 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			}
 		};
 		
-		//determine order to display offerings
+
+		/**
+		 * Operates with user selection of ordering function for the offerings listing.
+		 * It will sort according to order, descending or ascending, by the attribute selected with changeSort().
+		 * It will cause the page to reorder the list of offerings.
+		 *
+		 * @param none
+		 * @method changeOrder
+		 * @return nothing
+		 */
 		$scope.changeOrder = function() {
 		
 			if ($scope.order === 'Descending'){
@@ -224,6 +365,13 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			}
 		};		
 	}
+		/**
+		 * This directive creates and styles the stars displayed for the Offering star rating system.
+		 *
+		 * @param none
+		 * @method starOffering
+		 * @return html that renders the stars
+		 */
 ]).directive('starOffering',
 	function() {
 		return {
