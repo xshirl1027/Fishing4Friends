@@ -1,6 +1,25 @@
+/**
+ * Provides the Ratings module for the client (Angular).
+ *
+ * @module Ratings
+ * @submodule Ratings-Client
+ * @main
+ */
+
 'use strict';
 
-// Ratings controller
+/**
+ * Controller driving the client views.
+ *
+ * @class RatingsController
+ * @constructor
+ * @param $scope {Object} 
+ * @param $stateParams {Object}
+ * @param $location {Service}
+ * @param Authentication {Service} 
+ * @param Ratings {Resource}
+ * @param Offerings {Resource}
+ */
 angular.module('ratings').controller('RatingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Ratings', 'Offerings',
 	function($scope, $stateParams, $location, Authentication, Ratings, Offerings) {
 		$scope.authentication = Authentication;
@@ -11,18 +30,29 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 		$scope.found = false;
 
 
+		/**
+		 * Checks whether the logged in user has the priviledge of writing a rating for the Offering that they are curently viewing.
+		 * The function sets the $scope.found property, which triggers 'ng-show' and 'ng-hide' directives in the view.
+		 *
+		 * @param none 
+		 * @method checkRaterPriviledge
+		 * @return nothing
+		 */
 		$scope.checkRaterPriviledge = function () {
+			// Obtain the offering ID from the current page URL.
 			var Id = $location.path().split('/')[2];
+			// Get a valid Offering object from the database.
 			var offering = Offerings.get({
 				offeringId: Id
-			}, function(juice) {
-				console.log('returned offering._id is',juice._id);
+			}, function(checkData) {
+				console.log('returned offering._id is',checkData._id);
+				// Get currently logged-in user's ID
 				var userId = $scope.authentication.user._id;
 				var inArray = false;
 				var i = 0;
 				while (inArray === false && i < offering.rater.length) {
+					// Look for logged-in user's ID among the Offering's array of approved raters
 					if (offering.rater[i]._id === $scope.authentication.user._id) {
-						// something
 						$scope.found = true;
 					}
 					i++;
@@ -32,7 +62,17 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 
 		$scope.checkRaterPriviledge();
 
-		// Create new Rating
+
+		/**
+		 * Creates a new Rating, adds it to the database, and receives a new Rating document back from the database.
+		 * The Rating document ID is then added to the intended Offering.
+		 * The Offering's average score and times_purchased properties are updated.
+		 * Parameters for the new Rating are indirectly provided by $scope.
+		 *
+		 * @param none 
+		 * @method create
+		 * @return nothing
+		 */
 		$scope.create = function() {
 			// Create new Rating object
 			var rating = new Ratings ({
@@ -81,7 +121,16 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 			});
 		};
 
-		// Remove existing Rating
+
+		/**
+		 * Removes the specified Rating from the database.
+		 * This is used in the .../view page.
+		 * On successful response from the database, the client is redirected the Rating list.
+		 *
+		 * @param rating
+		 * @method remove
+		 * @return nothing
+		 */
 		$scope.remove = function(rating) {
 			if ( rating ) { 
 				rating.$remove();
@@ -98,7 +147,17 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 			}
 		};
 
-		// Update existing Rating
+
+		/**
+		 * Updates the specified Rating, with new input from the user.
+		 * This is used in the .../edit page.
+		 * Parameters for the new Rating are indirectly provided by $scope.
+		 * On successful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none
+		 * @method update
+		 * @return nothing
+		 */
 		$scope.update = function() {
 			var rating = $scope.rating;
 
@@ -109,18 +168,44 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 			});
 		};
 
-		// Find a list of Ratings
+
+		/**
+		 * Obtains a full list Rating documents from the database.
+		 * This is used with the 'ng-init' directive.
+		 * On successful response from the database, an array of Rating objects is assigned to $scope.ratings.
+		 *
+		 * @param none
+		 * @method find
+		 * @return nothing
+		 */
 		$scope.find = function() {
 			$scope.ratings = Ratings.query();
 		};
 
-		// Find existing Rating
+
+		/**
+		 * Makes a 'get' request to the database, seeking a single Rating by specified ID.
+		 * On successful response from the database, the Rating object is assigned to $scope.rating.
+		 * The rating ID is obtained from $stateParams.
+		 *
+		 * @param none
+		 * @method findOne
+		 * @return nothing
+		 */	
 		$scope.findOne = function() {
 			$scope.rating = Ratings.get({ 
 				ratingId: $stateParams.ratingId
 			});
 		};
 	}
+		/**
+		 * This directive creates and styles the stars displayed for the Rating star rating system.
+		 * It provides an interactive styling and records the user's star rating selection.
+		 *
+		 * @param none
+		 * @method starRating
+		 * @return html that renders the stars
+		 */	
 ]).directive('starRating',
 	function() {
 		return {

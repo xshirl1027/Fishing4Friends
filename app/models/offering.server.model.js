@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
  * Defines the Mongoose schema for an Offering.
  *
  * @module Offerings
- * @submodule Server
+ * @submodule Offerings-Server
  * @class Offering
  * @constructor
  * @param none 

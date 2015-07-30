@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * Defines the RESTful API endpoints related to Ratings.
+ *
+ * @module Ratings
+ * @submodule Ratings-Server
+ * @class Routes
+ * @static
+ */
+
 module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 	var ratings = require('../../app/controllers/ratings.server.controller');

@@ -3,9 +3,10 @@
 
 /**
  * Offerings service used for communicating with the Offering REST endpoints.
+ * By default, interacts with REST endpoint 'offerings/:offeringId'
  *
  * @module Offerings
- * @submodule Client
+ * @submodule Offerings-Client
  * @class Offerings
  * @constructor
  * @param $resource {Object}
