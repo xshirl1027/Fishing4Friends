@@ -5,14 +5,14 @@
 		<p data-ng-bind="messageboard.message"></p>
 	</div>
 	<div class="pull-right" >
-		<a class="btn btn-primary" data-ng-show="((authentication.user) && (authentication.user._id == messageboard.user._id))" href="/#!/messageboards/{{messageboard._id}}/edit">
+		<a class="btn btn-primary" title='edit this messageboard' data-ng-show="((authentication.user) && (authentication.user._id == messageboard.user._id))" href="/#!/messageboards/{{messageboard._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 		<a class="btn btn-primary" data-ng-show="((authentication.user) && (authentication.user._id == messageboard.user._id))"data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 		<a class="btn btn-primary" href="/#!/messageboards/{{messageboard._id}}/add">
-			<i class="glyphicon glyphicon-pencil"></i>
+			<i class="glyphicon glyphicon-plus"></i>
 		</a>
 	</div>
 	<small>

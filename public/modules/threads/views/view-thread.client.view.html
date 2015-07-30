@@ -8,14 +8,14 @@
 		<div class="panel-body" style="overflow: auto;"> <span>{{thread.message}}
 				
 			<div class="pull-right" >
-			<a class="btn btn-primary" data-ng-show="((authentication.user) && (authentication.user._id == thread.user._id))" href="/#!/threads/{{thread._id}}/edit">
+			<a class="btn btn-primary" title='edit this thread' data-ng-show="((authentication.user) && (authentication.user._id == thread.user._id))" href="/#!/threads/{{thread._id}}/edit">
 				<i class="glyphicon glyphicon-edit"></i>
 			</a>
-			<a class="btn btn-primary" data-ng-show="((authentication.user) && (authentication.user._id == thread.user._id))" data-ng-click="remove(post);">
+			<a class="btn btn-primary" title='delete this thread' data-ng-show="((authentication.user) && (authentication.user._id == thread.user._id))" data-ng-click="remove(post);">
 				<i class="glyphicon glyphicon-trash"></i>
 			</a>
-			<a class="btn btn-primary" href="/#!/threads/{{thread._id}}/add">
-				<i class="glyphicon glyphicon-pencil"></i>
+			<a class="btn btn-primary" title='write on this thread' href="/#!/threads/{{thread._id}}/add">
+				<i class="glyphicon glyphicon-plus"></i>
 			</a>
 			</div>
 			</span>

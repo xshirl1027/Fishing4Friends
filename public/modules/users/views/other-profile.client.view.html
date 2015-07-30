@@ -1,10 +1,8 @@
 <section data-ng-controller="SettingsController" data-ng-init='findOne()'>
 	<div class="page-header">
 		<h1 data-ng-bind="other.username"></h1>
-		<div>Welcome <span data-ng-bind="other.displayName"></span><br>
-			<span data-ng-bind="other.email"></span>
-		
-
+		<div><span data-ng-bind="other.displayName"></span><br>
+			<span>Contact: {{other.email}}</span>
 			<div class="row">
 				<div class="col-xs-6 col-md-3">
 					<a href="#" class="thumbnail">
@@ -14,6 +12,15 @@
       		        <!-- If the user has not uploaded a profile pic, display the alternate: -->
 					<span class="empty" ng-show="!other.profile_pic.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
  				</div>
+				     <a class="btn btn-primary" title='add as friend' href="/#!/users/friends/{{user._id}}/add">
+						<i class="glyphicon glyphicon-user"></i>
+					</a>
+					 <a class="btn btn-primary" title='send them a nice message' href="/#!/messages/{{user._id}}/add">
+						<i class="glyphicon glyphicon-envelope"></i>
+					</a>
+					 <a class="btn btn-primary" title='report this user' href="/#!/report/{{user._id}}">
+						<i class="glyphicon glyphicon-eye-open"></i>
+					</a>
 		</div>
 		</div>
 	</div>
