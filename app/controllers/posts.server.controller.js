@@ -1,16 +1,27 @@
 'use strict';
 
 /**
- * Server-side Controller for Posts module
-	responsible for reading data from and propagating changes to the database
+ * Providing the Post module for the server
+ * @module Post
+ * @submodule Server
+ * @requires mongoose
  */
+ 
+ /** Server-side Controller for Posts module responsible for reading data from and propagating changes to the database
+ *@class ServerController
+ *@static
+ **/
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Post = mongoose.model('Post'),
 	_ = require('lodash');
 
-/**create(req, res):
- * Save post and creating user to database
+/**
+ * Save post and creator to database
+ * @method create
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.create = function(req, res) {
 	var post = new Post(req.body);
@@ -27,15 +38,23 @@ exports.create = function(req, res) {
 	});
 };
 
-/**read(req,res):
- * return an existing post from the database
+/**
+ * return an existing post to the client
+ * @method read
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.read = function(req, res) {
 	res.jsonp(req.post);
 };
 
-/**update(req, res):
- * Update a Post and save to database
+/**
+ * Update a Post and save to database and returning update to client
+ * @method update
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.update = function(req, res) {
 	var post = req.post ;
@@ -53,8 +72,13 @@ exports.update = function(req, res) {
 	});
 };
 
-/**delete(req, res):
- * Delete an Post from the database
+/**
+ * Delete an Post
+  * @method delete
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
+ */
  */
 exports.delete = function(req, res) {
 	var post = req.post ;
@@ -70,8 +94,12 @@ exports.delete = function(req, res) {
 	});
 };
 
-/**list(req, res):
+/**
  * Queries the database and return a list of posts
+  * @method list
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.list = function(req, res) { 
 var keyNames= Object.keys(req.query);
@@ -101,9 +129,15 @@ var keyNames= Object.keys(req.query);
 	
 };
 
-/**postByID(req, res, next, id):
- * Post middleware
- */
+/**
+ * Post middleware\ * 
+ * @method postByID
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @param id {Number} 
+ * @return nothing
+ **/
 exports.postByID = function(req, res, next, id) { 
 	Post.findById(id).populate('user', 'displayName').exec(function(err, post) {
 		if (err) return next(err);
@@ -113,8 +147,13 @@ exports.postByID = function(req, res, next, id) {
 	});
 };
 
-/**hasAuthorization(req, res, next,):
+/**
  * Post authorization middleware
+ * @method hasAuthorization
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @return nothing
  */
 exports.hasAuthorization = function(req, res, next) {
 	if (req.post.user.id !== req.user.id) {

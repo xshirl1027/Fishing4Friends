@@ -1,16 +1,29 @@
 'use strict';
 
 /**
- * Client-side controller for the Thread module responsible for saving changes and retrieving thread data from the database
- */
+ Server-side controller for the Thread module responsible for saving changes and retrieving thread data from the database
+ @module Thread
+ @submodule server
+ @require mongoose
+ **/
+ /**
+ * Controller handling the server requests for Thread
+ *
+  @class ServerController
+ * @static
+ **/
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Thread = mongoose.model('Thread'),
 	_ = require('lodash');
 
-/**create(req, res):
- * Create a Thread and save to database
- */
+		/**
+		 * Saves the newly created thread to the database and returning it to the client
+		 * @param req{object}
+		   @param res{object}
+		 * @method create
+		 * @return nothing
+		 */
 exports.create = function(req, res) {
 	var thread = new Thread(req.body);
 	thread.user = req.user;
@@ -26,15 +39,22 @@ exports.create = function(req, res) {
 	});
 };
 
-/**read(req, res):
- * return the current thread
+/**Sends the current thread back to the client controller
+		 * @param req{object}
+		 * @param res{object}
+		 * @method read
+		 * @return nothing
  */
 exports.read = function(req, res) {
 	res.jsonp(req.thread);
 };
 
-/**Update(req, res)
+/**
  * Update a Thread in the database
+ 		 * @param req{object}
+		   @param res{object}
+		 * @method update
+		 * @return nothing
  */
 exports.update = function(req, res) {
 	var thread = req.thread ;
@@ -52,8 +72,12 @@ exports.update = function(req, res) {
 	});
 };
 
-/**Delete(req, res):
+/**
  * Delete a Thread from the database
+ 		 * @param req{object}
+		   @param res{object}
+		 * @method delete
+		 * @return nothing
  */
 exports.delete = function(req, res) {
 	var thread = req.thread ;
@@ -69,9 +93,12 @@ exports.delete = function(req, res) {
 	});
 };
 
-/**list(req, res)
- * return query result of of Threads from the database
- return all threads if query is empty
+/**
+ * sends a query result of Threads to the client or send a list of all threads if client did not provide a query
+ 		 * @param req{object}
+		   @param res{object}
+		 * @method list
+		 * @return nothing
  */
 exports.list = function(req, res) { 
 	console.log(req.query);
@@ -104,8 +131,14 @@ exports.list = function(req, res) {
 
 
 
-/**threadByID(req, res, next, id):
+/**
  * Thread middleware
+ 		 * @param req{object}
+		   @param res{object}
+		   @param id{string}
+		   @param next{function}
+		 * @method threadByID
+		 * @return nothing
  */
 exports.threadByID = function(req, res, next, id) { 
 	Thread.findById(id).populate('user', 'displayName').exec(function(err, thread) {
@@ -117,9 +150,14 @@ exports.threadByID = function(req, res, next, id) {
 };
 
 
-/**hasAuthorization(req, res, next):
+/**
  * Thread authorization middleware
- */
+ 		 * @param req{object}
+		   @param res{object}
+		   @param next{function}
+		 * @method hasAuthorization
+		 * @return nothing
+ **/
 exports.hasAuthorization = function(req, res, next) {
 	if (req.thread.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');

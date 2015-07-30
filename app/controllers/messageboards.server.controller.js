@@ -9,9 +9,11 @@ var mongoose = require('mongoose'),
 	Messageboard = mongoose.model('Messageboard'),
 	_ = require('lodash');
 
-/**
- * create(req, res):
- * Saves the newly created messageboard, which also contains the user object, to the database
+/** Saves the newly created messageboard to the database
+ * @method create
+ * @param req{object}
+ * @param res{object}
+ * @return nothing
  **/
 exports.create = function(req, res) {
 	var messageboard = new Messageboard(req.body);
@@ -28,15 +30,23 @@ exports.create = function(req, res) {
 	});
 };
 
-/**read(req, res):
- * Shows the current Messageboard
- */
+/**
+ * Shows the current Messageboard to client
+ * @method read
+ * @param req{object}
+ * @param res{object}
+ * @return nothing
+ **/
 exports.read = function(req, res) {
 	res.jsonp(req.messageboard);
 };
 
-/**update(req, res):
+/**
  * Update a Messageboard
+ * @method update
+ * @param req{object}
+ * @param res{object}
+ * @return nothing
  */
 exports.update = function(req, res) {
 	var messageboard = req.messageboard ;
@@ -54,8 +64,13 @@ exports.update = function(req, res) {
 	});
 };
 
-/**delete(req, res):
+/**
  * Delete an Messageboard
+ * @method delete
+ * @param req{object}
+ * @param res{object}
+ * @return nothing
+ *
  */
 exports.delete = function(req, res) {
 	var messageboard = req.messageboard ;
@@ -71,8 +86,13 @@ exports.delete = function(req, res) {
 	});
 };
 
-/**list(req, res)
- *returns a list of Messageboards
+/**
+ *returns a list of all Messageboards
+ *@method list
+ *@param req{object}
+ *@param res{object}
+ *@return nothing
+ *
  */
 exports.list = function(req, res) {
 	var keyNames = Object.keys(req.query);
@@ -96,8 +116,15 @@ exports.list = function(req, res) {
 	}
 };
 
-/**messageboardById(req,res,next,id):
+/**
  * Messageboard middleware
+ * @method messageboardByID
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @param id {Number} 
+ * @return nothing
+ *
  */
 exports.messageboardByID = function(req, res, next, id) { 
 	Messageboard.findById(id).populate('user', 'displayName').exec(function(err, messageboard) {
@@ -109,8 +136,14 @@ exports.messageboardByID = function(req, res, next, id) {
 };
 
  
-/**hasAuthorization(req, res, next):
+/**
  * Messageboard authorization middleware
+  * @method hasAuthorization
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @return nothing
+ *
  */
 exports.hasAuthorization = function(req, res, next) {
 	if (req.messageboard.user.id !== req.user.id) {

@@ -1,15 +1,40 @@
+/**
+ * Provides the Messageboard module for the Messageboard (Angular).
+ *
+ * @module Messageboard
+ * @submodule Client
+ * @main
+ */
+ 
 'use strict';
+ 
+/**
+ * Controller driving the client views.
+ *
+ * @class MessageboardController
+ * @constructor
+ * @param $scope {Object} 
+ * @param $stateParams {Object}
+ * @param $location {Service}
+ * @param Authentication {Service} 
+ * @param Messageboards {Resource}
+ *
+ */
 
-/** 
-Client side controller for Messageboards module
-responsible for user activities on the creation, deletion and updating of message boards.
-**/
 angular.module('messageboards').controller('MessageboardsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messageboards',
 	function($scope, $stateParams, $location, Authentication, Messageboards) {
 		$scope.authentication = Authentication;
 
-		/** $scope.create():
-			stores user input for a new message board and saves to database**/
+		/** 
+		 * Creates a new messageboard, adding it to the database, and returning it to be displayed in the .../view page.
+		 * Parameters for the new messageboards are indirectly provided by $scope.
+		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none 
+		 * @method create
+		 * @return nothing
+		 *
+		 */
 		$scope.create = function() {
 			// Create new Messageboard object
 			var messageboard = new Messageboards ({
@@ -28,8 +53,12 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			});
 		};
 
-		/** $scope.remove():
-		iterates through a list of all message board and remove the one you want**/
+		/**
+		removes the specified messageboard and directs client back to messageboard page
+		 * @param messageboard
+		 * @method remove
+		 * @return nothing
+		 **/
 		$scope.remove = function(messageboard) {
 			if ( messageboard ) { 
 				messageboard.$remove();
@@ -46,8 +75,16 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			}
 		};
 
-		/** $scope.update():
-		Update existing Messageboard**/
+		/**
+		 * Updates the specified messageboard, with new input from the user.
+		 * This is used in the .../edit page.
+		 * Parameters for the new messageboard are indirectly provided by $scope.
+		 * On successful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none
+		 * @method update
+		 * @return nothing
+		 **/
 		$scope.update = function() {
 			var messageboard = $scope.messageboard;
 
@@ -58,15 +95,26 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 			});
 		};
 
-		/**$scope.find():
-		returns a list of all existing message boards
+		/**
+		 * returns a list of all existing messageboards to $scope.messageboard
+		 *
+		 * @param none
+		 * @method find
+		 * @return nothing
 		**/
 		$scope.find = function() {
 			$scope.messageboards = Messageboards.query();
 		};
 		
-		/** $scope.findOne():
-		Return a Message board with the id in the current $stateParams **/
+		/**
+		 * Makes a 'get' to the database, seeking a single messageboard by specified ID.
+		 * On sucessful response from the database, the messageboard objects is assigned to $scope.messageboard
+		 * The Messageboard ID is obtained from $stateParams.
+		 *
+		 * @param none
+		 * @method findOne
+		 * @return nothing
+		 **/	
 		$scope.findOne = function() {
 			$scope.messageboard = Messageboards.get({ 
 				messageboardId: $stateParams.messageboardId
