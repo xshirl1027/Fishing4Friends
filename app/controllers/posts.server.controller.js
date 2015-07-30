@@ -79,7 +79,6 @@ exports.update = function(req, res) {
  * @param res {Object} 
  * @return nothing
  */
- */
 exports.delete = function(req, res) {
 	var post = req.post ;
 
