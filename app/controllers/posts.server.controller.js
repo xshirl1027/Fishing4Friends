@@ -3,12 +3,12 @@
 /**
  * Providing the Post module for the server
  * @module Post
- * @submodule Server
+ * @submodule Post-Server
  * @requires mongoose
  */
  
  /** Server-side Controller for Posts module responsible for reading data from and propagating changes to the database
- *@class ServerController
+ *@class PostController
  *@static
  **/
 var mongoose = require('mongoose'),
@@ -78,7 +78,6 @@ exports.update = function(req, res) {
  * @param req {Object} 
  * @param res {Object} 
  * @return nothing
- */
  */
 exports.delete = function(req, res) {
 	var post = req.post ;

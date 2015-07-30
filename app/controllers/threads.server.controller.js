@@ -3,13 +3,13 @@
 /**
  Server-side controller for the Thread module responsible for saving changes and retrieving thread data from the database
  @module Thread
- @submodule server
+ @submodule Thread-Server
  @require mongoose
  **/
  /**
  * Controller handling the server requests for Thread
  *
-  @class ServerController
+  @class ThreadController
  * @static
  **/
 var mongoose = require('mongoose'),

@@ -2,7 +2,7 @@
  * Provides the Messageboard module for the Messageboard (Angular).
  *
  * @module Messageboard
- * @submodule Client
+ * @submodule Messageboard-Client
  * @main
  */
  

@@ -23,6 +23,17 @@ var MessageSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	}, 
+	body: {
+		type: String,
+		default: '',
+		required: 'Don\'t leave the message empty',
+		trim: true
+	},
+	receiving: {
+		type: String,
+		default: '',
+		trim: true
 	}
 });
 

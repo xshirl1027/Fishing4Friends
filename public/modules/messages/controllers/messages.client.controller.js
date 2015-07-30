@@ -9,7 +9,9 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 		$scope.create = function() {
 			// Create new Message object
 			var message = new Messages ({
-				name: this.name
+				name: this.name,
+				body: this.body,
+				receiving: $stateParams.userID
 			});
 
 			// Redirect after save
@@ -55,7 +57,20 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 		$scope.find = function() {
 			$scope.messages = Messages.query();
 		};
-
+		
+				/**
+		 * return all messages sent to the user.
+		 *
+		 * @param none
+		 * @method findOne2
+		 * @return nothing
+		 **/	
+		// Find existing Thread
+		$scope.findOne2 = function() {
+			console.log($scope.authentication.user._id);
+			$scope.messages = Messages.query({'receiving':$scope.authentication.user._id});
+		};
+		
 		// Find existing Message
 		$scope.findOne = function() {
 			$scope.message = Messages.get({ 

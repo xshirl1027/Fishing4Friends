@@ -2,7 +2,7 @@
  * Provides the posts module for the Post(Angular).
  *
  * @module Post
- * @submodule Client
+ * @submodule Post-Client
  * @main
  */
  

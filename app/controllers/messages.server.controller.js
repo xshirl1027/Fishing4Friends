@@ -73,15 +73,30 @@ exports.delete = function(req, res) {
  * List of Messages
  */
 exports.list = function(req, res) { 
-	Message.find().sort('-created').populate('user', 'displayName').exec(function(err, messages) {
-		if (err) {
+	var keyNames= Object.keys(req.query);
+	if (keyNames.length===0){
+		Message.find().sort('-created').populate('user', 'displayName').exec(function(err, Messages) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.jsonp(Messages);
+			}
+		
+		});
+	}else{
+		Message.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('-created').populate('user', 'displayName').exec(function(err, Messages){
+			if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(messages);
-		}
-	});
+			} else {
+				res.jsonp(Messages);
+			}
+		});
+		
+	}
 };
 
 /**

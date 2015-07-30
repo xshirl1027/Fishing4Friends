@@ -1,9 +1,14 @@
-'use strict';
-
 /**
- * Server-side controller for messageboards module
-	Responsible for reading data from and propagating the user's changes to the database
+ * Providing the Messageboard module for the server
+ * @module Messageboard
+ * @submodule Messageboard-Server
+ * @requires mongoose
  */
+ 'use strict';
+ /** Server-side Controller for Posts module responsible for reading data from and propagating changes to the database
+ *@class MessageboardController
+ *@static
+ **/
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Messageboard = mongoose.model('Messageboard'),

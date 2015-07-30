@@ -2,7 +2,7 @@
  * Provides the threads module for the Thread (Angular).
  *
  * @module Thread
- * @submodule Client
+ * @submodule Threads-Client
  * @main
  */
  
@@ -110,7 +110,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 		 * return all threads with the messageboardId obtained from $stateParams.
 		 *
 		 * @param none
-		 * @method findOne
+		 * @method findOne2
 		 * @return nothing
 		 **/	
 		// Find existing Thread

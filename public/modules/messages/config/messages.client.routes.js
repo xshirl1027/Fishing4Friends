@@ -10,7 +10,7 @@ angular.module('messages').config(['$stateProvider',
 			templateUrl: 'modules/messages/views/list-messages.client.view.html'
 		}).
 		state('createMessage', {
-			url: '/messages/create',
+			url: '/messages/:userID/create',
 			templateUrl: 'modules/messages/views/create-message.client.view.html'
 		}).
 		state('viewMessage', {
