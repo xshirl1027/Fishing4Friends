@@ -4,7 +4,7 @@
  * Defines the RESTful API endpoints related to offerings.
  *
  * @module Offerings
- * @submodule Server
+ * @submodule Offerings-Server
  * @class Routes
  * @static
  */

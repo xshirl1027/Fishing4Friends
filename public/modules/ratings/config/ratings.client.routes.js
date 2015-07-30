@@ -1,6 +1,15 @@
 'use strict';
 
-//Setting up route
+/**
+ * Configures the Ratings module.
+ * Adds the client routes to the $stateProvider.
+ * 
+ * @module Ratings
+ * @submodule Ratings-Client
+ * @class config
+ * @param $stateProvider {Object}
+ * @return nothing
+ */
 angular.module('ratings').config(['$stateProvider',
 	function($stateProvider) {
 		// Ratings state routing

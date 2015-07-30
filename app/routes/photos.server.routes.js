@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * Defines the RESTful API endpoints related to Photos.
+ *
+ * @module Photos
+ * @submodule Photos-Server
+ * @class Routes
+ * @static
+ */
+
 module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 	var photos = require('../../app/controllers/photos.server.controller');

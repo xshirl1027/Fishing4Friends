@@ -1,12 +1,12 @@
 'use strict';
 
-//Setting up route
+
 /**
  * Configures the Offerings module.
  * Adds the client routes to the $stateProvider.
  * 
  * @module Offerings
- * @submodule Client
+ * @submodule Offerings-Client
  * @class config
  * @param $stateProvider {Object}
  * @return nothing

@@ -2,7 +2,7 @@
  * Provides the Offerings module for the client (Angular).
  *
  * @module Offerings
- * @submodule Client
+ * @submodule Offerings-Client
  * @main
  */
 
@@ -31,7 +31,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		/**
 		 * Creates a new offering, adding it to the database, and returning it to be displayed in the .../view page.
 		 * Parameters for the new offering are indirectly provided by $scope.
-		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 * On successful response from the database, the client is redirected to the .../view page.
 		 *
 		 * @param none 
 		 * @method create
@@ -61,7 +61,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		/**
 		 * Removes the specified offering from the database.
 		 * This is used in the .../view page.
-		 * On sucessful response from the database, the client is redirected to one page back in the browser's history.
+		 * On successful response from the database, the client is redirected to one page back in the browser's history.
 		 *
 		 * @param offering
 		 * @method remove
@@ -89,7 +89,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		 * Updates the specified offering, with new input from the user.
 		 * This is used in the .../edit page.
 		 * Parameters for the new offering are indirectly provided by $scope.
-		 * On sucessful response from the database, the client is redirected to the .../view page.
+		 * On successful response from the database, the client is redirected to the .../view page.
 		 *
 		 * @param none
 		 * @method update
@@ -109,7 +109,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		/**
 		 * Obtains a full list Offering documents from the database.
 		 * This is used with the 'ng-init' directive.
-		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 * On successful response from the database, an array of offering objects is assigned to $scope.offerings.
 		 *
 		 * @param none
 		 * @method find
@@ -123,7 +123,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		/**
 		 * Makes a 'search' to the database, seeking a list of offerings by a specified user's ID.
 		 * This is used with the 'ng-init' directive, when loading a user's own profile page.
-		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 * On successful response from the database, an array of offering objects is assigned to $scope.offerings.
 		 *
 		 * @param none
 		 * @method findByUser
@@ -140,7 +140,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		/**
 		 * Makes a 'search' to the database, seeking a list of offerings by a specified user's ID.
 		 * This is used with the 'ng-init' directive, when loading another user's profile page.
-		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 * On successful response from the database, an array of offering objects is assigned to $scope.offerings.
 		 *
 		 * @param none
 		 * @method findByUser
@@ -157,7 +157,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 
 		/**
 		 * Makes a 'query' to the database, seeking a list of offerings for which a specified user has rater priviledges.
-		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 * On successful response from the database, an array of offering objects is assigned to $scope.offerings.
 		 *
 		 * @param none
 		 * @method findByRater
@@ -171,7 +171,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 
 		/**
 		 * Makes a 'query' to the database, seeking a list of offerings for which a specified user has shown interest.
-		 * On sucessful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 * On successful response from the database, an array of offering objects is assigned to $scope.offerings.
 		 *
 		 * @param none
 		 * @method findByInterest
@@ -185,7 +185,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		
 		/**
 		 * Makes a 'get' to the database, seeking a single offering by specified ID.
-		 * On sucessful response from the database, the offering objects is assigned to $scope.offering.
+		 * On successful response from the database, the offering objects is assigned to $scope.offering.
 		 * The offering ID is obtained from $stateParams.
 		 *
 		 * @param none
@@ -206,7 +206,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		// function from the Offerings $resource uses a different RESTful API call.
 		/**
 		 * Adds the user to the offering's 'interested' array. This uses a custom route to trigger the server to modify the document.
-		 * On sucessful response from the database, the client is directed to the .../view page.
+		 * On successful response from the database, the client is directed to the .../view page.
 		 *
 		 * @param none
 		 * @method addInterested
@@ -280,7 +280,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 
 		/**
 		 * Performs an 'update' of the offering document, which has been modified with the addition of the reference to anew rating document.
-		 * On sucessful response from the database, the client is directed to the .../view page.
+		 * On successful response from the database, the client is directed to the .../view page.
 		 *
 		 * @param none
 		 * @method addRating
@@ -301,7 +301,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 
 		/**
 		 * Makes a 'query' to the database, having two options: keyword search or price search.
-		 * On sucessful response from the database, the client is directed to the .../view page.
+		 * On successful response from the database, the client is directed to the .../view page.
 		 * The query terms are indirectly provided through $scope.searchCriteria and $scope.searchInfo.entry.
 		 *
 		 * @param none

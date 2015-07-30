@@ -2,7 +2,7 @@
  * Provides the Offerings module for the server (Express).
  *
  * @module Offerings
- * @submodule Server
+ * @submodule Offerings-Server
  * @requires mongoose
  */
 
@@ -74,9 +74,6 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var offering = req.offering ;
-	console.log('PUT request body is ',req.body);
-	console.log('PUT request body.id is ',req.body._id);
-	console.log('req.offering is ',req.offering);
 
 	offering = _.extend(offering , req.body);
 
@@ -90,6 +87,7 @@ exports.update = function(req, res) {
 		}
 	});
 };
+
 
 /**
  * Delete an Offering.
@@ -235,8 +233,10 @@ exports.addRating = function(req, res) {
 	});
 };
 
+
 /**
  * Offering middleware; obtains the offering with specified ID from the database.
+ * The offering has sub-document population of the displayName for the creator, interested array, and rater array, as well as the offering's photo's source.
  * Writes an error back to the user if the offering is not found.
  *
  * @method offeringByID
@@ -268,10 +268,10 @@ exports.offeringByID = function(req, res, next, id) {
 
 
 /**
- * Offering authorization middleware; checks that the logged in user is also the offering's creator.
+ * Offering authorization middleware; checks that the logged-in user is also the offering's creator.
  * Writes an error back to the user if they lack authorization.
  *
- * @method addInterested
+ * @method hasAuthorization
  * @param req {Object} 
  * @param res {Object} 
  * @param next {Function} 

@@ -1,7 +1,16 @@
 'use strict';
 
-//Setting up route
-angular.module('photos').config(['$stateProvider',
+/**
+ * Configures the Photos module.
+ * Adds the client routes to the $stateProvider.
+ * 
+ * @module Photos
+ * @submodule Photos-Client
+ * @class config
+ * @param $stateProvider {Object}
+ * @return nothing
+ */
+ angular.module('photos').config(['$stateProvider',
 	function($stateProvider) {
 		// Photos state routing
 		$stateProvider.

@@ -5,7 +5,7 @@
  * Adds Offering menu items to the top menu bar.
  * 
  * @module Offerings
- * @submodule Client
+ * @submodule Offerings-Client
  * @class run
  * @param Menus {service}
  * @return nothing
