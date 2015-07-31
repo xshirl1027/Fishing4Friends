@@ -376,13 +376,14 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 	function() {
 		return {
 			restrict : 'A',
-			template : '<ul class="rating"><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">\u2605</li></ul>',
+			template : '<ul class="rating"><li ng-repeat="star in stars" ng-class="star">\u2605</li></ul>',
 			scope : {
 				ratingValue : '=',
 				max : '=',
-				onRatingSelected : '&'
+				//onRatingSelected : '&'
 			},
 			link : function(scope, elem, attrs) {
+				
 				var updateStars = function() {
 					scope.stars = [];
 					for ( var i = 0; i < scope.max; i++) {
@@ -392,12 +393,12 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 					}
 				};
 				
-				scope.toggle = function(index) {
+				/*scope.toggle = function(index) {
 					scope.ratingValue = index + 1;
 					scope.onRatingSelected({
 						rating : index + 1
 					});
-				};
+				};*/
 				
 				scope.$watch('ratingValue',
 					function(oldVal, newVal) {

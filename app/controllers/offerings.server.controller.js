@@ -160,7 +160,7 @@ exports.list = function(req, res) {
 			break;
 			
 			default:
-			Offering.find({ $text: { $search: val }}).sort('-created').exec(offeringsErr);
+			Offering.find({ $text: { $search: val }}).sort('-created').exec(offeringsErr);			
 		}
 	}
 	/*

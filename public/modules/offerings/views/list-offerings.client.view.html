@@ -37,8 +37,8 @@
 		<a data-ng-repeat="offering in offerings | orderBy: sorting : descend" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item">
 			<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h3>
 			<h4 class="list-group-item-heading">Price: ${{offering.price}}</h4>
-			<h5 class="list-group-item-heading">Rating:
-				<span class="star-rating" star-rating rating-value="offering.rating.score" data-max="5"></span>
+			<h5 class="list-group-item-heading">
+				<span star-rating rating-value="offering.rating.score" data-max="5"></span>
 				({{offering.rating.comments.length}} Comments)
 			</h4>
             <p data-ng-bind="offering.description"></p>

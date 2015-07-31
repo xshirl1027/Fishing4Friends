@@ -110,8 +110,8 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 					i++;
 				}
 
-				// This is the default, but would rather go back to the offering/.../view page. 
-				$location.path('ratings/' + response._id);
+				// Route back to offering/.../view page. 
+				$location.path('offerings/' + offering._id);
 
 				// Clear form fields
 				$scope.comment = '';
@@ -210,7 +210,7 @@ angular.module('ratings').controller('RatingsController', ['$scope', '$statePara
 	function() {
 		return {
 			restrict : 'A',
-			template : '<ul class="rating"><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">\u2605</li></ul>',
+			template : '<ul class="rating"><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" STYLE="cursor: pointer">\u2605</li></ul>',
 			scope : {
 				ratingValue : '=',
 				max : '=',

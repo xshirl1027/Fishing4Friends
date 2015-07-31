@@ -14,7 +14,7 @@
 							<a href="#" class="thumbnail">
 								<img ng-show="photo.src" ng-src="{{photo.src}}" />
 								<!-- If the user has not uploaded a profile pic, display the alternate: -->
-					<span class="empty" ng-show="!photo.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
+								<span class="empty" ng-show="!photo.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
 							</a>
 						</div>
 					</div>
@@ -43,9 +43,15 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
+			
 			<a href='/#!/offerings/{{offering._id}}'>
-				<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+				<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h2>
 			</a>
+			<h4 class="list-group-item-heading">Price: ${{offering.price}}</h4>
+			<h5 class="list-group-item-heading">
+				<span class="star-rating" star-rating rating-value="offering.rating.score" data-max="5"></span>
+				({{offering.rating.comments.length}} Comments)
+			</h5>
             <p data-ng-bind="offering.description"></p>
 
 
@@ -76,8 +82,14 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
-			<div class="star-rating" star-rating rating-value="offering.rating.score" data-max="5"></div>
+			<a href='/#!/offerings/{{offering._id}}'>
+				<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h2>
+			</a>
+			<h4 class="list-group-item-heading">Price: ${{offering.price}}</h4>
+			<h5 class="list-group-item-heading">
+				<span class="star-rating" star-rating rating-value="offering.rating.score" data-max="5"></span>
+				({{offering.rating.comments.length}} Comments)
+			</h5>
             <p data-ng-bind="offering.description"></p>
 			
 			<!-- This produces the icon to prompt the user to rate the offering. -->
@@ -101,7 +113,14 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="offering.name"></h4>
+			<a href='/#!/offerings/{{offering._id}}'>
+				<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h2>
+			</a>
+			<h4 class="list-group-item-heading">Price: ${{offering.price}}</h4>
+			<h5 class="list-group-item-heading">
+				<span class="star-rating" star-rating rating-value="offering.rating.score" data-max="5"></span>
+				({{offering.rating.comments.length}} Comments)
+			</h5>
             <p data-ng-bind="offering.description"></p>
 			
 			<div class="pull-right" data-ng-show="((authentication.user) && !(authentication.user._id == offering.user._id))">
