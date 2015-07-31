@@ -27,7 +27,7 @@
 				Posted on
 				<span data-ng-bind="message.created | date:'medium'"></span>
 				by
-				<span data-ng-bind="message.user.displayName"></span>
+				<span><a class='userprofilelink' href='/#!/users/profile/{{message.user._id}}'>{{message.user.displayName}}</a></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4>			
 			</div>

@@ -20,7 +20,7 @@
 			Posted on
 			<span data-ng-bind="messageboard.created | date:'mediumDate'"></span>
 			by
-			<span data-ng-bind="messageboard.user.displayName"></span>
+			<span><a class='userprofilelink' href='/#!/users/profile/{{messageboard.user._id}}'>{{messageboard.user.displayName}}</a></span>
 		</em>
 	</small>
 
