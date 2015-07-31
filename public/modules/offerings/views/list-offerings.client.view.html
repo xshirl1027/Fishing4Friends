@@ -35,6 +35,10 @@
     <div class="list-group">
         <!--a data-ng-repeat="offering in offerings | filter: {price : exactPrice}" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item"-->
 		<a data-ng-repeat="offering in offerings | orderBy: sorting : descend" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item">
+			    <div >
+			        <img class="pull-right thumbnail" style="max-height:120px" ng-show="offering.offering_pic.src" 
+			        data-ng-src="{{offering.offering_pic.src}}" />
+			    </div>
 			<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h3>
 			<h4 class="list-group-item-heading">Price: ${{offering.price}}</h4>
 			<h5 class="list-group-item-heading">
@@ -49,6 +53,7 @@
 				by
 				<span><a class='userprofilelink' href='/#!/users/profile/{{offering.user._id}}'>{{offering.user.displayName}}</a></span>
 			</small>
+
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!offerings.$resolved || offerings.length">

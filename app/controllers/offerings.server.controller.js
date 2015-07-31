@@ -139,28 +139,28 @@ exports.list = function(req, res) {
 	
 	// if no search key is specified, get full list of offerings, since no query is specified
 	if (keyNames.length === 0) {
-		Offering.find().sort('-created').populate('user', 'displayName').exec(offeringsErr);
+		Offering.find().sort('-created').populate('user', 'displayName').populate('offering_pic','src').exec(offeringsErr);
 	}
 	else{
 		switch(keyNames[0]){
 			case 'price':
-			Offering.where('price').lte(val).sort('-created').exec(offeringsErr);
+			Offering.where('price').lte(val).sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
 			case 'user':
-			Offering.find().where('user').equals(val).populate('interested', 'displayName').sort('-created').exec(offeringsErr);
+			Offering.find().where('user').equals(val).populate('interested', 'displayName').populate('offering_pic','src').sort('-created').exec(offeringsErr);
 			break;
 			
 			case 'rater':
-			Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
+			Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
 			case 'interested':
-			Offering.find({'interested': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
+			Offering.find({'interested': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
 			default:
-			Offering.find({ $text: { $search: val }}).sort('-created').exec(offeringsErr);			
+			Offering.find({ $text: { $search: val }}).sort('-created').populate('offering_pic','src').exec(offeringsErr);			
 		}
 	}
 	/*
