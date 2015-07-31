@@ -34,6 +34,11 @@ var MessageSchema = new Schema({
 		type: String,
 		default: '',
 		trim: true
+	},
+	sentby:{
+		type: String,
+		default: '',
+		trim: true
 	}
 });
 

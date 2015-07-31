@@ -4,14 +4,14 @@
 angular.module('messages').controller('MessagesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messages',
 	function($scope, $stateParams, $location, Authentication, Messages) {
 		$scope.authentication = Authentication;
-
 		// Create new Message
-		$scope.create = function() {
+		$scope.createreply = function() {
 			// Create new Message object
 			var message = new Messages ({
 				name: this.name,
 				body: this.body,
-				receiving: $stateParams.userID
+				receiving: $stateParams.userId,
+				sentby: $scope.authentication.user._id
 			});
 
 			// Redirect after save
@@ -25,6 +25,29 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			});
 		};
 
+		// Create new Message
+		$scope.create = function() {
+			// Create new Message object
+
+			var message = new Messages ({
+				name: this.name,
+				body: this.body,
+				receiving: $stateParams.userId,
+				sentby: $scope.authentication.user._id
+			});
+
+			// Redirect after save
+			message.$save(function(response) {
+				$location.path('messages/' + response._id);
+
+				// Clear form fields
+				$scope.name = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		
 		// Remove existing Message
 		$scope.remove = function(message) {
 			if ( message ) { 
@@ -70,7 +93,10 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			console.log($scope.authentication.user._id);
 			$scope.messages = Messages.query({'receiving':$scope.authentication.user._id});
 		};
-		
+		$scope.findconvo = function() {
+			$scope.sent = Messages.query({'receiving':$stateParams.userId},{'user':$scope.authentication.user});
+			$scope.received= Messages.query({'sentby':$stateParams.userId}, {'receiving':$scope.authentication.user._id});
+		};
 		// Find existing Message
 		$scope.findOne = function() {
 			$scope.message = Messages.get({ 
