@@ -12,9 +12,8 @@
 					<div class="row">
 						<div class="col-xs-6 col-md-3">
 							<a href="#" class="thumbnail">
-								<img ng-show="photo.src" ng-src="{{photo.src}}" />
 								<!-- If the user has not uploaded a profile pic, display the alternate: -->
-								<span class="empty" ng-show="!photo.src"><img src="/modules/users/img/stunned.jpg" alt="nice pic here"></span>
+								<img ng-src="{{photo.src || '/modules/users/img/stunned.jpg'}}" />
 							</a>
 						</div>
 					</div>
@@ -24,10 +23,9 @@
 				
 
 		<!-- This includes the HTML for the modal view for profile photo upload. -->
-		<!-- <div ng-show="{{user._id}} == {{$$nextSibling.authentication.user._id}" ng-include="'/modules/core/views/modal-upload.client.view.html'"></div> -->
-	<!-- 	this line works, but throws errors
-		<div ng-show="{user:_id} == {$$nextSibling.authentication.user:_id}" ng-include="'/modules/core/views/modal-upload.client.view.html'"></div>
- -->
+		<div ng-include="'/modules/core/views/modal-upload.client.view.html'"></div>
+
+
 		</div>
 	</div>
 </section>
