@@ -1,4 +1,4 @@
-<section data-ng-controller="MessagesController" data-ng-init="find()">
+<section data-ng-controller="MessagesController" data-ng-init="findconvo()">
 	<!--<div class="page-header">
 		<h1 data-ng-bind="message.name"></h1>
 		<h1 data-ng-bind="message.body"></h1>
@@ -22,7 +22,16 @@
 	
 	
 		<div class="list-group">
-			<div data-ng-repeat="message in messages" class="list-group-item">
+			<div data-ng-repeat="message in received" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="message.created | date:'medium'"></span>
+				by
+				<span><a class='userprofilelink' href='/#!/users/profile/{{message.user._id}}'>{{message.user.displayName}}</a></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4>			
+			</div>
+			<div data-ng-repeat="message in sent" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="message.created | date:'medium'"></span>
