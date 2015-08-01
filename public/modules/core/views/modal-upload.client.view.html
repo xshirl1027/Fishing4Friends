@@ -15,15 +15,16 @@
 			            
 			            <input id="inputImage" type="file" accept="image/*" image="image"/>
 			            
-			            <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/>
+			            <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" style="max-width:560px"/>
 
 
 				        <div class="modal-footer">
-				            <button class="btn btn-primary" type="submit" ng-click="photouploaded=true ; create(image)" >Add</button>
-				            <button class="btn btn-secondary" type="reset">Clear</button>
+				            <button class="btn btn-primary" ng-hide="photouploaded" type="submit" ng-click="ok() ; create(image)" >Add</button>
+
+				            <button class="btn btn-secondary" ng-hide="photouploaded" type="reset">Clear</button>
 				    	<!--  // buttons below should alternate only when ADD button above has been pressed.  -->
 	      				    <button class="btn btn-warning" ng-hide="photouploaded" ng-click="cancel()">Cancel</button>
-	            			<button class="btn btn-primary" ng-show="photouploaded" ng-click="ok()">OK</button>
+
 	        			</div>
 
 			        </div>
