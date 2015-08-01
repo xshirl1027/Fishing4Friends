@@ -4,8 +4,8 @@
         <div class='heading'><center>Messageboards</center></div>
 		<center>Forge friendships. Organize fishing Trips. Find great deals on gears and equipments. BNBR rule applies.</center>
     </div>
-    <div class="list-group">
-        <a class="list-group-item messageboard" data-ng-repeat="messageboard in messageboards | orderBy:created:reverse" data-ng-href="#!/messageboards/{{messageboard._id}}" >
+    <div class="list-group messageboardpanel">
+        <a class="list-group-item" data-ng-repeat="messageboard in messageboards | orderBy:created:reverse" data-ng-href="#!/messageboards/{{messageboard._id}}" >
 			
 			<div class="list-group-item-text">
 				Posted on

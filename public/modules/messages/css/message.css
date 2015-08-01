@@ -1,9 +1,19 @@
 .one{
+	
 	margin-top:0;
 	width:45%;
 	
 }  
+.msgreceived{
+	background-color:#F5F6CE;
+	padding:5px;
+}
+.msgsent{
+	background-color:#F5F6CE;
+	padding:5px;
+}
 .two{
 	margin-top:0;
 	width:45%;
+	
 }  

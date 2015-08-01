@@ -1,16 +1,5 @@
-.panel{
- background-color:#F5ECCE;
-}
-.panel-head{
-	font-weight:bold;
-	border-color:#084B8A;
-}
-.panel-body{
+.threadpanel{
 	border:solid;
 	border-width:1px;
-	border-color:#084B8A;
-}
-.small{
-	font-weight:light;
-	font-color:grey;
+	background-color:#084B8A;
 }
