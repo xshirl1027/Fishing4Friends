@@ -1,13 +1,21 @@
 <section data-ng-controller="MessagesController" data-ng-init="findOne2()">
     <div class="page-header">
-        <h1>Conversations</h1>
+        <h1>Received</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="message in messages| unique:'user'" data-ng-href="#!/messages/{{message.user._id}}" class="list-group-item">
+        <a data-ng-repeat="message in received| unique:'user'" data-ng-href="#!/messages/{{message.user._id}}" class="list-group-item">
 			<h3 class="list-group-item-text">{{message.user.displayName}}</h3>
 			
 			<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4>
 			
         </a>
+    </div>
+	<h1>Sent</h1>
+	    <div class="list-group">
+			<a data-ng-repeat="message in sent| unique:'receiving'" data-ng-href="#!/messages/{{message.receiving}}" class="list-group-item">
+
+				<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4>
+				
+			</a>
     </div>
 </section>

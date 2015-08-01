@@ -1,6 +1,9 @@
 .pull-left  {
-	color:#3ADF00;
+	margin-top:0;
+	width:45%;
+	
 }  
 .pull-right {
-	color:red;
+	margin-top:0;
+	width:45%;
 }  
