@@ -16,10 +16,9 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
 			// Redirect after save
 			message.$save(function(response) {
-				$location.path('messages/' + response._id);
+				//$window.location.reload();
 
-				// Clear form fields
-				$scope.name = '';
+
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -40,8 +39,6 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			message.$save(function(response) {
 				$location.path('messages/' + response._id);
 
-				// Clear form fields
-				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -94,8 +91,8 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			$scope.messages = Messages.query({'receiving':$scope.authentication.user._id});
 		};
 		$scope.findconvo = function() {
-			$scope.sent = Messages.query({'receiving':$stateParams.userId},{'user':$scope.authentication.user});
-			$scope.received= Messages.query({'sentby':$stateParams.userId}, {'receiving':$scope.authentication.user._id});
+			$scope.sent= Messages.query({'receiving':$stateParams.userId,'sentby':$scope.authentication.user._id});
+			$scope.received= Messages.query({'sentby':$stateParams.userId,'receiving':$scope.authentication.user._id});
 		};
 		// Find existing Message
 		$scope.findOne = function() {

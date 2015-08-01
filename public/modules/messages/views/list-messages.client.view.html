@@ -1,16 +1,10 @@
 <section data-ng-controller="MessagesController" data-ng-init="findOne2()">
     <div class="page-header">
-        <h1>Messages</h1>
+        <h1>Conversations</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="message in messages" data-ng-href="#!/messages/{{message.user._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="message.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="message.user.displayName"></span>
-				
-			</small>
+        <a data-ng-repeat="message in messages| unique:'user'" data-ng-href="#!/messages/{{message.user._id}}" class="list-group-item">
+			<h3 class="list-group-item-text">{{message.user.displayName}}</h3>
 			
 			<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4>
 			

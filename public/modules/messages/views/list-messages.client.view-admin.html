@@ -1,0 +1,16 @@
+<section data-ng-controller="MessagesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Conversations</h1>
+    </div>
+    <div class="list-group">
+        <div data-ng-repeat="message in messages" class="list-group-item">
+			<h3 class="list-group-item-text">aaaaa{{message.user.displayName}}</h3>
+
+			<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4> 
+
+			<div class="btn btn-primary" title='delete this thread' data-ng-click="remove(message);">
+				<i class="glyphicon glyphicon-trash"></i>
+			</div>
+        </div>
+    </div>
+</section>
