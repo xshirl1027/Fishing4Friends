@@ -3,14 +3,14 @@
 		<h1 data-ng-bind="offering.name"></h1>
 	</div>
 
-	<div class="list-group">
+	<div class="panel panel-default">
 
-		<div class="list-group-item">
+		<div class="panel-body">
 
 		<!-- This produces the buttons for editing the offering, given correct authentication status. -->
 		<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == offering.user._id))">
 			<div ng-show="offering.offering_pic.src">
-				<img data-ng-src="{{offering.offering_pic.src}}" />
+				<img class="thumbnail" data-ng-src="{{offering.offering_pic.src}}" />
 			</div><br>
 			
 			<a class="btn btn-primary" href="/#!/offerings/{{offering._id}}/edit">
@@ -45,6 +45,7 @@
 		<h4 class="list-group-item-heading">${{offering.price}}</h3>
 		<p data-ng-bind="offering.description"></p>
 
+		<!-- <small > -->
 		<small class="list-group-item-text">
 			<em class="text-muted">
 				Posted on

@@ -119,6 +119,12 @@
 	</div>
 	<div class="list-group">
 		<a class="list-group-item" data-ng-repeat="offering in offerings" data-ng-href="#!/offerings/{{offering._id}}">
+
+			    <div >
+			        <img class="pull-right thumbnail" style="max-height:120px" ng-show="offering.offering_pic.src" 
+			        data-ng-src="{{offering.offering_pic.src}}" />
+			    </div>
+		
 			<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h3>
 			<h4 class="list-group-item-heading">Price: ${{offering.price}}</h4>
 			<h5 class="list-group-item-heading">Rating:
