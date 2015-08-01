@@ -37,6 +37,10 @@
     <div class="list-group">
 
         <div data-ng-repeat="offering in offerings"  class="list-group-item">
+		    <div >
+		        <img class="pull-right thumbnail" style="max-height:120px" ng-show="offering.offering_pic.src" 
+		        data-ng-src="{{offering.offering_pic.src}}" />
+		    </div><br>
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
@@ -76,6 +80,10 @@
     </div>
 	<div class="list-group">
 		<div class="list-group-item" data-ng-repeat="offering in offerings">
+		    <div >
+		        <img class="pull-right thumbnail" style="max-height:120px" ng-show="offering.offering_pic.src" 
+		        data-ng-src="{{offering.offering_pic.src}}" />
+		    </div><br>
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
@@ -107,6 +115,10 @@
     </div>
 	<div class="list-group">
 		<div class="list-group-item" data-ng-repeat="offering in offerings">
+		    <div >
+		        <img class="pull-right thumbnail" style="max-height:120px" ng-show="offering.offering_pic.src" 
+		        data-ng-src="{{offering.offering_pic.src}}" />
+		    </div><br>
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>

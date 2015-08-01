@@ -61,4 +61,5 @@ var PhotoSchema = new Schema({
 	}
 });
 
+PhotoSchema.set('autoIndex', false);
 mongoose.model('Photo', PhotoSchema);

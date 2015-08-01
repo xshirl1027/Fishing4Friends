@@ -42,4 +42,5 @@ var MessageSchema = new Schema({
 	}
 });
 
+MessageSchema.set('autoIndex', false);
 mongoose.model('Message', MessageSchema);

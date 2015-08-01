@@ -152,4 +152,5 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
 	});
 };
 
+UserSchema.set('autoIndex', false);
 mongoose.model('User', UserSchema);

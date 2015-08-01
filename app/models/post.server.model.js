@@ -31,4 +31,5 @@ var PostSchema = new Schema({
 	}
 });
 
+PostSchema.set('autoIndex', false);
 mongoose.model('Post', PostSchema);

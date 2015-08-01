@@ -37,4 +37,5 @@ var ThreadSchema = new Schema({
 	}
 });
 
+ThreadSchema.set('autoIndex', false);
 mongoose.model('Thread', ThreadSchema);

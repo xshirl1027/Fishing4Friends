@@ -139,46 +139,30 @@ exports.list = function(req, res) {
 	
 	// if no search key is specified, get full list of offerings, since no query is specified
 	if (keyNames.length === 0) {
-		Offering.find().sort('-created').populate('user', 'displayName').exec(offeringsErr);
+		Offering.find().sort('-created').populate('user', 'displayName').populate('offering_pic','src').exec(offeringsErr);
 	}
 	else{
 		switch(keyNames[0]){
-			case 'price':
-			Offering.where('price').lte(val).sort('-created').exec(offeringsErr);
+			case 'price': //user input
+			Offering.where('price').lte(val).sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
-			case 'user':
-			Offering.find().where('user').equals(val).populate('interested', 'displayName').sort('-created').exec(offeringsErr);
+			case 'user': //not user input (user_id)
+			Offering.find({'user' : val}).populate('interested', 'displayName').populate('offering_pic','src').sort('-created').exec(offeringsErr);
 			break;
 			
-			case 'rater':
-			Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
+			case 'rater': //not user input (user_id)
+			Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
-			case 'interested':
-			Offering.find({'interested': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
+			case 'interested': //not user input (user_id)
+			Offering.find({'interested': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
 			default:
-			Offering.find({ $text: { $search: val }}).sort('-created').exec(offeringsErr);			
+			Offering.find({ $text: { $search: val }}).sort('-created').populate('offering_pic','src').exec(offeringsErr);			
 		}
 	}
-	/*
-	// if first key is price, get all offerings with price <= the value in the pair
- 	else if ( === 'price'){
- 		Offering.where('price').lte(val).sort('-created').exec(offeringsErr);
- 	}
-	// search the list of offerings with the first key:value pair in the query
-	else if (keyNames[0] === 'user') {
-		Offering.find().where('user').equals(val).populate('interested', 'displayName').sort('-created').exec(offeringsErr);
-	}
-	else if (keyNames[0] === 'rater'){
-		Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
-	}
-	// otherwise search index 
-	else {
-		Offering.find({ $text: { $search: req.query[keyNames[0]] }}).sort('-created').exec(offeringsErr);
-	}*/
 };
 
 
