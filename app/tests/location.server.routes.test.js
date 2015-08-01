@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, location;
+var credentials, user, lction;
 
 /**
  * Location routes tests
@@ -37,7 +37,7 @@ describe('Location CRUD tests', function() {
 
 		// Save a user to the test db and create new Location
 		user.save(function() {
-			location = {
+			lction = {
 				name: 'Location Name'
 			};
 
@@ -58,7 +58,7 @@ describe('Location CRUD tests', function() {
 
 				// Save a new Location
 				agent.post('/locations')
-					.send(location)
+					.send(lction)
 					.expect(200)
 					.end(function(locationSaveErr, locationSaveRes) {
 						// Handle Location save error

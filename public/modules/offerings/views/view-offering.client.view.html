@@ -7,11 +7,14 @@
 
 		<div class="panel-body">
 
+		<div class="pull-right" >
+			<div ng-show="offering.offering_pic.src">
+				<img class="thumbnail" data-ng-src="{{offering.offering_pic.src}}"  style="max-width:500px"/>
+			</div>
+		</div><br>
+
 		<!-- This produces the buttons for editing the offering, given correct authentication status. -->
 		<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == offering.user._id))">
-			<div ng-show="offering.offering_pic.src">
-				<img class="thumbnail" data-ng-src="{{offering.offering_pic.src}}" />
-			</div><br>
 			
 			<a class="btn btn-primary" href="/#!/offerings/{{offering._id}}/edit">
 				<i class="glyphicon glyphicon-edit"></i>
