@@ -64,4 +64,5 @@ var RatingSchema = new Schema({
 
 });
 
+RatingSchema.set('autoIndex', false);
 mongoose.model('Rating', RatingSchema);

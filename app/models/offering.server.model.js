@@ -152,6 +152,7 @@ var OfferingSchema = new Schema({
 	}
 });
 
+OfferingSchema.set('autoIndex', false);
 OfferingSchema.index({ '$**': 'text' });
 mongoose.model('Offering', OfferingSchema);
 

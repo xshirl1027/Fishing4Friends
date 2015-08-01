@@ -37,4 +37,5 @@ var LocationSchema = new Schema({
 	}
 });
 
+LocationSchema.set('autoIndex', false);
 mongoose.model('Location', LocationSchema);

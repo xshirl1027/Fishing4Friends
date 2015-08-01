@@ -143,19 +143,19 @@ exports.list = function(req, res) {
 	}
 	else{
 		switch(keyNames[0]){
-			case 'price':
+			case 'price': //user input
 			Offering.where('price').lte(val).sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
-			case 'user':
-			Offering.find().where('user').equals(val).populate('interested', 'displayName').populate('offering_pic','src').sort('-created').exec(offeringsErr);
+			case 'user': //not user input (user_id)
+			Offering.find({'user' : val}).populate('interested', 'displayName').populate('offering_pic','src').sort('-created').exec(offeringsErr);
 			break;
 			
-			case 'rater':
+			case 'rater': //not user input (user_id)
 			Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
-			case 'interested':
+			case 'interested': //not user input (user_id)
 			Offering.find({'interested': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
@@ -163,22 +163,6 @@ exports.list = function(req, res) {
 			Offering.find({ $text: { $search: val }}).sort('-created').populate('offering_pic','src').exec(offeringsErr);			
 		}
 	}
-	/*
-	// if first key is price, get all offerings with price <= the value in the pair
- 	else if ( === 'price'){
- 		Offering.where('price').lte(val).sort('-created').exec(offeringsErr);
- 	}
-	// search the list of offerings with the first key:value pair in the query
-	else if (keyNames[0] === 'user') {
-		Offering.find().where('user').equals(val).populate('interested', 'displayName').sort('-created').exec(offeringsErr);
-	}
-	else if (keyNames[0] === 'rater'){
-		Offering.find({'rater': val}).populate('user', 'displayName').sort('-created').exec(offeringsErr);
-	}
-	// otherwise search index 
-	else {
-		Offering.find({ $text: { $search: req.query[keyNames[0]] }}).sort('-created').exec(offeringsErr);
-	}*/
 };
 
 
