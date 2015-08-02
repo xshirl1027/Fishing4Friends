@@ -11,9 +11,8 @@ var mongoose = require('mongoose'),
  */
 var ThreadSchema = new Schema({
 	messageboardId:{
-		type: String,
-		default: '',
-		trim: true
+		type: Schema.Types.ObjectId,
+		ref: 'Messageboard'
 	},
 	name: {
 		type: String,

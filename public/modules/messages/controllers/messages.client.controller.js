@@ -76,7 +76,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			$scope.messages = Messages.query();
 		};
 		
-				/**
+		 /**
 		 * return all messages sent to the user.
 		 *
 		 * @param none
@@ -85,7 +85,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 		 **/	
 		// Find existing Thread
 		$scope.findOne2 = function() {
-			console.log($scope.authentication.user._id);
+			//console.log($scope.authentication.user._id);
 			$scope.received = Messages.query({'receiving':$scope.authentication.user._id});
 			$scope.sent = Messages.query({'sentby':$scope.authentication.user._id});
 		};
@@ -94,6 +94,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			$scope.received= Messages.query({'sentby':$stateParams.userId,'receiving':$scope.authentication.user._id});
 			
 		};
+		
 		// Find existing Message
 		$scope.findOne = function() {
 			$scope.message = Messages.get({ 

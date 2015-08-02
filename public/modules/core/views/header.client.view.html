@@ -58,7 +58,8 @@
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
-			<a href="/#!/messages" class="navbar-brand">Messages <span class="badge">1</span></a>
+			<a href="/#!/messages" data-ng-init="countUnreadMsgs()" data-ng-click='clear()' class="navbar-brand">
+			Messages<span class="badge" style="background-color: red" data-ng-bind="unreadMsgs.Total"></span></a>
 		</ul>
 	</nav>
 </div>

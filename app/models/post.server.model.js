@@ -11,9 +11,8 @@ var mongoose = require('mongoose'),
  */
 var PostSchema = new Schema({
 	threadid:{
-		type: String,
-		default: '',
-		trim: true
+		type: Schema.Types.ObjectId,
+		ref: 'Thread'
 	},
 	name: {
 		type: String,

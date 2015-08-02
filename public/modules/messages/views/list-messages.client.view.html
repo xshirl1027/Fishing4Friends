@@ -12,7 +12,8 @@
     </div>
 	<h1>Sent</h1>
 	    <div class="list-group">
-			<a data-ng-repeat="message in sent| unique:'receiving'" data-ng-href="#!/messages/{{message.receiving}}" class="list-group-item">
+			<a data-ng-repeat="message in sent| unique:'receiving'" data-ng-href="#!/messages/{{message.receiving}}"
+				class="list-group-item">
 
 				<h4 class="list-group-item-heading" data-ng-bind="message.name"></h4>
 				
