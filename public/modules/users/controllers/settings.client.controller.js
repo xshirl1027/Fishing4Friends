@@ -12,8 +12,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 		//Get recommended messageBoards and Offerings 
 		$scope.getRecommendations = function(){
 			var words = $scope.user.interests;
-			$scope.offerings = Offerings.query({ keywords : words });
-			$scope.posts = Messageboards.query({ keywords : words });
+			$scope.offerings = Offerings.query({ input : words });
+			$scope.posts = Messageboards.query({ input : words });
 		};
 		
 		// Check if there are additional accounts 

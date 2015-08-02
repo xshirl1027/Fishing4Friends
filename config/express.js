@@ -9,6 +9,7 @@ var fs = require('fs'),
 	express = require('express'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
+	expressValidator = require('express-validator'),
 	session = require('express-session'),
 	compress = require('compression'),
 	methodOverride = require('method-override'),
@@ -21,6 +22,7 @@ var fs = require('fs'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
+	csurf = require('csurf'),
 	path = require('path');
 
 module.exports = function(db) {
@@ -83,6 +85,7 @@ module.exports = function(db) {
 	app.use(bodyParser.json({
 		limit: '5mb'
 	}));
+	app.use(expressValidator());
 	app.use(methodOverride());
 
 	// CookieParser should be above session
@@ -102,7 +105,15 @@ module.exports = function(db) {
 	// use passport session
 	app.use(passport.initialize());
 	app.use(passport.session());
-
+	
+	// add csrf should be added after cookie and session initialization.
+	// Otherwise you will get 'Error: misconfigured csrf'
+	app.use(csurf());
+	app.use(function(req, res, next) {
+		res.cookie('XSRF-TOKEN', req.csrfToken());
+		next();
+	});
+	
 	// connect flash for flash messages
 	app.use(flash());
 

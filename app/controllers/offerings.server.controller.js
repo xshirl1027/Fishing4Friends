@@ -34,6 +34,9 @@ var mongoose = require('mongoose'),
  * @return nothing
  */
 exports.create = function(req, res) {
+	req.sanitize('name').escape();
+	req.sanitize('description').escape();
+	
 	var offering = new Offering(req.body);
 	// console.log('POST request body is ',req.body);
 	offering.user = req.user;
@@ -73,7 +76,10 @@ exports.read = function(req, res) {
  * @return nothing
  */
 exports.update = function(req, res) {
-	var offering = req.offering ;
+	req.sanitize('name').escape();
+	req.sanitize('description').escape();
+	
+	var offering = req.offering;
 
 	offering = _.extend(offering , req.body);
 
@@ -98,7 +104,7 @@ exports.update = function(req, res) {
  * @return nothing
  */
 exports.delete = function(req, res) {
-	var offering = req.offering ;
+	var offering = req.offering;
 
 	offering.remove(function(err) {
 		if (err) {
@@ -159,8 +165,10 @@ exports.list = function(req, res) {
 			Offering.find({'interested': val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
-			default:
-			Offering.find({ $text: { $search: val }}).sort('-created').populate('offering_pic','src').exec(offeringsErr);			
+			default: //user input
+			req.sanitize('input').escape();
+			Offering.find({ $text: { $search: val }}).sort('-created').populate('offering_pic','src').exec(offeringsErr);
+			console.log(val);
 		}
 	}
 };

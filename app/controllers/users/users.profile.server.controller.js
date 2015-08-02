@@ -14,6 +14,7 @@ var _ = require('lodash'),
  */
 exports.update = function(req, res) {
 	// Init Variables
+	req.sanitize('interests').escape();
 	var user = req.user;
 	var message = null;
 

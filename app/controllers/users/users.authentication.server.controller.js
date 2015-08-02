@@ -17,6 +17,7 @@ exports.signup = function(req, res) {
 	delete req.body.roles;
 
 	// Init Variables
+	req.sanitize('interests').escape();
 	var user = new User(req.body);
 	var message = null;
 

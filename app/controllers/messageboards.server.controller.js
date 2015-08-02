@@ -21,6 +21,9 @@ var mongoose = require('mongoose'),
  * @return nothing
  **/
 exports.create = function(req, res) {
+	req.sanitize('name').escape(); //escape user input
+	req.sanitize('message').escape(); //escape user input
+	
 	var messageboard = new Messageboard(req.body);
 	messageboard.user = req.user;
 
@@ -54,6 +57,9 @@ exports.read = function(req, res) {
  * @return nothing
  */
 exports.update = function(req, res) {
+	
+	req.sanitize('name').escape(); //escape user input
+	req.sanitize('message').escape(); //escape user input
 	var messageboard = req.messageboard ;
 
 	messageboard = _.extend(messageboard , req.body);
@@ -117,6 +123,7 @@ exports.list = function(req, res) {
 		Messageboard.find().sort('-created').populate('user', 'displayName').exec(messageboardsErr);
 	}
 	else{
+		req.sanitize('input').escape();
 		Messageboard.find({ $text: { $search: val }}).sort('-created').exec(messageboardsErr);
 	}
 };
