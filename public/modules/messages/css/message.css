@@ -1,19 +1,23 @@
+
 .one{
-	
-	margin-top:0;
+	margin-top:2%;
 	width:45%;
-	
 }  
+.msgheader{
+	color:#01DFD7;
+}
 .msgreceived{
-	background-color:#F5F6CE;
 	padding:5px;
 }
 .msgsent{
-	background-color:#F5F6CE;
 	padding:5px;
 }
+.replymsg{
+		background-color:#E0F8F1;
+		padding:5px;
+}
 .two{
-	margin-top:0;
+	margin-top:2%;
 	width:45%;
-	
+	text-align:right;
 }  

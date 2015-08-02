@@ -1,5 +1,8 @@
+.heading{
+	color:#5F04B4;
+	font-family: "Times New Roman", Times, serif;
+}
 .threadpanel{
-	border:solid;
+	background-color:#58ACFA;
 	border-width:1px;
-	background-color:#084B8A;
 }
