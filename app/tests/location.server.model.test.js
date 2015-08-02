@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var user, location;
+var user, lction;
 
 /**
  * Unit tests
@@ -28,8 +28,10 @@ describe('Location Model Unit Tests:', function() {
 		});
 
 		user.save(function() { 
-			location = new Location({
+			lction = new Location({
 				name: 'Location Name',
+				latitude: '0',
+				longitude: '0',
 				user: user
 			});
 
@@ -39,16 +41,16 @@ describe('Location Model Unit Tests:', function() {
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
-			return location.save(function(err) {
+			return lction.save(function(err) {
 				should.not.exist(err);
 				done();
 			});
 		});
 
 		it('should be able to show an error when try to save without name', function(done) { 
-			location.name = '';
+			lction.name = '';
 
-			return location.save(function(err) {
+			return lction.save(function(err) {
 				should.exist(err);
 				done();
 			});

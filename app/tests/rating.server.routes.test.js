@@ -38,7 +38,7 @@ describe('Rating CRUD tests', function() {
 		// Save a user to the test db and create new Rating
 		user.save(function() {
 			rating = {
-				name: 'Rating Name'
+				comment: 'Rating Name'
 			};
 
 			done();
@@ -75,7 +75,7 @@ describe('Rating CRUD tests', function() {
 
 								// Set assertions
 								(ratings[0].user._id).should.equal(userId);
-								(ratings[0].name).should.match('Rating Name');
+								(ratings[0].comment).should.match('Rating Name');
 
 								// Call the assertion callback
 								done();
@@ -94,33 +94,33 @@ describe('Rating CRUD tests', function() {
 			});
 	});
 
-	it('should not be able to save Rating instance if no name is provided', function(done) {
-		// Invalidate name field
-		rating.name = '';
+	// it('should not be able to save Rating instance if no name is provided', function(done) {
+	// 	// Invalidate name field
+	// 	rating.name = '';
 
-		agent.post('/auth/signin')
-			.send(credentials)
-			.expect(200)
-			.end(function(signinErr, signinRes) {
-				// Handle signin error
-				if (signinErr) done(signinErr);
+	// 	agent.post('/auth/signin')
+	// 		.send(credentials)
+	// 		.expect(200)
+	// 		.end(function(signinErr, signinRes) {
+	// 			// Handle signin error
+	// 			if (signinErr) done(signinErr);
 
-				// Get the userId
-				var userId = user.id;
+	// 			// Get the userId
+	// 			var userId = user.id;
 
-				// Save a new Rating
-				agent.post('/ratings')
-					.send(rating)
-					.expect(400)
-					.end(function(ratingSaveErr, ratingSaveRes) {
-						// Set message assertion
-						(ratingSaveRes.body.message).should.match('Please fill Rating name');
+	// 			// Save a new Rating
+	// 			agent.post('/ratings')
+	// 				.send(rating)
+	// 				.expect(400)
+	// 				.end(function(ratingSaveErr, ratingSaveRes) {
+	// 					// Set message assertion
+	// 					(ratingSaveRes.body.message).should.match('Please fill Rating name');
 						
-						// Handle Rating save error
-						done(ratingSaveErr);
-					});
-			});
-	});
+	// 					// Handle Rating save error
+	// 					done(ratingSaveErr);
+	// 				});
+	// 		});
+	// });
 
 	it('should be able to update Rating instance if signed in', function(done) {
 		agent.post('/auth/signin')
@@ -142,7 +142,7 @@ describe('Rating CRUD tests', function() {
 						if (ratingSaveErr) done(ratingSaveErr);
 
 						// Update Rating name
-						rating.name = 'WHY YOU GOTTA BE SO MEAN?';
+						rating.comment = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update existing Rating
 						agent.put('/ratings/' + ratingSaveRes.body._id)
@@ -154,7 +154,7 @@ describe('Rating CRUD tests', function() {
 
 								// Set assertions
 								(ratingUpdateRes.body._id).should.equal(ratingSaveRes.body._id);
-								(ratingUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+								(ratingUpdateRes.body.comment).should.match('WHY YOU GOTTA BE SO MEAN?');
 
 								// Call the assertion callback
 								done();
@@ -192,7 +192,7 @@ describe('Rating CRUD tests', function() {
 			request(app).get('/ratings/' + ratingObj._id)
 				.end(function(req, res) {
 					// Set assertion
-					res.body.should.be.an.Object.with.property('name', rating.name);
+					res.body.should.be.an.Object.with.property('comment', rating.comment);
 
 					// Call the assertion callback
 					done();

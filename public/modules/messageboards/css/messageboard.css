@@ -1,13 +1,9 @@
-.list-group-item{
-	margin:0.5%;
-	border-color:#084B8A;
-	border-width:2px;
-	background-color:#CEE3F6;
-	margin-bottom:0;
-}
 .heading{
+	color:#5F04B4;
 	font-size:30px;
-	font-family: "Times New Roman", Georgia, Serif;
 	font-weight:bold;
-	color:#084B8A;
+	font-family: "Times New Roman", Times, serif;
+}
+.page-header{
+	color:#0B3861;
 }

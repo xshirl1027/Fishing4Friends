@@ -43,6 +43,7 @@ angular.module('photos').controller('PhotosController', ['$scope', '$stateParams
 			});
 
 			photo.$save(function(response) {
+
 				// Two paths lead to this point: from an offering, or from a user
 				if ($stateParams.offeringId) {
 					// Since the only link to the offering is the $stateParams, we make a new query to the database
@@ -60,6 +61,7 @@ angular.module('photos').controller('PhotosController', ['$scope', '$stateParams
 					// !! Perform any page redirects from here.
 				}
 
+				$scope.photo = response;
 				// Clear form fields
 				$scope.name = '';
 

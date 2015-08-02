@@ -1,11 +1,10 @@
 <section data-ng-controller="ThreadsController" data-ng-init="findOne()">
     <div class="page-header">
-	<h3>topic</h3>
     </div>
 <link rel="stylesheet" href="modules\threads\css\thread.css">
 	<div class="panel panel-primary">
 		<div class="panel-heading">{{thread.name}}</div>
-		<div class="panel-body" style="overflow: auto;"> <span>{{thread.message}}
+		<div class="panel-body postpanelbody" style="overflow: auto;"> <span>{{thread.message}}
 				
 			<div class="pull-right" >
 			<a class="btn btn-primary" title='edit this thread' data-ng-show="((authentication.user) && (authentication.user._id == thread.user._id))" href="/#!/threads/{{thread._id}}/edit">
@@ -15,7 +14,7 @@
 				<i class="glyphicon glyphicon-trash"></i>
 			</a>
 			<a class="btn btn-primary" title='write on this thread' href="/#!/threads/{{thread._id}}/add">
-				<i class="glyphicon glyphicon-plus"></i>
+				reply &nbsp<i class="glyphicon glyphicon-plus"></i>
 			</a>
 			</div>
 			</span>
@@ -37,7 +36,7 @@
 
 	<div class='panel panel-primary'>
 	
-        <div data-ng-repeat="post in posts"  class="panel-body">
+        <div data-ng-repeat="post in posts"  class="panel-body postpanel">
 		<p class="list-group-item-heading" data-ng-bind="post.name"></p>
 			<small class="list-group-item-text">
 				<em class="text-muted">

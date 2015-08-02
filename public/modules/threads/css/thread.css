@@ -1,16 +1,8 @@
-.panel{
- background-color:#F5ECCE;
+.heading{
+	color:#5F04B4;
+	font-family: "Times New Roman", Times, serif;
 }
-.panel-head{
-	font-weight:bold;
-	border-color:#084B8A;
-}
-.panel-body{
-	border:solid;
+.threadpanel{
+	background-color:#58ACFA;
 	border-width:1px;
-	border-color:#084B8A;
-}
-.small{
-	font-weight:light;
-	font-color:grey;
 }

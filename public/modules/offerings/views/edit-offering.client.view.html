@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label class="control-label" for="description">Description</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="offering.description" id="description" class="form-control" placeholder="Description" required>
+                        <textarea data-ng-model="offering.description" id="description" class="form-control" placeholder="Description" required rows="5"></textarea>
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
     </div>
 
     <div >
-        <img ng-show="offering.offering_pic.src" data-ng-src="{{offering.offering_pic.src}}" />
+        <img ng-show="offering.offering_pic.src" data-ng-src="{{offering.offering_pic.src}}" style="max-width:500px"/>
         <img ng-hide="offering.offering_pic.src" src="/modules/users/img/stunned.jpg" >
     </div><br>
 

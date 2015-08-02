@@ -86,15 +86,33 @@ exports.list = function(req, res) {
 		
 		});
 	}else{
-		Message.find().where(keyNames[0]).equals(req.query[keyNames[0]]).sort('-created').populate('user', 'displayName').exec(function(err, Messages){
-			if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+		console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++',keyNames);
+		if (keyNames.length===1){
+			Message.find().where(keyNames[0]).equals(req.query[keyNames[0]])
+			.sort('-created').populate('user', 'displayName').exec(function(err, Messages){
+				if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+				} else {
+					res.jsonp(Messages);
+				}
 			});
-			} else {
-				res.jsonp(Messages);
-			}
-		});
+		}else if (keyNames.length===2){
+			console.log('***************************************************8888');
+			Message.find().where(keyNames[0]).equals(req.query[keyNames[0]])
+			.where(keyNames[1]).equals(req.query[keyNames[1]])
+			.sort('-created')
+			.populate('user', 'displayName').exec(function(err, Messages){
+				if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+				} else {
+					res.jsonp(Messages);
+				}
+			});
+		}
 		
 	}
 };

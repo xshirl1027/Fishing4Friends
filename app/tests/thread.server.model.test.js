@@ -30,6 +30,7 @@ describe('Thread Model Unit Tests:', function() {
 		user.save(function() { 
 			thread = new Thread({
 				name: 'Thread Name',
+				message: 'New Message',
 				user: user
 			});
 

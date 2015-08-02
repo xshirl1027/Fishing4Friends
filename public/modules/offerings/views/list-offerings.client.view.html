@@ -51,7 +51,7 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 				by
-				<span><a class='userprofilelink' href='/#!/users/profile/{{offering.user._id}}'>{{offering.user.displayName}}</a></span>
+				<span data-ng-bind="offering.user.displayName"></span>
 			</small>
 
         </a>

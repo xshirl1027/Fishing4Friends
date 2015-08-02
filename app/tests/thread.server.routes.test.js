@@ -38,7 +38,8 @@ describe('Thread CRUD tests', function() {
 		// Save a user to the test db and create new Thread
 		user.save(function() {
 			thread = {
-				name: 'Thread Name'
+				name: 'Thread Name',
+				message: 'New Message'
 			};
 
 			done();

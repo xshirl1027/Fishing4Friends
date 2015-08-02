@@ -30,6 +30,7 @@ describe('Messageboard Model Unit Tests:', function() {
 		user.save(function() { 
 			messageboard = new Messageboard({
 				name: 'Messageboard Name',
+				message: 'New Message',
 				user: user
 			});
 

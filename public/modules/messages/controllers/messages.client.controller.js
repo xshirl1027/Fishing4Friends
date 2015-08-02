@@ -9,17 +9,15 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 			// Create new Message object
 			var message = new Messages ({
 				name: this.name,
-				body: this.body,
 				receiving: $stateParams.userId,
 				sentby: $scope.authentication.user._id
 			});
 
 			// Redirect after save
 			message.$save(function(response) {
-				$location.path('messages/' + response._id);
+				//$window.location.reload();
 
-				// Clear form fields
-				$scope.name = '';
+
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -31,17 +29,14 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
 			var message = new Messages ({
 				name: this.name,
-				body: this.body,
 				receiving: $stateParams.userId,
 				sentby: $scope.authentication.user._id
 			});
 
 			// Redirect after save
 			message.$save(function(response) {
-				$location.path('messages/' + response._id);
+				$location.path('/sent');
 
-				// Clear form fields
-				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -91,11 +86,13 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 		// Find existing Thread
 		$scope.findOne2 = function() {
 			console.log($scope.authentication.user._id);
-			$scope.messages = Messages.query({'receiving':$scope.authentication.user._id});
+			$scope.received = Messages.query({'receiving':$scope.authentication.user._id});
+			$scope.sent = Messages.query({'sentby':$scope.authentication.user._id});
 		};
 		$scope.findconvo = function() {
-			$scope.sent = Messages.query({'receiving':$stateParams.userId},{'user':$scope.authentication.user});
-			$scope.received= Messages.query({'sentby':$stateParams.userId}, {'receiving':$scope.authentication.user._id});
+			$scope.sent= Messages.query({'receiving':$stateParams.userId,'sentby':$scope.authentication.user._id});
+			$scope.received= Messages.query({'sentby':$stateParams.userId,'receiving':$scope.authentication.user._id});
+			
 		};
 		// Find existing Message
 		$scope.findOne = function() {
