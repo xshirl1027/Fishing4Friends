@@ -38,7 +38,8 @@ describe('Messageboard CRUD tests', function() {
 		// Save a user to the test db and create new Messageboard
 		user.save(function() {
 			messageboard = {
-				name: 'Messageboard Name'
+				name: 'Messageboard Name',
+				message: 'New Message'
 			};
 
 			done();

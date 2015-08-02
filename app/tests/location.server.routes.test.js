@@ -38,7 +38,9 @@ describe('Location CRUD tests', function() {
 		// Save a user to the test db and create new Location
 		user.save(function() {
 			lction = {
-				name: 'Location Name'
+				name: 'Location Name',
+				latitude: '0',
+				longitude: '0'
 			};
 
 			done();
@@ -86,7 +88,7 @@ describe('Location CRUD tests', function() {
 
 	it('should not be able to save Location instance if not logged in', function(done) {
 		agent.post('/locations')
-			.send(location)
+			.send(lction)
 			.expect(401)
 			.end(function(locationSaveErr, locationSaveRes) {
 				// Call the assertion callback
@@ -96,7 +98,7 @@ describe('Location CRUD tests', function() {
 
 	it('should not be able to save Location instance if no name is provided', function(done) {
 		// Invalidate name field
-		location.name = '';
+		lction.name = '';
 
 		agent.post('/auth/signin')
 			.send(credentials)
@@ -110,11 +112,11 @@ describe('Location CRUD tests', function() {
 
 				// Save a new Location
 				agent.post('/locations')
-					.send(location)
+					.send(lction)
 					.expect(400)
 					.end(function(locationSaveErr, locationSaveRes) {
 						// Set message assertion
-						(locationSaveRes.body.message).should.match('Please fill Location name');
+						(locationSaveRes.body.message).should.match('Please fill in the Location name.');
 						
 						// Handle Location save error
 						done(locationSaveErr);
@@ -135,18 +137,18 @@ describe('Location CRUD tests', function() {
 
 				// Save a new Location
 				agent.post('/locations')
-					.send(location)
+					.send(lction)
 					.expect(200)
 					.end(function(locationSaveErr, locationSaveRes) {
 						// Handle Location save error
 						if (locationSaveErr) done(locationSaveErr);
 
 						// Update Location name
-						location.name = 'WHY YOU GOTTA BE SO MEAN?';
+						lction.name = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update existing Location
 						agent.put('/locations/' + locationSaveRes.body._id)
-							.send(location)
+							.send(lction)
 							.expect(200)
 							.end(function(locationUpdateErr, locationUpdateRes) {
 								// Handle Location update error
@@ -165,7 +167,7 @@ describe('Location CRUD tests', function() {
 
 	it('should be able to get a list of Locations if not signed in', function(done) {
 		// Create new Location model instance
-		var locationObj = new Location(location);
+		var locationObj = new Location(lction);
 
 		// Save the Location
 		locationObj.save(function() {
@@ -185,14 +187,14 @@ describe('Location CRUD tests', function() {
 
 	it('should be able to get a single Location if not signed in', function(done) {
 		// Create new Location model instance
-		var locationObj = new Location(location);
+		var locationObj = new Location(lction);
 
 		// Save the Location
 		locationObj.save(function() {
 			request(app).get('/locations/' + locationObj._id)
 				.end(function(req, res) {
 					// Set assertion
-					res.body.should.be.an.Object.with.property('name', location.name);
+					res.body.should.be.an.Object.with.property('name', lction.name);
 
 					// Call the assertion callback
 					done();
@@ -213,7 +215,7 @@ describe('Location CRUD tests', function() {
 
 				// Save a new Location
 				agent.post('/locations')
-					.send(location)
+					.send(lction)
 					.expect(200)
 					.end(function(locationSaveErr, locationSaveRes) {
 						// Handle Location save error
@@ -221,7 +223,7 @@ describe('Location CRUD tests', function() {
 
 						// Delete existing Location
 						agent.delete('/locations/' + locationSaveRes.body._id)
-							.send(location)
+							.send(lction)
 							.expect(200)
 							.end(function(locationDeleteErr, locationDeleteRes) {
 								// Handle Location error error
@@ -239,10 +241,10 @@ describe('Location CRUD tests', function() {
 
 	it('should not be able to delete Location instance if not signed in', function(done) {
 		// Set Location user 
-		location.user = user;
+		lction.user = user;
 
 		// Create new Location model instance
-		var locationObj = new Location(location);
+		var locationObj = new Location(lction);
 
 		// Save the Location
 		locationObj.save(function() {

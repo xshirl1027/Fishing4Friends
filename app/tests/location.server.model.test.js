@@ -30,6 +30,8 @@ describe('Location Model Unit Tests:', function() {
 		user.save(function() { 
 			lction = new Location({
 				name: 'Location Name',
+				latitude: '0',
+				longitude: '0',
 				user: user
 			});
 
@@ -56,7 +58,7 @@ describe('Location Model Unit Tests:', function() {
 	});
 
 	afterEach(function(done) { 
-		lction.remove().exec();
+		Location.remove().exec();
 		User.remove().exec();
 
 		done();
