@@ -25,17 +25,15 @@ var MessageSchema = new Schema({
 		ref: 'User'
 	},
 	receiving: {
-		type: String,
-		default: '',
-		trim: true
+		type: Schema.Types.ObjectId,
+		ref: 'User'
 	},
 	sentby:{
-		type: String,
-		default: '',
-		trim: true
+		type: Schema.Types.ObjectId,
+		ref: 'User'
 	},
 	read:{		
-		type:Boolean,
+		type: Boolean,
 		default: false
 	}
 });

@@ -7,6 +7,14 @@ angular.module('messages').factory('Messages', ['$resource',
 		}, {
 			update: {
 				method: 'PUT'
+			},
+			count: {
+				method: 'GET',
+				url: 'messages/count'
+			},
+			clear: {
+				method: 'PUT',
+				url: 'messages/clear'
 			}
 		});
 	}
