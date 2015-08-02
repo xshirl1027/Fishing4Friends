@@ -64,6 +64,7 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		1) gets the array coordinates for the details of the location
 		   ie latitude, longitude, the index of the icon picture, and the
 		   icon pictures local path.
+		
 		2) Draws a map using google maps
 		
 		3) The user can input and save the locations data using
@@ -130,6 +131,19 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
 			function get_lat_long (locations) {
 
+
+			/**************************************************************
+    		purpose:  this function gets the latitudes and longitudes
+    		          of all of the saved locations
+    		          along with the name, icon_number and the icon_pathname
+    		          and the location name, which is the details that appear
+    		          above the marker on the map
+			--------------------------------------------------------------	
+			parameters:  map -- the google map object
+			--------------------------------------------------------------
+			called by init_map function.
+    		*************************************************************/
+
 				console.log ('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 
 				console.log('********', locations);
@@ -160,15 +174,15 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 			}
 
 
-			$scope.locations = Locations.query(get_lat_long);
+			$scope.locations = Locations.query(get_lat_long); 
 
 
 		};
 
 
-
-	//start map stuff here
+		//start map stuff here
     function init_map(arraycoords) {
+
 
     	/**************************************************************
     	purpose:  this function draws a google map
@@ -179,91 +193,130 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		--------------------------------------------------------------
 
     	*************************************************************/
+	
 
-    	function map_markers (map, center_lat, center_long) {
+		function map_markers (map, center_lat, center_long,arraycoords) {
 
-    		/**************************************************************
-    		purpose:  this function puts the saved map markers on the map
-			--------------------------------------------------------------	
-			parameters:  map -- the google map object
-			--------------------------------------------------------------
-			called by init_map function.
-    		*************************************************************/
+	    		/**************************************************************
+	    		purpose:  this function puts the saved map markers on the map
+				--------------------------------------------------------------	
+				parameters:  map -- the google map object
+				--------------------------------------------------------------
+				called by init_map function.
+	    		*************************************************************/
 
-	        var NAME = 0;  // the name that goes on the map marker
-	        var LATITUDE = 1; //the lattude of the map marker
-	        var LONGITUDE = 2; //the longitude of the map marker
-	        var ICON_NUM = 3;  //the index number of the icon marker picture
-	        var ICON_PATH = 4; //the path in the filesystem of the marker picture
+		        var NAME = 0;  // the name that goes on the map marker
+		        var LATITUDE = 1; //the lattude of the map marker
+		        var LONGITUDE = 2; //the longitude of the map marker
+		        var ICON_NUM = 3;  //the index number of the icon marker picture
+		        var ICON_PATH = 4; //the path in the filesystem of the marker picture
 
-	 
-	       console.log('%%%%%%%%',arraycoords);
+		 
+		       console.log('%%%%%%%%',arraycoords);
+		       
+			   //draw the custom markers on the map.
+		       for (var i = 0; i < arraycoords.length; i++) {
+		       		//write marker to position
+
+		       		if ( (!isNaN(arraycoords[i][LATITUDE])) && (!isNaN(arraycoords[i][LONGITUDE])) ) {
+		       		    
+
+				       var marker_position = new google.maps.LatLng(arraycoords[i][LATITUDE],arraycoords[i][LONGITUDE]);
+				       var marker = new google.maps.Marker({position:marker_position,icon: arraycoords[i][ICON_PATH]
+				        });
+				       marker.setMap(map);
+
+				        //write 'blurb' infowindow over marker.
+
+				        var infowindow = new google.maps.InfoWindow({content:arraycoords[i][NAME]});
+
+			        infowindow.open(map,marker);
+			    	}//if
+			    }//for
+		    }//function map_markers
 
 
-	       //draw the user's position (center lat, center long as a std marker on the map)
-	       var marker_position = new google.maps.LatLng(center_lat,center_long);
-		   var marker = new google.maps.Marker({position:marker_position});
-		   marker.setMap(map);
-	    
-	       
-		   //draw the custom markers on the map.
-	       for (var i = 0; i < arraycoords.length; i++) {
-	       		//write marker to position
 
-	       		if ( (!isNaN(arraycoords[i][LATITUDE])) && (!isNaN(arraycoords[i][LONGITUDE])) ) {
-	       		    
+		    function draw_center_marker (map, center_lat, center_long) {
 
-			        marker_position = new google.maps.LatLng(arraycoords[i][LATITUDE],arraycoords[i][LONGITUDE]);
-			        marker = new google.maps.Marker({position:marker_position,icon: arraycoords[i][ICON_PATH]
-			        });
-			        marker.setMap(map);
 
-			        //write 'blurb' infowindow over marker.
+		      /**************************************************************
+	    		purpose:  this function puts the center postiton map marker
+	    		          on the map
+				--------------------------------------------------------------	
+				parameters:  map -- the google map object
+				             center_lat - the center latitude
+				             center_long - the center longitude
+				--------------------------------------------------------------
+				called by init_map function.
+	    		*************************************************************/
 
-			        var infowindow = new google.maps.InfoWindow({content:arraycoords[i][NAME]});
 
-		        infowindow.open(map,marker);
-		    	}//if
-		    }//for
-	    }//function map_markers
+		     //draw the user's position (center lat, center long as a std marker on the map)
 
+		       var marker_position = new google.maps.LatLng(center_lat,center_long);
+			   var marker = new google.maps.Marker({position:marker_position});
+			   marker.setMap(map);
+
+			   var latString = center_lat.toString();
+			   var longString = center_long.toString();
+
+			   var centerString = latString + ' , ' + longString;
+
+			   console.log (centerString);
+
+			   var infowindow = new google.maps.InfoWindow({content: centerString});
+
+			   infowindow.open(map,marker);
+
+			}
+
+		//init map function continues here
 
 
     	console.log ('IM IN INIT Map');
 
-    	var called_local_coords = false;
+    	var called_local_coords = false;  // false if local_coords callback not used.
 
     	var Center_lat = 43.7000;    //default latitude for Toronto
     	var Center_long = -79.4000;  //default longitude for Toronto
 
-    	$scope.Center_Latitude = Center_lat;
-		$scope.Center_Longitude = Center_long;
-
  		var local_coords = navigator.geolocation;
 		
-		function location_function (position) {
-			Center_lat = position.coords.latitude;
-			Center_long = position.coords.longitude;
+			function location_function (position) {
 
-			$scope.Center_Latitude = Center_lat;
-			$scope.Center_Longitude = Center_long;
-			
-			var myCenter = new google.maps.LatLng(Center_lat, Center_long);
+			/**************************************************************
+	    	purpose:  this function is a callback function that runs
+	    	when a user allows their coordinates to be used.
+			--------------------------------------------------------------	
+			parameters:  position - returned by the 
+			             localcoords.getCurrentPosition(location_function)
+			             call.
+			--------------------------------------------------------------
 
-	    	var myOptions = {
-	      		center:myCenter,
-	      		zoom:5,
-	      		mapTypeId:google.maps.MapTypeId.ROADMAP
-	      	};
+	    	*************************************************************/
+				
+				Center_lat = position.coords.latitude;
+				Center_long = position.coords.longitude;
 
-	  
-	    	var map = new google.maps.Map(document.getElementById('map'),myOptions);
+				
+				var myCenter = new google.maps.LatLng(Center_lat, Center_long);
 
-	    	map_markers(map, Center_lat, Center_long);
+		    	var myOptions = {
+		      		center:myCenter,
+		      		zoom:5,
+		      		mapTypeId:google.maps.MapTypeId.ROADMAP
+		      	};
 
-	    	called_local_coords = true;
+		  
+		    	var map = new google.maps.Map(document.getElementById('map_canvas'),myOptions);
 
-		}
+		    	draw_center_marker(map, Center_lat, Center_long);
+		    	map_markers(map, Center_lat, Center_long,arraycoords);
+
+		    	called_local_coords = true;
+
+			}
 
 		if (local_coords) {
 
@@ -279,9 +332,10 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		      mapTypeId:google.maps.MapTypeId.ROADMAP
 		      };
 
-		    var map = new google.maps.Map(document.getElementById('map'),myOptions);
+		    var map = new google.maps.Map(document.getElementById('map_canvas'),myOptions);
 		    
-			map_markers(map, Center_lat, Center_long);
+		    draw_center_marker(map, Center_lat, Center_long);
+			map_markers(map, Center_lat, Center_long,arraycoords);
 		}//else
 	
 		if (called_local_coords === false) {
@@ -294,9 +348,10 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		      mapTypeId:google.maps.MapTypeId.ROADMAP
 		      };
 
-		    var map1 = new google.maps.Map(document.getElementById('map1'),myOptions1);
+		    var map1 = new google.maps.Map(document.getElementById('map_canvas'),myOptions1);
 		    
-			map_markers(map1, Center_lat, Center_long);
+		    draw_center_marker(map1, Center_lat, Center_long);
+			map_markers(map1, Center_lat, Center_long,arraycoords);
 
 		}
 
