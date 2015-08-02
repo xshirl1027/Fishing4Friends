@@ -58,13 +58,79 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 			});
 		};
 
-		// Find a list of Locations
+		/******************************************************************
+		This set of functions:
 
-		// modified to store the locations into the ArrayCoords
+		1) gets the array coordinates for the details of the location
+		   ie latitude, longitude, the index of the icon picture, and the
+		   icon pictures local path.
+		2) Draws a map using google maps
+		
+		3) The user can input and save the locations data using
+		   The locations CRUD module, and select a marker icon
+		   as well as the text to appear above the icon
+
+		4)  There is a standard marker showing the users supposed position.
+
+		5)  if the user opts out of using position services, or if the browser
+		    doesn't support geolocation, the map should have Toronto as the 
+		    center
+
+		functions:  
+
+		get_lat_long, init_map, map_markers
+
+		associated views: (views folder)
+
+		create-location.client.view.html
+		edit-location.client.view.html
+		list-locations.client.view.html
+		view-location.client.view.html
+
+		icon images are in the img folder, also located in public/modules/locations
+		----------------------------------------------------------------------------------
+		known bugs:  (warnings)
+
+		14 warnings " ^ 'google' is not defined. "
+
+		Added the line to get the google libraries to
+
+		layout.server.view in the header.
+
+		(in app/views)
+
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+		There is an option for having a callback after the library is loaded, but that doesn't seem to
+		help.
+
+		have tried:   using a loadscript function as in
+
+		www.w3schools.com/googleapi/tryit.asp?filename=tryhtml_map_async
+
+		which should prevent the function from running before the library has loaded, which is
+		presumably the source of the warning.  The map renders and works ok, however, even with
+		the warning.
+
+		One solution, that would involve rewriting the whole function
+
+		would be to
+
+		do something using the ngmap that can be installed by bower.
+
+		excellent tutorial that I found  (very late on) at
+
+		htttp://rickgao.com/mean-js-ngmaps-crud
+
+		********************************************************************/
 
 
 		$scope.find = function() {
-			var get_lat_long = function(locations) {
+
+
+			function get_lat_long (locations) {
+
+				console.log ('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 
 				console.log('********', locations);
 
@@ -91,7 +157,7 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 				$scope.arraycoords = ArrayCoords;
 
 				init_map(ArrayCoords);
-			};
+			}
 
 
 			$scope.locations = Locations.query(get_lat_long);
@@ -114,7 +180,7 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
     	*************************************************************/
 
-    	function map_markers (map) {
+    	function map_markers (map, center_lat, center_long) {
 
     		/**************************************************************
     		purpose:  this function puts the saved map markers on the map
@@ -132,15 +198,23 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
 	 
 	       console.log('%%%%%%%%',arraycoords);
+
+
+	       //draw the user's position (center lat, center long as a std marker on the map)
+	       var marker_position = new google.maps.LatLng(center_lat,center_long);
+		   var marker = new google.maps.Marker({position:marker_position});
+		   marker.setMap(map);
 	    
+	       
+		   //draw the custom markers on the map.
 	       for (var i = 0; i < arraycoords.length; i++) {
 	       		//write marker to position
 
 	       		if ( (!isNaN(arraycoords[i][LATITUDE])) && (!isNaN(arraycoords[i][LONGITUDE])) ) {
-	       			
+	       		    
 
-			        var marker_position = new google.maps.LatLng(arraycoords[i][LATITUDE],arraycoords[i][LONGITUDE]);
-			        var marker = new google.maps.Marker({position:marker_position,icon: arraycoords[i][ICON_PATH]
+			        marker_position = new google.maps.LatLng(arraycoords[i][LATITUDE],arraycoords[i][LONGITUDE]);
+			        marker = new google.maps.Marker({position:marker_position,icon: arraycoords[i][ICON_PATH]
 			        });
 			        marker.setMap(map);
 
@@ -159,14 +233,20 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
     	var called_local_coords = false;
 
-    	var Center_lat = 43.48;    //default latitude for Toronto
-    	var Center_long = -79.50;  //default longitude for Toronto
+    	var Center_lat = 43.7000;    //default latitude for Toronto
+    	var Center_long = -79.4000;  //default longitude for Toronto
+
+    	$scope.Center_Latitude = Center_lat;
+		$scope.Center_Longitude = Center_long;
 
  		var local_coords = navigator.geolocation;
 		
 		function location_function (position) {
 			Center_lat = position.coords.latitude;
 			Center_long = position.coords.longitude;
+
+			$scope.Center_Latitude = Center_lat;
+			$scope.Center_Longitude = Center_long;
 			
 			var myCenter = new google.maps.LatLng(Center_lat, Center_long);
 
@@ -179,7 +259,7 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 	  
 	    	var map = new google.maps.Map(document.getElementById('map'),myOptions);
 
-	    	map_markers(map);
+	    	map_markers(map, Center_lat, Center_long);
 
 	    	called_local_coords = true;
 
@@ -201,7 +281,7 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
 		    var map = new google.maps.Map(document.getElementById('map'),myOptions);
 		    
-			map_markers(map);
+			map_markers(map, Center_lat, Center_long);
 		}//else
 	
 		if (called_local_coords === false) {
@@ -214,10 +294,9 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		      mapTypeId:google.maps.MapTypeId.ROADMAP
 		      };
 
-		    var map1 = new google.maps.Map(document.getElementById('map'),myOptions1);
+		    var map1 = new google.maps.Map(document.getElementById('map1'),myOptions1);
 		    
-			map_markers(map1);
-
+			map_markers(map1, Center_lat, Center_long);
 
 		}
 
