@@ -26,6 +26,12 @@ var LocationSchema = new Schema({
 		default: '',
 		required: 'Please fill in the Longitude.',
 		trim: true
+	}, icon_number: {
+		type: Number,
+		default: 0
+	}, icon_pathname: {
+		type: String,
+		default: 'modules/locations/img/0.png'
 	},
 	created: {
 		type: Date,
@@ -37,5 +43,4 @@ var LocationSchema = new Schema({
 	}
 });
 
-LocationSchema.set('autoIndex', false);
 mongoose.model('Location', LocationSchema);
