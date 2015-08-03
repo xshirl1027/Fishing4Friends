@@ -1,4 +1,20 @@
+/**
+ * Provides the Users module for the server (Express).
+ *
+ * @module Users
+ * @submodule Users-Server
+ */
 'use strict';
+
+/**
+ * Controller driving the server and database behaviour.
+ *
+ * @class UserAuthenticationController
+ * @static
+ * @requires lodash
+ * @requires mongoose
+ * @requires passport
+ */
 
 /**
  * Module dependencies.
@@ -10,7 +26,13 @@ var _ = require('lodash'),
 	User = mongoose.model('User');
 
 /**
- * Signup
+ * Creates a new User, adding it to the database, and writing it to the client.
+ * Uses Passport's 'local' strategy.
+ *
+ * @method signup
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
@@ -47,10 +69,18 @@ exports.signup = function(req, res) {
 	});
 };
 
+
 /**
- * Signin after passport authentication
+ * Signs in an existing user, and writes the associated User document to the client.
+ * Uses Passport's 'local' strategy.
+ *
+ * @method signin
+ * @param req {Object} 
+ * @param res {Object} 
+ * @param next {Function} 
+ * @return nothing
  */
-exports.signin = function(req, res, next) {
+ exports.signin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			res.status(400).send(info);
@@ -70,16 +100,28 @@ exports.signin = function(req, res, next) {
 	})(req, res, next);
 };
 
+
 /**
- * Signout
+ * Signs out an existing user, and redirects the client to the Home page.
+ * Uses Passport's 'logout' function.
+ *
+ * @method signout
+ * @param req {Object} 
+ * @param res {Object} 
+ * @return nothing
  */
 exports.signout = function(req, res) {
 	req.logout();
 	res.redirect('/');
 };
 
+
 /**
- * OAuth callback
+ * Runs Passport.authenticate and redirects the user to the signin page if auth fails.
+ *
+ * @method oauthCallback
+ * @param strategy {Object} 
+ * @return res.redirect()
  */
 exports.oauthCallback = function(strategy) {
 	return function(req, res, next) {
@@ -98,8 +140,15 @@ exports.oauthCallback = function(strategy) {
 	};
 };
 
+
 /**
- * Helper function to save or update a OAuth user profile
+ * Helper function to save or update a OAuth user profile.
+ *
+ * @method saveOAuthUserProfile
+ * @param req {Object}
+ * @param providerUserProfile {Object}
+ * @param done {Function}
+ * @return res.redirect()
  */
 exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 	if (!req.user) {
@@ -172,8 +221,15 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 	}
 };
 
+
 /**
- * Remove OAuth provider
+ * Helper function to remove OAuth provider from the user profile.
+ *
+ * @method removeOAuthProvider
+ * @param req {Object}
+ * @param res {Object}
+ * @param next {Function}
+ * @return nothing
  */
 exports.removeOAuthProvider = function(req, res, next) {
 	var user = req.user;

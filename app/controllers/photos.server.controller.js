@@ -11,7 +11,7 @@
 /**
  * Controller driving the server and database behaviour.
  *
- * @class ServerController
+ * @class PhotosServerController
  * @static
  */
 
