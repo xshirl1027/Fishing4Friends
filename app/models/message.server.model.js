@@ -13,7 +13,7 @@ var MessageSchema = new Schema({
 	name: {
 		type: String,
 		default: '',
-		required: 'Please fill Message name',
+		required: 'Please write a message',
 		trim: true
 	},
 	created: {
@@ -25,17 +25,15 @@ var MessageSchema = new Schema({
 		ref: 'User'
 	},
 	receiving: {
-		type: String,
-		default: '',
-		trim: true
+		type: Schema.Types.ObjectId,
+		ref: 'User'
 	},
 	sentby:{
-		type: String,
-		default: '',
-		trim: true
+		type: Schema.Types.ObjectId,
+		ref: 'User'
 	},
 	read:{		
-		type:Boolean,
+		type: Boolean,
 		default: false
 	}
 });

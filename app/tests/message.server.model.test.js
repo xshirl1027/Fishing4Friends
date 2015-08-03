@@ -53,6 +53,13 @@ describe('Message Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		// pending test below
+		it('should be able to show an error when try to save without receiving');
+
+		// pending test below
+		it('should be able to show an error when try to save without sentby');
+
 	});
 
 	afterEach(function(done) { 

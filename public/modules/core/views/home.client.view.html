@@ -1,18 +1,16 @@
 
 <section data-ng-controller="HomeController">
 	
-
 	<div class="jumbotron text-center">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-				<!--<img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/logo.png" /> -->
+			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12"> 
+				<!-- <img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/fishing_logo.png" /> -->
 			</div>
 		</div>
-		<br>
-
 		<div class="row">
-			<p class="lead">
-				<h1> Fishing For Friends! </h1>
+			<p class = "lead">
+				<h1> Fishing 4 Friends! </h1>
+				<h2> Connecting People to the Great Outdoors </h2>
 			</p>
 		</div>
 		<div class="row">
@@ -27,15 +25,6 @@
   <!-- addin for carousel display of rotating pictures starts here-->
   <!-- Needed libraries loaded by layout.server.view.html -->
   
-  
-  <style>
-
-  .carousel-inner > .item > img,
-  .carousel-inner > .item > a > img {
-      width: 70%;
-      margin: auto;
-  }
-  </style>
 
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
@@ -46,29 +35,58 @@
     <li data-target="#carousel-example-generic" data-slide-to="3"></li>
     <li data-target="#carousel-example-generic" data-slide-to="4"></li>
     <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="7"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="8"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="9"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="10"></li>
   </ol>
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="modules/core/img/carousel/northernpikefishing.JPG" alt="northernpikefishing.JPG" width="460" height="345">
+      <img src="modules/core/img/carousel/people_fishing_latirs.jpg" alt="Fishing From Shore" width="460" height="345">
       <div class="carousel-caption">
-        mr. pike fisherman
+        Fishing From Shore.
       </div>
     </div>
+
+      <div class="item">
+        <img src="modules/core/img/carousel/Algonquin.jpg" alt="Algonquin" width="460" height="345">
+	      <div class="carousel-caption">
+	        Calm day, Algonquin, ON.
+	      </div>
+      </div>
+
 
      <div class="item">
         <img src="modules/core/img/carousel/fishing on boat.jpg" alt="fishing on a boat" width="460" height="345">
 	      <div class="carousel-caption">
-	        casting from the boat
+	        Casting from the Boat.
 	      </div>
       </div>
     
-      <div class="item">
+     <div class="item">
+        <img src="modules/core/img/carousel/boy_caught_fish.jpg" alt="first fish" width="460" height="345">
+	      <div class="carousel-caption">
+	        First Fish.
+	      </div>
+      </div>
+
+ 	<div class="item">
         <img src="modules/core/img/carousel/Northern-Pike-Fishing.jpg" alt="northern pike fishing" width="460" height="345">
       	
       	<div class="carousel-caption">
 	        I caught a big one!
+	     </div>
+
+      </div>
+
+      <div class="item">
+        <img src="modules/core/img/carousel/Center_Island_Common_Carp.jpg" alt="Center Island Common Carp" width="460" height="345">
+      	
+      	<div class="carousel-caption">
+	        Center Island Common Carp Catch.
 	     </div>
 
       </div>
@@ -83,23 +101,38 @@
       </div>
 		
 		<div class="item">
-	        <img src="modules/core/img/carousel/people_fishing_latirs.jpg" alt="fishing from shore" max-width="460" max-height="345">
+	        <img src="modules/core/img/carousel/northernpikefishing.JPG" alt="Proud of his Catch" max-width="460" max-height="345">
 	      	
 	      	<div class="carousel-caption">
-		        Fishing from Shore.
+		        Proud of his Catch.
 		    </div>
 
 		</div>
 		
 		<div class="item">
-	        <img src="modules/core/img/carousel/downtown_fisherman.jpeg" alt="fishing by the tower" max-width="460" max-height="345">
+	        <img src="modules/core/img/carousel/flat_water.jpg" alt="Calm day on the water" width="460" height="345">
+		      <div class="carousel-caption">
+		        Calm Day on the Water
+		      </div>
+      </div>
+
+      <div class="item">
+	        <img src="modules/core/img/carousel/downtown_fisherman.jpeg" alt="fishing by the tower" max-width="460" max-height="300">
 	      	
 	      	<div class="carousel-caption">
-		        Fishing in TO
+		        Fishing in Toronto.
 		    </div>
-
 		</div>
 		
+
+		<div class="item">
+	        <img src="modules/core/img/carousel/fishing-in-toronto-and-gta.jpeg" alt="fishing in Toronto GTA" max-width="460" max-height="300">
+	      	
+	      	<div class="carousel-caption">
+		        Fishing in Toronto.
+		    </div>
+		</div>
+
      </div>
   </div>
 
@@ -112,7 +145,9 @@
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
+</div>		
+<!-- addin for carousel display of rotating pictures ends here-->
+  
 <section data-ng-controller="SettingsController" data-ng-init="getRecommendations()" data-ng-show="authentication.user">
 	<div class="page-header">
         <h1>Recommended Offerings</h1>	
@@ -160,7 +195,7 @@
         </a>
     </div>
 </section>
-<!-- addin for carousel display of rotating pictures ends here-->
+
 <!--
 	<div>
 		<h2>Congrats! You've configured and run the sample application.</h2>

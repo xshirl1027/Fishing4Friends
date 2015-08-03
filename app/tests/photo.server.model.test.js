@@ -29,7 +29,7 @@ describe('Photo Model Unit Tests:', function() {
 
 		user.save(function() { 
 			photo = new Photo({
-				name: 'Photo Name',
+				src: 'Photo src',
 				user: user
 			});
 
@@ -45,14 +45,14 @@ describe('Photo Model Unit Tests:', function() {
 			});
 		});
 
-		// it('should be able to show an error when try to save without name', function(done) { 
-		// 	photo.name = '';
+		it('should be able to show an error when try to save without Photo src', function(done) { 
+			photo.src = '';
 
-		// 	return photo.save(function(err) {
-		// 		should.exist(err);
-		// 		done();
-		// 	});
-		// });
+			return photo.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 	});
 
 	afterEach(function(done) { 

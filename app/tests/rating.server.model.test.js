@@ -29,7 +29,7 @@ describe('Rating Model Unit Tests:', function() {
 
 		user.save(function() { 
 			rating = new Rating({
-				comment: 'Rating Name',
+				rating: 5,
 				user: user
 			});
 
@@ -45,14 +45,14 @@ describe('Rating Model Unit Tests:', function() {
 			});
 		});
 
-		// it('should be able to show an error when try to save without name', function(done) { 
-		// 	rating.comment = '';
+		it('should be able to show an error when try to save without rating score', function(done) { 
+			rating.rating = null;
 
-		// 	return rating.save(function(err) {
-		// 		should.exist(err);
-		// 		done();
-		// 	});
-		// });
+			return rating.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 	});
 
 	afterEach(function(done) { 

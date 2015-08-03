@@ -61,7 +61,7 @@ var OfferingSchema = new Schema({
 	 */
 	description: {
 		type: String,
-		default: 'blankity-blank',
+		default: '',
 		required: 'Please fill Offering description',
 		trim: true
 	},

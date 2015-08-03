@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, post;
+var credentials, credentials2, user, user2, post, postGlobal;
 
 /**
  * Post routes tests
@@ -105,9 +105,6 @@ describe('Post CRUD tests', function() {
 				// Handle signin error
 				if (signinErr) done(signinErr);
 
-				// Get the userId
-				var userId = user.id;
-
 				// Save a new Post
 				agent.post('/posts')
 					.send(post)
@@ -121,6 +118,9 @@ describe('Post CRUD tests', function() {
 					});
 			});
 	});
+
+	// pending test below
+	it('should not be able to save Post instance if no threadid is provided');
 
 	it('should be able to update Post instance if signed in', function(done) {
 		agent.post('/auth/signin')
@@ -258,6 +258,139 @@ describe('Post CRUD tests', function() {
 			});
 
 		});
+	});
+
+	it('should not be able to update Post instance if not signed in', function(done) {
+		// Set Post user 
+		post.user = user;
+
+		// Create new Post model instance
+		var postObj = new Post(post);
+
+		// Save the Post
+		postObj.save(function() {
+			// Try deleting Post
+			request(app).put('/posts/' + postObj._id)
+			.expect(401)
+			.end(function(postUpdateErr, postUpdateRes) {
+				// Set message assertion
+				(postUpdateRes.body.message).should.match('User is not logged in');
+
+				// Handle Post error error
+				done(postUpdateErr);
+			});
+
+		});
+	});
+
+	afterEach(function(done) {
+		User.remove().exec();
+		Post.remove().exec();
+		done();
+	});
+});
+
+describe('ADDITIONAL Post CRUD tests', function() {
+		beforeEach(function(done) {
+		// Create user credentials
+		credentials = {
+			username: 'username',
+			password: 'password'
+		};
+
+		credentials2 = {
+			username: 'otherUsername',
+			password: 'password'
+		};
+
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
+
+		// Create another new user
+		user2 = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials2.username,
+			password: credentials2.password,
+			provider: 'local'
+		});
+
+		// Save both users to the test db and create a new Post in the first user's name
+		user.save(function() {
+
+			postGlobal = new Post({
+				name: 'Post name',
+				user: user._id
+			});
+
+			// Save post to the db
+			postGlobal.save(function() {
+				// Save user2 to the test db
+				user2.save(function(res) {
+					done();
+				});
+			});
+		});
+	});
+
+	it('should not be able to delete Post instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Post
+				agent.delete('/posts/' + postGlobal._id)
+					.send(postGlobal)
+					.expect(403)
+					.end(function(postDeleteErr, postDeleteRes) {
+						// Handle Post error
+						if (postDeleteErr) done(postDeleteErr);
+
+						// Set message assertion
+						(postDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Post save error
+						done(postDeleteErr);
+					});
+			});
+	});
+
+	it('should not be able to update Post instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Update existing Post
+				agent.put('/posts/' + postGlobal._id)
+					.send(postGlobal)
+					.expect(403)
+					.end(function(postPutErr, postPutRes) {
+						// Handle Post error
+						if (postPutErr) done(postPutErr);
+
+						// Set message assertion
+						(postPutRes.text).should.match('User is not authorized');
+						
+						// Handle Post save error
+						done(postPutErr);
+					});
+			});
 	});
 
 	afterEach(function(done) {

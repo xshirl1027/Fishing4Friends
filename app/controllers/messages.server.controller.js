@@ -72,7 +72,8 @@ exports.delete = function(req, res) {
 /**
  * List of Messages
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
+
 	var keyNames= Object.keys(req.query);
 	if (keyNames.length===0){
 		Message.find().sort('-created').populate('user', 'displayName').exec(function(err, Messages) {
@@ -124,7 +125,7 @@ exports.messageByID = function(req, res, next, id) {
 	Message.findById(id).populate('user', 'displayName').exec(function(err, message) {
 		if (err) return next(err);
 		if (! message) return next(new Error('Failed to load Message ' + id));
-		req.message = message ;
+		req.message = message;
 		next();
 	});
 };
@@ -137,4 +138,33 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
+};
+
+/**
+ * Get total count of unread messages by user
+ */
+exports.countUnread = function(req, res){
+	var receiverID = req.user._id;
+	console.log(receiverID);
+	Message.count({receiving: receiverID, read: false}, function (err, total) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			console.log(total);
+			res.jsonp({Total:total});
+		}
+	});
+ };
+ 
+exports.clearUnread = function(req, res){
+	var receiverID = req.user._id;
+	Message.update({receiving: receiverID}, { $set: { read: true }}, {multi: true}, function(err){//set all read to true
+		if (err){
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+	});
 };

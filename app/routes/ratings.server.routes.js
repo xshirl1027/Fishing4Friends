@@ -5,7 +5,7 @@
  *
  * @module Ratings
  * @submodule Ratings-Server
- * @class Routes
+ * @class RatingsRoutes
  * @static
  */
 

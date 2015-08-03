@@ -17,12 +17,12 @@ var LocationSchema = new Schema({
 		required: 'Please fill in the Location name.',
 		trim: true
 	},latitude: {
-		type: String,
+		type: Number,
 		default: '',
 		required: 'Please fill in the Latitude.',
 		trim: true
 	},longitude: {
-		type: String,
+		type: Number,
 		default: '',
 		required: 'Please fill in the Longitude.',
 		trim: true

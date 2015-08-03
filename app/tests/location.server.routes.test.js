@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, lction;
+var credentials, credentials2, user, user2, lction, locationGlobal;
 
 /**
  * Location routes tests
@@ -39,10 +39,9 @@ describe('Location CRUD tests', function() {
 		user.save(function() {
 			lction = {
 				name: 'Location Name',
-				latitude: '0',
-				longitude: '0'
+				latitude: 0,
+				longitude: 0
 			};
-
 			done();
 		});
 	});
@@ -165,6 +164,29 @@ describe('Location CRUD tests', function() {
 			});
 	});
 
+	it('should not be able to update Location instance if not signed in', function(done) {
+		// Set Location user 
+		lction.user = user;
+
+		// Create new Location model instance
+		var locationObj = new Location(lction);
+
+		// Save the Location
+		locationObj.save(function() {
+			// Try deleting Location
+			request(app).put('/locations/' + locationObj._id)
+			.expect(401)
+			.end(function(locationDeleteErr, locationDeleteRes) {
+				// Set message assertion
+				(locationDeleteRes.body.message).should.match('User is not logged in');
+
+				// Handle Location error error
+				done(locationDeleteErr);
+			});
+
+		});
+	});
+
 	it('should be able to get a list of Locations if not signed in', function(done) {
 		// Create new Location model instance
 		var locationObj = new Location(lction);
@@ -183,7 +205,6 @@ describe('Location CRUD tests', function() {
 
 		});
 	});
-
 
 	it('should be able to get a single Location if not signed in', function(done) {
 		// Create new Location model instance
@@ -260,6 +281,119 @@ describe('Location CRUD tests', function() {
 			});
 
 		});
+	});
+
+
+	afterEach(function(done) {
+		User.remove().exec();
+		Location.remove().exec();
+		done();
+	});
+});
+
+describe('ADDITIONAL Location CRUD tests', function() {
+		beforeEach(function(done) {
+		// Create user credentials
+		credentials = {
+			username: 'username',
+			password: 'password'
+		};
+
+		credentials2 = {
+			username: 'otherUsername',
+			password: 'password'
+		};
+
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
+
+		// Create another new user
+		user2 = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials2.username,
+			password: credentials2.password,
+			provider: 'local'
+		});
+
+		// Save both users to the test db and create a new Location in the first user's name
+		user.save(function() {
+
+			locationGlobal = new Location({
+				name: 'Location Name',
+				latitude: 0,
+				longitude: 0,
+				user: user._id
+			});
+
+			// Save location to the db
+			locationGlobal.save(function() {
+				// Save user2 to the test db
+				user2.save(function(res) {
+					done();
+				});
+			});
+		});
+	});
+
+	it('should not be able to delete Location instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Location
+				agent.delete('/locations/' + locationGlobal._id)
+					.send(lction)
+					.expect(403)
+					.end(function(locationDeleteErr, locationDeleteRes) {
+						// Handle Location error
+						if (locationDeleteErr) done(locationDeleteErr);
+
+						// Set message assertion
+						(locationDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Location save error
+						done(locationDeleteErr);
+					});
+			});
+	});
+
+	it('should not be able to update Location instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Location
+				agent.put('/locations/' + locationGlobal._id)
+					.send(lction)
+					.expect(403)
+					.end(function(locationDeleteErr, locationDeleteRes) {
+						// Handle Location error
+						if (locationDeleteErr) done(locationDeleteErr);
+
+						// Set message assertion
+						(locationDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Location save error
+						done(locationDeleteErr);
+					});
+			});
 	});
 
 	afterEach(function(done) {

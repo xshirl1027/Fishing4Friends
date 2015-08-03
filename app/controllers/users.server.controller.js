@@ -1,3 +1,14 @@
+/**
+ * Provides the Users module for the server (Express).
+ *
+ * @module Users
+ * @submodule Users-Server
+ * @requires lodash
+ * @requires mongoose
+ * @requires passport
+  * @main
+ */
+
 'use strict';
 
 /**

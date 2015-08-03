@@ -20,7 +20,7 @@ var MessageboardSchema = new Schema({
 	message: {
 		type: String,
 		default: '',
-		required: 'Please fill Messageboard name',
+		required: 'Please fill Messageboard message',
 		trim: true
 	},
 	created: {

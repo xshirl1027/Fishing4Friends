@@ -30,8 +30,8 @@ describe('Location Model Unit Tests:', function() {
 		user.save(function() { 
 			lction = new Location({
 				name: 'Location Name',
-				latitude: '0',
-				longitude: '0',
+				latitude: 0,
+				longitude: 0,
 				user: user
 			});
 
@@ -49,6 +49,33 @@ describe('Location Model Unit Tests:', function() {
 
 		it('should be able to show an error when try to save without name', function(done) { 
 			lction.name = '';
+
+			return lction.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without latitude', function(done) { 
+			lction.latitude = '';
+
+			return lction.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without longitude', function(done) { 
+			lction.longitude = '';
+
+			return lction.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save with icon_number as String', function(done) { 
+			lction.icon_number = 'I am a String';
 
 			return lction.save(function(err) {
 				should.exist(err);
