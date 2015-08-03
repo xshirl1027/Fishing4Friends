@@ -31,11 +31,11 @@
                     </div>
                     <label class="control-label" for="latitude">Latitude</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="location.latitude" id="name" class="form-control" placeholder="Latitude" required>
+                        <input type="number" data-ng-model="location.latitude" id="name" class="form-control" placeholder="Latitude" required>
                     </div>
                     <label class="control-label" for="longitude">Longitude</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="location.longitude" id="name" class="form-control" placeholder="longitude" required>
+                        <input type="number" data-ng-model="location.longitude" id="name" class="form-control" placeholder="longitude" required>
                     </div>
                     <span><img ng-src="{{availableIcons[location.icon_number].src}}"/></span>
                 </div>
