@@ -39,8 +39,8 @@ describe('Location CRUD tests', function() {
 		user.save(function() {
 			lction = {
 				name: 'Location Name',
-				latitude: '0',
-				longitude: '0'
+				latitude: 0,
+				longitude: 0
 			};
 			done();
 		});
@@ -331,8 +331,8 @@ describe('ADDITIONAL Location CRUD tests', function() {
 
 			locationGlobal = new Location({
 				name: 'Location Name',
-				latitude: '0',
-				longitude: '0',
+				latitude: 0,
+				longitude: 0,
 				user: user._id
 			});
 
