@@ -22,4 +22,13 @@
       margin: auto;
   }
 
-  .jumbotron { max-height: 200px; }
+  .jumbotron { max-height: 200px; color:#CEE3F6;}
+.mainheader{
+	color:#380B61;
+	background-color:#CEE3F6
+}
+.footer{
+	background-color:#CEE3F6;
+	margin-left:0;
+	margin-right:0;
+}
