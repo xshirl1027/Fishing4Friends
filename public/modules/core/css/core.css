@@ -21,3 +21,5 @@
       width: 70%;
       margin: auto;
   }
+
+  .jumbotron { max-height: 200px; }
