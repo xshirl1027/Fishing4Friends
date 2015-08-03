@@ -4,6 +4,6 @@
 angular.module('messageboards').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Messageboards', 'messageboards', '/messageboards/create');
+		Menus.addMenuItem('topbar', 'Forums', 'messageboards', '/messageboards/create');
 	}
 ]);

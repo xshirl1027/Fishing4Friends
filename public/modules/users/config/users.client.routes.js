@@ -14,7 +14,7 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/other-profile.client.view.html'
 		}).
 		state('admin-list', {
-			url: '/users',
+			url: '/admin',
 			templateUrl: 'modules/users/views/user-list.client.view.html'
 		}).
 		state('profile', {

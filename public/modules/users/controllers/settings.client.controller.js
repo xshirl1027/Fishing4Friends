@@ -84,27 +84,27 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 				$scope.error = errorResponse.data.message;
 			});
 		};
-		$scope.checkrole=function(user){
-			if (user.roles.indexOf('admin')>=0){
+		$scope.checkrole=function(other){
+			if (other.roles.indexOf('admin')>=0){
 				return true;
 			}else{
 				return false;
 			}
 		};
 		
-		$scope.makeadmin=function(user){
-			user.roles.push('admin');
-			console.log(user.roles);
-			user.$update(function() {
+		$scope.makeadmin=function(other){
+			other.roles.push('admin');
+			console.log(other.roles);
+			other.$update(function() {
 				
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
-		$scope.removeadmin=function(user){
-			var i=user.roles.indexOf('admin');
-			user.roles.splice(i,1);
-			user.$update(function() {
+		$scope.removeadmin=function(other){
+			var i=other.roles.indexOf('admin');
+			other.roles.splice(i,1);
+			other.$update(function() {
 				
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;

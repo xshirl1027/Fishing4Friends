@@ -158,8 +158,10 @@ exports.messageboardByID = function(req, res, next, id) {
  *
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.messageboard.user.id !== req.user.id) {
+	if (req.messageboard.user.id === req.user.id | req.user.roles.indexOf('admin')>=0) {
+		next();
+	}else{
 		return res.status(403).send('User is not authorized');
 	}
-	next();
+	
 };

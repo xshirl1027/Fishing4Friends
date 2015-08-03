@@ -1,15 +1,46 @@
+<section data-ng-controller="MessageboardsController" data-ng-init="find()">
+	
+    <div class="page-header">
+        <div class='heading'><center>Add or delete topics</center></div>
+    </div>
+	
+	<a class="btn btn-primary" title='add topic' href='#!/messageboards/create'>
+		Add topic <i class="glyphicon glyphicon-plus"></i>
+	</a>
+	<p>
+    <div class="list-group messageboardpanel">
+        <div class="list-group-item" data-ng-repeat="messageboard in messageboards | orderBy:created:reverse" style='background-color:#A9D0F5;border:solid;border-width:1px;border-color:black;margin-bottom:0.5%' >
+			
+			<div class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="messageboard.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="messageboard.user.displayName"></span>
+			</div>
+			<div class='topic-box'>
+				<h4 class="list-group-item-heading" data-ng-bind="messageboard.name"></h4>
+				<div class="btn btn-primary pull-right" title='delete this' data-ng-click="remove(messageboard);">
+					<i class="glyphicon glyphicon-trash"></i>
+				</div>
+				<p class="list-group-item-heading" data-ng-bind="messageboard.message"></p>
+				
+			</div>
+        </div>
+    </div>
+
+</section>
 <section data-ng-controller="SettingsController" data-ng-init="find()">
     <div class="page-header">
         <h1>User accounts</h1>
     </div>
     <div class="row">
-        <div data-ng-repeat="user in users"  class="list-group-item">
-			<span><span class="list-group-item-heading"> {{user.displayName}}{{user.roles}}
+        <div data-ng-repeat="other in users"  class="list-group-item">
+			<span><span class="list-group-item-heading"> {{other.displayName}}{{other.roles}}
 			
-			<a class="btn btn-primary pull-right" ng-show='!checkrole(user)' data-ng-click='makeadmin(user)'>
+			<a class="btn btn-primary pull-right" ng-show='!checkrole(other)' data-ng-click='makeadmin(other)'>
 				Give admin privileges <i class="glyphicon glyphicon-plus"></i>
 			</a>
-			<a class="btn btn-primary pull-right" ng-show='checkrole(user)' data-ng-click='removeadmin(user)'>
+			<a class="btn btn-primary pull-right" ng-show='checkrole(other)' data-ng-click='removeadmin(other)'>
 				Remove admin privileges <i class="glyphicon glyphicon-plus"></i>
 			</a>
 			</span>
