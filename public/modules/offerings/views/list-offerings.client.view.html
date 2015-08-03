@@ -32,6 +32,7 @@
 			<option value="Descending">Descending</option>
 		</select>:</p>
 	</div>
+	<h1 ng-hide='offerings'> LOADING </h1>
     <div class="list-group">
         <!--a data-ng-repeat="offering in offerings | filter: {price : exactPrice}" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item"-->
 		<a data-ng-repeat="offering in offerings | orderBy: sorting : descend" data-ng-href="#!/offerings/{{offering._id}}" class="list-group-item">

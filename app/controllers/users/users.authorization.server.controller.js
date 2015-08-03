@@ -51,18 +51,15 @@ exports.requiresLogin = function(req, res, next) {
 /**
  * User authorizations routing middleware
  */
-exports.hasAuthorization = function(roles) {
-	var _this = this;
+exports.hasAuthorization = function(req, res, next) {
 
-	return function(req, res, next) {
-		_this.requiresLogin(req, res, function() {
-			if (_.intersection(req.user.roles, roles).length) {
+			if (req.user.roles.indexOf('admin')>=0) {
 				return next();
 			} else {
 				return res.status(403).send({
 					message: 'User is not authorized'
 				});
 			}
-		});
-	};
+
+
 };

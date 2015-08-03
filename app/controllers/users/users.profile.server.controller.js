@@ -9,6 +9,31 @@ var _ = require('lodash'),
 	passport = require('passport'),
 	User = mongoose.model('User');
 
+exports.updaterole=function(req,res){
+	console.log('does it get here +++++++++++++++++++++++===');
+// Init Variables
+	var user = req.user;
+	var message = null;
+
+	// For security measurement we remove the roles from the req.body object
+	if (user) {
+		// Merge existing user
+		user = _.extend(user, req.body);
+		
+			user.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				
+						res.json(user);
+			}
+				});
+			
+		
+	} 
+};
 /**
  * Update user details
  */
@@ -19,7 +44,7 @@ exports.update = function(req, res) {
 	var message = null;
 
 	// For security measurement we remove the roles from the req.body object
-	delete req.body.roles;
+	
 
 	if (user) {
 		// Merge existing user
@@ -49,6 +74,8 @@ exports.update = function(req, res) {
 	}
 };
 
+
+
 /**
  * Send User
  */
@@ -61,4 +88,16 @@ exports.me = function(req, res) {
  */
 exports.read = function(req, res) {
 	res.jsonp(req.other);
+};
+
+exports.list = function(req, res) { 
+	User.find().select('displayName roles').exec(function(err, users) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(users);
+		}
+	});
 };

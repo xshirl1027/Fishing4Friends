@@ -72,6 +72,44 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 			},console.log($scope.other));
 			
 		};
+		$scope.find=function(){
+			$scope.users=Users.query();
+			$scope.roles=['user','admin'];
+		};
+		$scope.update = function(user, role) {
+			user.roles=role;
+			user.$update(function() {
+				
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+		$scope.checkrole=function(user){
+			if (user.roles.indexOf('admin')>=0){
+				return true;
+			}else{
+				return false;
+			}
+		};
+		
+		$scope.makeadmin=function(user){
+			user.roles.push('admin');
+			console.log(user.roles);
+			user.$update(function() {
+				
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+		$scope.removeadmin=function(user){
+			var i=user.roles.indexOf('admin');
+			user.roles.splice(i,1);
+			user.$update(function() {
+				
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
 
 		// Change user password
 		$scope.changeUserPassword = function() {

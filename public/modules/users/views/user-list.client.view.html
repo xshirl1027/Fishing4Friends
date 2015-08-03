@@ -1,0 +1,19 @@
+<section data-ng-controller="SettingsController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>User accounts</h1>
+    </div>
+    <div class="row">
+        <div data-ng-repeat="user in users"  class="list-group-item">
+			<span><span class="list-group-item-heading"> {{user.displayName}}{{user.roles}}
+			
+			<a class="btn btn-primary pull-right" ng-show='!checkrole(user)' data-ng-click='makeadmin(user)'>
+				Give admin privileges <i class="glyphicon glyphicon-plus"></i>
+			</a>
+			<a class="btn btn-primary pull-right" ng-show='checkrole(user)' data-ng-click='removeadmin(user)'>
+				Remove admin privileges <i class="glyphicon glyphicon-plus"></i>
+			</a>
+			</span>
+			</span>
+        </div>
+    </div>
+</section>
