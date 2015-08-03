@@ -30,8 +30,8 @@ describe('Location Model Unit Tests:', function() {
 		user.save(function() { 
 			lction = new Location({
 				name: 'Location Name',
-				latitude: '0',
-				longitude: '0',
+				latitude: 0,
+				longitude: 0,
 				user: user
 			});
 
