@@ -57,7 +57,8 @@ var PhotoSchema = new Schema({
 	 * @property src
 	 * @type String
 	 */	src: {
-		type: String
+		type: String,
+		required: 'Please provide Photo source'
 	}
 });
 

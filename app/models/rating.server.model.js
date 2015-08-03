@@ -36,7 +36,8 @@ var RatingSchema = new Schema({
 	 */	
 	rating: {
 		type: Number,
-		default: -1
+		default: -1,
+		required: 'Please input a rating score'
 	},
 	/**
 	 * Written comments for the Rating.

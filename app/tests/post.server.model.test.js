@@ -53,6 +53,9 @@ describe('Post Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		// pending test below
+		it('should be able to show an error when try to save without threadid');
 	});
 
 	afterEach(function(done) { 

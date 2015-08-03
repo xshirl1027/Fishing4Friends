@@ -6,12 +6,13 @@ var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Offering = mongoose.model('Offering'),
+	Rating = mongoose.model('Rating'),
 	agent = request.agent(app);
 
 /**
  * Globals
  */
-var credentials, user, offering;
+var credentials, credentials2, user, user2, offering, offeringGlobal;
 
 /**
  * Offering routes tests
@@ -38,7 +39,8 @@ describe('Offering CRUD tests', function() {
 		// Save a user to the test db and create new Offering
 		user.save(function() {
 			offering = {
-				name: 'Offering Name'
+				name: 'Offering Name',
+				description: 'Offering description'
 			};
 
 			done();
@@ -258,6 +260,219 @@ describe('Offering CRUD tests', function() {
 			});
 
 		});
+	});
+
+	it('should not be able to update Offering instance if not signed in', function(done) {
+		// Set Offering user 
+		offering.user = user;
+
+		// Create new Offering model instance
+		var offeringObj = new Offering(offering);
+
+		// Save the Offering
+		offeringObj.save(function() {
+			// Try deleting Offering
+			request(app).put('/offerings/' + offeringObj._id)
+			.expect(401)
+			.end(function(offeringUpdateErr, offeringUpdateRes) {
+				// Set message assertion
+				(offeringUpdateRes.body.message).should.match('User is not logged in');
+
+				// Handle Offering error error
+				done(offeringUpdateErr);
+			});
+
+		});
+	});
+
+	afterEach(function(done) {
+		User.remove().exec();
+		Offering.remove().exec();
+		done();
+	});
+});
+
+describe('ADDITIONAL Offering CRUD tests', function() {
+	beforeEach(function(done) {
+		// Create user credentials
+		credentials = {
+			username: 'username',
+			password: 'password'
+		};
+
+		credentials2 = {
+			username: 'otherUsername',
+			password: 'password'
+		};
+
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
+
+		// Create another new user
+		user2 = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials2.username,
+			password: credentials2.password,
+			provider: 'local'
+		});
+
+		// Save both users to the test db and create a new Offering in the first user's name
+		user.save(function() {
+
+			offeringGlobal = new Offering({
+				name: 'Offering Name',
+				description: 'My Offering',
+				user: user._id
+			});
+
+			// Save Offering to the db
+			offeringGlobal.save(function() {
+				// Save user2 to the test db
+				user2.save(function(res) {
+					done();
+				});
+			});
+		});
+	});
+
+	it('should not be able to delete Offering instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Offering
+				agent.delete('/offerings/' + offeringGlobal._id)
+					.send(offering)
+					.expect(403)
+					.end(function(offeringDeleteErr, offeringDeleteRes) {
+						// Handle Offering error
+						if (offeringDeleteErr) done(offeringDeleteErr);
+
+						// Set message assertion
+						(offeringDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Offering save error
+						done(offeringDeleteErr);
+					});
+			});
+	});
+
+	it('should not be able to update Offering instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Offering
+				agent.put('/offerings/' + offeringGlobal._id)
+					.send(offering)
+					.expect(403)
+					.end(function(offeringDeleteErr, offeringDeleteRes) {
+						// Handle Offering error
+						if (offeringDeleteErr) done(offeringDeleteErr);
+
+						// Set message assertion
+						(offeringDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Offering save error
+						done(offeringDeleteErr);
+					});
+			});
+	});
+
+	it('should not be able to add userId to interested array if not logged in', function(done) {
+		agent.put('/offerings/' + offeringGlobal._id + '/interested')
+			.send(offering)
+			.expect(401)
+			.end(function(offeringSaveErr, offeringSaveRes) {
+				// Call the assertion callback
+				done(offeringSaveErr);
+		});
+	});
+
+	it('should add userId to interested array if logged in', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				agent.put('/offerings/' + offeringGlobal._id + '/interested')
+					.send(offering)
+					.expect(200)
+					.end(function(offeringSaveErr, offeringSaveRes) {
+				// Call the assertion callback
+				done(offeringSaveErr);
+			});
+		});
+	});
+
+	it('should not be able to add a user rating if not logged in', function(done) {
+		// create a Rating document and save it to the db
+		var rating = new Rating({
+			user: user2._id
+		});
+		rating.save();
+
+		// add the rting document reference to the offering document
+		offeringGlobal.rating.comments.push(rating._id);
+
+		agent.put('/offerings/' + offeringGlobal._id + '/rating')
+			.send(offeringGlobal)
+			.expect(401)
+			.end(function(offeringSaveErr, offeringSaveRes) {
+				// Call the assertion callback
+				done(offeringSaveErr);
+		});
+	});
+
+	it('should add user rating if logged in', function(done) {
+		// create a Rating document and save it to the db
+		var rating = new Rating({
+			user: user2._id
+		});
+		rating.save();
+
+		// add the rating document reference to the offering document
+		offeringGlobal.rating.comments.push(rating);
+
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				agent.put('/offerings/' + offeringGlobal._id + '/rating')
+					.send(offeringGlobal)
+					.expect(200)
+					.end(function(offeringSaveErr, offeringSaveRes) {
+
+						// assert that rating got saved to the document: matching IDs
+						console.log('offeringSaveRes.body is ', offeringSaveRes.body.rating);
+						(offeringSaveRes.body.rating.comments[0]).should.match((rating._id).toString());
+
+						// Call the assertion callback
+						done(offeringSaveErr);
+			});
+		});		
 	});
 
 	afterEach(function(done) {
