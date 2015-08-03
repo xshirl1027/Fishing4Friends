@@ -1,11 +1,39 @@
+/**
+ * Provides the Locations module for the client (Angular).
+ *
+ * @module Locations
+ * @submodule Locations-Client
+ * @main
+ */
+
+
 'use strict';
 
-// Locations controller
+/**
+ * Controller driving the client views.
+ *
+ * @class LocationsController
+ * @constructor
+ * @param $scope {Object} 
+ * @param $stateParams {Object}
+ * @param $location {Service}
+ * @param Authentication {Service} 
+ * @param Locations{Resource}
+ */
 angular.module('locations').controller('LocationsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Locations',
 	function($scope, $stateParams, $location, Authentication, Locations) {
 		$scope.authentication = Authentication;
 
-		// Create new Location
+		
+		/**
+		 * Creates a new location, adding it to the database, and returning it to be displayed in the .../view page.
+		 * Parameters for the new offering are indirectly provided by $scope.
+		 * On successful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none 
+		 * @method create
+		 * @return nothing
+		 */
 		$scope.create = function() {
 			// Create new Location object
 			var location = new Locations ({
@@ -27,7 +55,15 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 			});
 		};
 
-		// Remove existing Location
+		/**
+		 * Removes the specified  location from the database.
+		 * This is used in the .../view page.
+		 * On successful response from the database, the client is redirected to one page back in the browser's history.
+		 *
+		 * @param offering
+		 * @method remove
+		 * @return nothing
+		 */
 		$scope.remove = function(location) {
 			if ( location ) { 
 				location.$remove();
@@ -44,7 +80,16 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 			}
 		};
 
-		// Update existing Location
+		/**
+		 * Updates the specified location with new input from the user.
+		 * This is used in the .../edit page.
+		 * Parameters for the new offering are indirectly provided by $scope.
+		 * On successful response from the database, the client is redirected to the .../view page.
+		 *
+		 * @param none
+		 * @method update
+		 * @return nothing
+		 */
 		$scope.update = function() {
 			var location = $scope.location;
 			
@@ -105,7 +150,7 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		There is an option for having a callback after the library is loaded, but that doesn't seem to
 		help.
 
-		have tried:   using a loadscript function as in
+		have tried: using a loadscript function as in
 
 		www.w3schools.com/googleapi/tryit.asp?filename=tryhtml_map_async
 
@@ -125,21 +170,30 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
 		********************************************************************/
 
-
+		/**
+		 * Obtains a full list location documents from the database.
+		 * This is used with the 'ng-init' directive.
+		 * On successful response from the database, an array of offering objects is assigned to $scope.offerings.
+		 *
+		 * @param none
+		 * @method find
+		 * @return nothing
+		 */
 		$scope.find = function() {
 
 
 			function get_lat_long (locations) {
 
 
-			/**************************************************************
+			/**
     		purpose:  this function gets the latitudes and longitudes
     		          of all of the saved locations
     		          along with the name, icon_number and the icon_pathname
     		          and the location name, which is the details that appear
     		          above the marker on the map
 			--------------------------------------------------------------	
-			parameters:  map -- the google map object
+			@param  locations
+			@return nothing
 			--------------------------------------------------------------
 			called by init_map function.
     		*************************************************************/
@@ -184,10 +238,10 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
     function init_map(arraycoords) {
 
 
-    	/**************************************************************
+    	/**
     	purpose:  this function draws a google map
 		--------------------------------------------------------------	
-		parameters:  arraycoords = an array of all the map information
+		@param  arraycoords = an array of all the map information
 
 		See $scope.find() for their definition.
 		--------------------------------------------------------------
@@ -196,11 +250,14 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 	
 
 		function map_markers (map, center_lat, center_long,arraycoords) {
-
-	    		/**************************************************************
+				
+				/**
 	    		purpose:  this function puts the saved map markers on the map
 				--------------------------------------------------------------	
-				parameters:  map -- the google map object
+				@param  map -- the google map object
+				@param  center_lat -- the latitude of the map center
+				@param  center_long -- the longitude of the map center
+				@param arraycoords -- the array of loaded map markers data
 				--------------------------------------------------------------
 				called by init_map function.
 	    		*************************************************************/
@@ -240,13 +297,13 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		    function draw_center_marker (map, center_lat, center_long) {
 
 
-		      /**************************************************************
+		      /**
 	    		purpose:  this function puts the center postiton map marker
 	    		          on the map
 				--------------------------------------------------------------	
-				parameters:  map -- the google map object
-				             center_lat - the center latitude
-				             center_long - the center longitude
+				@param  map -- the google map object
+				@param  center_lat - the center latitude
+				@param  center_long - the center longitude
 				--------------------------------------------------------------
 				called by init_map function.
 	    		*************************************************************/
@@ -285,15 +342,22 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 		
 			function location_function (position) {
 
-			/**************************************************************
+			/**
 	    	purpose:  this function is a callback function that runs
 	    	when a user allows their coordinates to be used.
-			--------------------------------------------------------------	
-			parameters:  position - returned by the 
-			             localcoords.getCurrentPosition(location_function)
-			             call.
-			--------------------------------------------------------------
 
+	    	3 way choice:
+
+	    	1)  user opts into map finding location, and the service exists
+	    	    in the browser
+
+	    	2)  user doesn't opt into using the location
+
+	    	3)  map service doesn't exist in the browswer
+
+			--------------------------------------------------------------	
+			@param  position - returned by the localcoords.getCurrentPosition(location_function) call.
+			--------------------------------------------------------------
 	    	*************************************************************/
 				
 				Center_lat = position.coords.latitude;
@@ -355,13 +419,20 @@ angular.module('locations').controller('LocationsController', ['$scope', '$state
 
 		}
 
-
 	}
 
 
     // end map stuff here
 
-		// Find existing Location
+		/**
+		 * Makes a 'get' to the database, seeking a single offering by specified ID.
+		 * On successful response from the database, the offering objects is assigned to $scope.offering.
+		 * The offering ID is obtained from $stateParams.
+		 *
+		 * @param none
+		 * @method findOne
+		 * @return nothing
+		 */	
 		$scope.findOne = function() {
 			var assignCurrent = function(location) {
 				$scope.current = location.icon_number;	
