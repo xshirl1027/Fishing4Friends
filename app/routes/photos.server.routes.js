@@ -5,7 +5,7 @@
  *
  * @module Photos
  * @submodule Photos-Server
- * @class Routes
+ * @class PhotosRoutes
  * @static
  */
 

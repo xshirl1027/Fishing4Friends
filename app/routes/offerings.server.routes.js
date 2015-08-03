@@ -5,7 +5,7 @@
  *
  * @module Offerings
  * @submodule Offerings-Server
- * @class Routes
+ * @class OfferingsRoutes
  * @static
  */
 
