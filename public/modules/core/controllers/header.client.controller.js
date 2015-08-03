@@ -25,7 +25,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		
 		$scope.clear = function(){
 			Messages.clear();
-			javascript:history.go(0);
+			history.go(0);
 		};
 	}
 ]);

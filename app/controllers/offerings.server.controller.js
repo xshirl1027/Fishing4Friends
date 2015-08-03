@@ -36,7 +36,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	req.sanitize('name').escape();
 	req.sanitize('description').escape();
-	
+	console.log(req.body);
 	var offering = new Offering(req.body);
 	// console.log('POST request body is ',req.body);
 	offering.user = req.user;

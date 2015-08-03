@@ -106,20 +106,17 @@ module.exports = function(db) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	
-	// add csrf should be added after cookie and session initialization.
+	// add csrf after cookie and session initialization.
 	// Otherwise you will get 'Error: misconfigured csrf'
 	// !! BUT it screws up th test scripts !!
-	if (process.env.NODE_ENV === 'test') {
-		// do nothing
-	}
-	else {
+	if (process.env.NODE_ENV !== 'test') {
+		
 		app.use(csurf());
 		app.use(function(req, res, next) {
 			res.cookie('XSRF-TOKEN', req.csrfToken());
 			next();
 		});		
 	}
-
 	
 	// connect flash for flash messages
 	app.use(flash());
