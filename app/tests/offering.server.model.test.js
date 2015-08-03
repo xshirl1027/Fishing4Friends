@@ -30,6 +30,7 @@ describe('Offering Model Unit Tests:', function() {
 		user.save(function() { 
 			offering = new Offering({
 				name: 'Offering Name',
+				description: 'Offering description',
 				user: user
 			});
 
@@ -53,6 +54,25 @@ describe('Offering Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should be able to show an error when try to save without description', function(done) { 
+			offering.description = '';
+
+			return offering.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save price as String', function(done) { 
+			offering.price = '5 dollars';
+
+			return offering.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
 	});
 
 	afterEach(function(done) { 

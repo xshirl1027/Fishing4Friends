@@ -55,6 +55,33 @@ describe('Location Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should be able to show an error when try to save without latitude', function(done) { 
+			lction.latitude = '';
+
+			return lction.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without longitude', function(done) { 
+			lction.longitude = '';
+
+			return lction.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save with icon_number as String', function(done) { 
+			lction.icon_number = 'I am a String';
+
+			return lction.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 	});
 
 	afterEach(function(done) { 

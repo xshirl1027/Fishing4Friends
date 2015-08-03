@@ -54,6 +54,15 @@ describe('Messageboard Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should be able to show an error when try to save without message', function(done) { 
+			messageboard.message = '';
+
+			return messageboard.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 	});
 
 	afterEach(function(done) { 

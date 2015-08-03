@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, thread;
+var credentials, credentials2, user, user2, thread, threadGlobal;
 
 /**
  * Thread routes tests
@@ -116,6 +116,34 @@ describe('Thread CRUD tests', function() {
 					.end(function(threadSaveErr, threadSaveRes) {
 						// Set message assertion
 						(threadSaveRes.body.message).should.match('Please fill Thread name');
+						
+						// Handle Thread save error
+						done(threadSaveErr);
+					});
+			});
+	});
+
+	it('should not be able to save Thread instance if no message is provided', function(done) {
+		// Invalidate message field
+		thread.message = '';
+
+		agent.post('/auth/signin')
+			.send(credentials)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Get the userId
+				var userId = user.id;
+
+				// Save a new Thread
+				agent.post('/threads')
+					.send(thread)
+					.expect(400)
+					.end(function(threadSaveErr, threadSaveRes) {
+						// Set message assertion
+						(threadSaveRes.body.message).should.match('Please enter a message');
 						
 						// Handle Thread save error
 						done(threadSaveErr);
@@ -259,6 +287,141 @@ describe('Thread CRUD tests', function() {
 			});
 
 		});
+	});
+
+	it('should not be able to update Thread instance if not signed in', function(done) {
+		// Set Thread user 
+		thread.user = user;
+
+		// Create new Thread model instance
+		var threadObj = new Thread(thread);
+
+		// Save the Thread
+		threadObj.save(function() {
+			// Try deleting Thread
+			request(app).put('/threads/' + threadObj._id)
+			.expect(401)
+			.end(function(threadUpdateErr, threadUpdateRes) {
+				// Set message assertion
+				(threadUpdateRes.body.message).should.match('User is not logged in');
+
+				// Handle Thread error error
+				done(threadUpdateErr);
+			});
+
+		});
+	});
+
+	afterEach(function(done) {
+		User.remove().exec();
+		Thread.remove().exec();
+		done();
+	});
+});
+
+
+describe('ADDITIONAL Thread CRUD tests', function() {
+		beforeEach(function(done) {
+		// Create user credentials
+		credentials = {
+			username: 'username',
+			password: 'password'
+		};
+
+		credentials2 = {
+			username: 'otherUsername',
+			password: 'password'
+		};
+
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
+
+		// Create another new user
+		user2 = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials2.username,
+			password: credentials2.password,
+			provider: 'local'
+		});
+
+		// Save both users to the test db and create a new Thread in the first user's name
+		user.save(function() {
+
+			threadGlobal = new Thread({
+				name: 'Thread Name',
+				message: 'New Message',
+				user: user._id
+			});
+
+			// Save Thread to the db
+			threadGlobal.save(function() {
+				// Save user2 to the test db
+				user2.save(function(res) {
+					done();
+				});
+			});
+		});
+	});
+
+	it('should not be able to delete Thread instance if user is not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Thread
+				agent.delete('/threads/' + threadGlobal._id)
+					.send(threadGlobal)
+					.expect(403)
+					.end(function(threadDeleteErr, threadsDeleteRes) {
+						// Handle Thread error
+						if (threadDeleteErr) done(threadDeleteErr);
+
+						// Set message assertion
+						(threadsDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Thread save error
+						done(threadDeleteErr);
+					});
+			});
+	});
+
+	it('should not be able to update Thread instance if user is not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Update existing Thread
+				agent.put('/threads/' + threadGlobal._id)
+					.send(threadGlobal)
+					.expect(403)
+					.end(function(threadPutErr, threadPutRes) {
+						// Handle Thread error
+						if (threadPutErr) done(threadPutErr);
+
+						// Set message assertion
+						(threadPutRes.text).should.match('User is not authorized');
+						
+						// Handle Thread save error
+						done(threadPutErr);
+					});
+			});
 	});
 
 	afterEach(function(done) {

@@ -13,7 +13,7 @@ var MessageSchema = new Schema({
 	name: {
 		type: String,
 		default: '',
-		required: 'Please fill Message name',
+		required: 'Please write a message',
 		trim: true
 	},
 	created: {

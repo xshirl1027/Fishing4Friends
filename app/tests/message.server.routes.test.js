@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var credentials, user, message;
+var credentials, credentials2, user, user2, message, messageGlobal;
 
 /**
  * Message routes tests
@@ -38,7 +38,7 @@ describe('Message CRUD tests', function() {
 		// Save a user to the test db and create new Message
 		user.save(function() {
 			message = {
-				name: 'Message Name'
+				name: 'Message Name',
 			};
 
 			done();
@@ -105,22 +105,25 @@ describe('Message CRUD tests', function() {
 				// Handle signin error
 				if (signinErr) done(signinErr);
 
-				// Get the userId
-				var userId = user.id;
-
 				// Save a new Message
 				agent.post('/messages')
 					.send(message)
 					.expect(400)
 					.end(function(messageSaveErr, messageSaveRes) {
 						// Set message assertion
-						(messageSaveRes.body.message).should.match('Please fill Message name');
+						(messageSaveRes.body.message).should.match('Please write a message');
 						
 						// Handle Message save error
 						done(messageSaveErr);
 					});
 			});
 	});
+
+	// pending test below
+	it('should not be able to save Message instance if no receiving is provided');
+
+	// pending test below
+	it('should not be able to save Message instance if no sentby is provided');
 
 	it('should be able to update Message instance if signed in', function(done) {
 		agent.post('/auth/signin')
@@ -258,6 +261,139 @@ describe('Message CRUD tests', function() {
 			});
 
 		});
+	});
+
+	it('should not be able to update Message instance if not signed in', function(done) {
+		// Set Message user 
+		message.user = user;
+
+		// Create new Message model instance
+		var messageObj = new Message(message);
+
+		// Save the Message
+		messageObj.save(function() {
+			// Try deleting Message
+			request(app).put('/messages/' + messageObj._id)
+			.expect(401)
+			.end(function(messageUpdateErr, messageUpdateRes) {
+				// Set message assertion
+				(messageUpdateRes.body.message).should.match('User is not logged in');
+
+				// Handle Message error error
+				done(messageUpdateErr);
+			});
+
+		});
+	});
+
+	afterEach(function(done) {
+		User.remove().exec();
+		Message.remove().exec();
+		done();
+	});
+});
+
+describe('ADDITIONAL Message CRUD tests', function() {
+		beforeEach(function(done) {
+		// Create user credentials
+		credentials = {
+			username: 'username',
+			password: 'password'
+		};
+
+		credentials2 = {
+			username: 'otherUsername',
+			password: 'password'
+		};
+
+		// Create a new user
+		user = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials.username,
+			password: credentials.password,
+			provider: 'local'
+		});
+
+		// Create another new user
+		user2 = new User({
+			firstName: 'Full',
+			lastName: 'Name',
+			displayName: 'Full Name',
+			email: 'test@test.com',
+			username: credentials2.username,
+			password: credentials2.password,
+			provider: 'local'
+		});
+
+		// Save both users to the test db and create a new Message in the first user's name
+		user.save(function() {
+
+			messageGlobal = new Message({
+				name: 'Message Name',
+				user: user._id
+			});
+
+			// Save message to the db
+			messageGlobal.save(function() {
+				// Save user2 to the test db
+				user2.save(function(res) {
+					done();
+				});
+			});
+		});
+	});
+
+	it('should not be able to delete Message instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Delete existing Message
+				agent.delete('/messages/' + messageGlobal._id)
+					.send(messageGlobal)
+					.expect(403)
+					.end(function(messageDeleteErr, messageDeleteRes) {
+						// Handle Message error
+						if (messageDeleteErr) done(messageDeleteErr);
+
+						// Set message assertion
+						(messageDeleteRes.text).should.match('User is not authorized');
+						
+						// Handle Message save error
+						done(messageDeleteErr);
+					});
+			});
+	});
+
+	it('should not be able to update Message instance if not its creator', function(done) {
+		agent.post('/auth/signin')
+			.send(credentials2)
+			.expect(200)
+			.end(function(signinErr, signinRes) {
+				// Handle signin error
+				if (signinErr) done(signinErr);
+
+				// Update existing Message
+				agent.put('/messages/' + messageGlobal._id)
+					.send(messageGlobal)
+					.expect(403)
+					.end(function(messagePutErr, messagePutRes) {
+						// Handle Message error
+						if (messagePutErr) done(messagePutErr);
+
+						// Set message assertion
+						(messagePutRes.text).should.match('User is not authorized');
+						
+						// Handle Message save error
+						done(messagePutErr);
+					});
+			});
 	});
 
 	afterEach(function(done) {
