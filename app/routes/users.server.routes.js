@@ -1,6 +1,15 @@
 'use strict';
 
 /**
+ * Defines the RESTful API endpoints related to Users.
+ *
+ * @module Users
+ * @submodule Users-Server
+ * @class UsersRoutes
+ * @static
+ */
+
+/**
  * Module dependencies.
  */
 var passport = require('passport');

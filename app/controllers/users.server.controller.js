@@ -6,7 +6,8 @@
  * @requires lodash
  * @requires mongoose
  * @requires passport
-  * @main
+ * @requires crypto
+ * @main
  */
 
 'use strict';

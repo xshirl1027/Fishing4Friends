@@ -57,7 +57,7 @@ describe('Location Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error when try to save without latitude', function(done) { 
-			lction.latitude = '';
+			lction.latitude = null;
 
 			return lction.save(function(err) {
 				should.exist(err);
@@ -66,7 +66,7 @@ describe('Location Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error when try to save without longitude', function(done) { 
-			lction.longitude = '';
+			lction.longitude = null;
 
 			return lction.save(function(err) {
 				should.exist(err);

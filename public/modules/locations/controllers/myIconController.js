@@ -1,4 +1,27 @@
+/**
+ * controller for selecting the icon images in the create icons and edit icons page displays
+ * used to select different marker pages
+ *
+ * @module Locations
+ * @submodule Locations-Client
+ * @main
+ */
+
+
 'use strict';
+/**
+ * Controller driving the map marker image selection
+ *
+ * @class LocationsController
+ * @constructor
+ * @param $scope {Object} 
+ * @param $stateParams {Object}
+ * @param $location {Service}
+ * @param Authentication {Service} 
+ * @param Locations{Resource}
+ */
+
+
 angular.module('locations').controller('IconpicController',['$scope', '$stateParams', '$location', 'Authentication', 'Locations', 
     function($scope, $stateParams, $location, Authentication, Locations) {
                 
@@ -45,9 +68,7 @@ angular.module('locations').controller('IconpicController',['$scope', '$statePar
             
                 $scope.max = $scope.availableIcons.length-1;
 
-                //$scope.icon_path = $scope.availableIcons[current].src;
-                //console.log($scope.icon_path);
-
+                
                 $scope.increment_icon = function() {
 
                     $scope.current++;
