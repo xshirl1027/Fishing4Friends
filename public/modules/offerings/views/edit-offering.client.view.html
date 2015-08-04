@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
+                    <input type="submit" value="Update listing" class="btn btn-default">
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
@@ -35,6 +35,8 @@
             </fieldset>
         </form>
     </div>
+
+<div class="form-group" ng-include="'/modules/core/views/modal-upload.client.view.html'"></div>
 
     <div >
         <img ng-show="offering.offering_pic.src" data-ng-src="{{offering.offering_pic.src}}" style="max-width:500px"/>
@@ -45,4 +47,3 @@
 
 
 
-<div class="form-group" ng-include="'/modules/core/views/modal-upload.client.view.html'"></div>
