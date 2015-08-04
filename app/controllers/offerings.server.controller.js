@@ -34,11 +34,13 @@ var mongoose = require('mongoose'),
  * @return nothing
  */
 exports.create = function(req, res) {
+	
 	req.sanitize('name').escape();
 	req.sanitize('description').escape();
 	console.log(req.body);
+	
 	var offering = new Offering(req.body);
-	// console.log('POST request body is ',req.body);
+	
 	offering.user = req.user;
 
 	offering.save(function(err) {
@@ -145,16 +147,16 @@ exports.list = function(req, res) {
 	
 	// if no search key is specified, get full list of offerings, since no query is specified
 	if (keyNames.length === 0) {
-		Offering.find().sort('-created').populate('user', 'displayName').populate('offering_pic','src').exec(offeringsErr);
+		Offering.find().populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 	}
 	else{
 		switch(keyNames[0]){
 			case 'price': //user input
-			Offering.where('price').lte(val).sort('-created').populate('offering_pic','src').exec(offeringsErr);
+			Offering.where('price').lte(val).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
 			case 'user': //not user input (user_id)
-			Offering.find({'user' : val}).populate('interested', 'displayName').populate('offering_pic','src').sort('-created').exec(offeringsErr);
+			Offering.find({'user' : val}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 			break;
 			
 			case 'rater': //not user input (user_id)
@@ -167,8 +169,7 @@ exports.list = function(req, res) {
 			
 			default: //user input
 			req.sanitize('input').escape();
-			Offering.find({ $text: { $search: val }}).sort('-created').populate('offering_pic','src').exec(offeringsErr);
-			console.log(val);
+			Offering.find({ $text: { $search: val }}).populate('user', 'displayName').sort('-created').populate('offering_pic','src').exec(offeringsErr);
 		}
 	}
 };

@@ -87,6 +87,8 @@
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="offering.user.displayName"></span>
 			</small>
 			<a href='/#!/offerings/{{offering._id}}'>
 				<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h2>
@@ -122,6 +124,8 @@
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="offering.user.displayName"></span>
 			</small>
 			<a href='/#!/offerings/{{offering._id}}'>
 				<h2 class="list-group-item-heading" data-ng-bind="offering.name"></h2>
