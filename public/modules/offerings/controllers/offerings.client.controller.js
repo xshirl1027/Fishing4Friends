@@ -45,7 +45,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 				price: this.price,
 				interested: []
 			});
-
+			console.log(this.description);
 			// Redirect after save
 			offering.$save(function(response) {
 				$location.path('offerings/' + response._id);
