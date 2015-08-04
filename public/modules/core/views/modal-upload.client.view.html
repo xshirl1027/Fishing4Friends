@@ -21,7 +21,7 @@
 				        <div class="modal-footer">
 				            <button class="btn btn-primary" ng-hide="photouploaded" type="submit" ng-click="ok();create(image)" >Add</button>
 
-				            <button class="btn btn-secondary" ng-hide="photouploaded" type="reset">Clear</button>
+				            <button class="btn btn-secondary" ng-hide="photouploaded" type="reset" ng-click="image = null">Clear</button>
 				    	<!--  // buttons below should alternate only when ADD button above has been pressed.  -->
 	      				    <button class="btn btn-warning" ng-hide="photouploaded" ng-click="cancel()">Cancel</button>
 

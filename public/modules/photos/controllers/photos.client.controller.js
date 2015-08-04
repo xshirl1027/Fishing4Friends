@@ -21,8 +21,8 @@
  * @param Users {Resource}
  * @param Offerings {Resource}
  */
-angular.module('photos').controller('PhotosController', ['$scope', '$stateParams', '$state', '$location', 'Authentication', 'Photos', 'Users', 'Offerings',
-	function($scope, $stateParams, $state, $location, Authentication, Photos, Users, Offerings) {
+angular.module('photos').controller('PhotosController', ['$scope', '$stateParams', '$state', '$location', '$window', 'Authentication', 'Photos', 'Users', 'Offerings',
+	function($scope, $stateParams, $state, $location, $window, Authentication, Photos, Users, Offerings) {
 		$scope.authentication = Authentication;
 
 
@@ -50,15 +50,19 @@ angular.module('photos').controller('PhotosController', ['$scope', '$stateParams
 					// for a valid offering object.
 					var offering = Offerings.get({offeringId:$stateParams.offeringId}, function(){
 						offering.offering_pic = response._id;
-						offering.$update();
+						offering.$update(function() {
+							$window.location.reload();
+						});
 					});
+
+					// $location.path('offerings/' + $stateParams.offeringId);
 
 					// !!! DO NOT REDIRECT the $location, as user might have unsaved edits in the form.
 				}
 				else {
-					Users.update({ 'profile_pic' : response._id });
-
-					// !! Perform any page redirects from here.
+					Users.update({ 'profile_pic' : response._id }, function() {
+						$window.location.reload();
+					});
 				}
 
 				$scope.photo = response;

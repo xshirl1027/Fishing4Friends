@@ -104,7 +104,7 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 				return false;
 			}
 			
-		}
+		};
 
 		/**
 		 * returns a list of all existing messageboards to $scope.messageboard
