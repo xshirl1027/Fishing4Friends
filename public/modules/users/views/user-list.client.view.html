@@ -4,7 +4,7 @@
         <div class='heading'><center>Add or delete topics</center></div>
     </div>
 	
-	<a class="btn btn-primary" title='add topic' href='#!/messageboards/create'>
+	<a class="btn btn-primary" title='add topic' href='#!/messageboards/create' ng-hide='!isadmin()'>
 		Add topic <i class="glyphicon glyphicon-plus"></i>
 	</a>
 	<p>
@@ -19,7 +19,7 @@
 			</div>
 			<div class='topic-box'>
 				<h4 class="list-group-item-heading" data-ng-bind="messageboard.name"></h4>
-				<div class="btn btn-primary pull-right" title='delete this' data-ng-click="remove(messageboard);">
+				<div class="btn btn-primary pull-right" title='delete this' data-ng-click="remove(messageboard);" ng-hide='!isadmin()'>
 					<i class="glyphicon glyphicon-trash"></i>
 				</div>
 				<p class="list-group-item-heading" data-ng-bind="messageboard.message"></p>

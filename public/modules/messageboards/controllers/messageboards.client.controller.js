@@ -94,6 +94,17 @@ angular.module('messageboards').controller('MessageboardsController', ['$scope',
 				$scope.error = errorResponse.data.message;
 			});
 		};
+		
+		$scope.isadmin=function(){
+			if($scope.authentication.user.roles.indexOf('admin')>=0){
+				return true;
+				
+			}else{
+				
+				return false;
+			}
+			
+		}
 
 		/**
 		 * returns a list of all existing messageboards to $scope.messageboard
