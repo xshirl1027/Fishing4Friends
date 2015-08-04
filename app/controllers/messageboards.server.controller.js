@@ -124,7 +124,7 @@ exports.list = function(req, res) {
 	}
 	else{
 		req.sanitize('input').escape();
-		Messageboard.find({ $text: { $search: val }}).sort('-created').exec(messageboardsErr);
+		Messageboard.find({ $text: { $search: val }}).sort('-created').populate('user', 'displayName').exec(messageboardsErr);
 	}
 };
 
