@@ -117,6 +117,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		 */
 		$scope.find = function() {
 			$scope.offerings = Offerings.query();
+			console.log($scope.offerings);
 		};
 
 
@@ -131,9 +132,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 		 */
 		$scope.findByUser = function() {
 			var profileId = $scope.$$prevSibling.user._id;
-
 			$scope.offerings = Offerings.search({ user: profileId });
-
 		};
 
 
@@ -314,6 +313,7 @@ angular.module('offerings').controller('OfferingsController', ['$scope', '$state
 			switch ($scope.searchCriteria){
 				case 'Keyword':
 				$scope.offerings = Offerings.query({ input: Info });
+				console.log($scope.offerings);
 				break;
 				
 				case 'Price':
