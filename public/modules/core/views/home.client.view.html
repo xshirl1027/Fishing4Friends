@@ -134,7 +134,7 @@
     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"ng-hide='authentication.user'>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" ng-hide='authentication.user'>
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
@@ -165,7 +165,7 @@
 				Posted on
 				<span data-ng-bind="offering.created | date:'medium'"></span>
 				by
-				<span data-ng-bind="offering.user"></span>
+				<span data-ng-bind="offering.user.displayName"></span>
 			</small>
         </a>
     </div>
