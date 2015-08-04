@@ -1,15 +1,39 @@
-'use strict';
 /**
-	client-side controller for the User Module
-**/
+ * Provides the users module for the User (Angular).
+ *
+ * @module User
+ * @submodule Users-Client
+ * @main
+ */
+ 
+'use strict';
+ 
+/**
+ * Controller driving the client views.
+ *
+ * @class UserController
+ * @constructor
+ * @param $scope {Object} 
+ * @param $stateParams {Object}
+ * @param $location {Service}
+ * @param Authentication {Service} 
+ * @param Users {Resource}
+ *
+ */
+ 
 angular.module('users').controller('SettingsController', ['$scope', '$stateParams','$http', '$location', 'Users', 'Authentication', 'Offerings', 'Messageboards',
 	function($scope, $stateParams, $http, $location, Users, Authentication, Offerings, Messageboards) {
 		$scope.user = Authentication.user;
-
+		
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
-		//Get recommended messageBoards and Offerings 
+		/**
+		Gets a list of recommended offerings and messageboard topics based on user preference
+		 * @param none
+		 * @method getRecommendations
+		 * @return nothing
+		 **/
 		$scope.getRecommendations = function(){
 			var words = $scope.user.interests;
 			$scope.offerings = Offerings.query({ input : words });
@@ -62,9 +86,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 				$scope.submitted = true;
 			}
 		};
-		/**findOne():
-			return a user object based on userId
-		**/
+		
+		/**
+		Return a user doc based on user ID
+		 * @param none
+		 * @method findOne
+		 * @return nothing
+		 **/
 		$scope.findOne= function(){
 			console.log($stateParams.otherId);
 			$scope.other= Users.search({
@@ -72,6 +100,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$stateParam
 			},console.log($scope.other));
 			
 		};
+		/**
+		Return a list of all existing users
+		 * @param none
+		 * @method find
+		 * @return nothing
+		 **/
 		$scope.find=function(){
 			$scope.users=Users.query();
 			$scope.roles=['user','admin'];
